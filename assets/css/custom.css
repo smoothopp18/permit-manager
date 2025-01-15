@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+.role-name {
+  padding: 0.5rem;
+}
+.role-name p {
+  color: gray;
+  font-style: italic;
+}
+.loginlogo {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.card-header,
+.txt {
+  display: flex;
+  justify-content: center;
+}
