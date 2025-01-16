@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Tunes - My Music</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f7fa;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #fff;
+            border-right: 1px solid #e1e5eb;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #eaf4ff;
+            color: #007bff;
+        }
+        .content {
+            padding: 20px;
+        }
+        .btn-create {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .search-bar {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
+            width: 100%;
+        }
+        .status-box {
+            background-color: #dff6ff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <h4 class="text-center">FRESH<br>TUNES <small>Beta</small></h4>
+                <a href="#">+ New Release</a>
+                <a href="#">Services</a>
+                <a href="#">Finance</a>
+                <hr>
+                <h6>Music</h6>
+                <a href="#" class="active">My Music</a>
+                <a href="#">Analytics</a>
+                <a href="#">Artists</a>
+                <hr>
+                <h6>Support</h6>
+                <a href="#">Requests</a>
+                <a href="#">Support</a>
+            </div>
+            <div class="col-md-10 content">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>My Music</h2>
+                    <button class="btn btn-create">Create +</button>
+                </div>
+                <ul class="nav nav-tabs mt-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Drafts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Distributed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Deleted</a>
+                    </li>
+                </ul>
+                <input type="text" class="search-bar mt-3" placeholder="Search by UPC, title, artist">
+                <div class="status-box mt-3">
+                    <p><i class="fas fa-info-circle"></i> No data</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

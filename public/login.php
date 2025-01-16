@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the User class to access login functionality
 require_once '../classes/User.php';
 

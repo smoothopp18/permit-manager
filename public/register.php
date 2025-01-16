@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the User class to access registration functionality
 require_once '../classes/User.php';
 
@@ -41,3 +42,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
