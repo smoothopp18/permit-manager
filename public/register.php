@@ -13,9 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];                                    // Retrieve the password
     $passwordconfirm = $_POST['passwordconfirm'];                     // Retrieve the password confirmation
     $role = 'business_owner';                                        // Set default role for registration
+    $phone = filter_input(INPUT_POST, 'phone');                     // Get and sanitize the phone number 
 
     // Check if any of the fields are empty
-    if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($passwordconfirm)) {
+    if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($passwordconfirm) || empty($phone)) {
         $error = "All fields are required.";  // Error message for incomplete form
     }
     // Check if password and confirmation match
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fullname = trim("$firstname $lastname");
 
         // Attempt to register the user
-        if ($user->register($fullname, $email, $password, $role)) {
+        if ($user->register($fullname, $email, $password, $role,$phone)) {
             // If successful, set a success message and redirect to the login page
             $_SESSION['success_message'] = "Registration successful. You can now log in.";
             header("Location: ../index.php");

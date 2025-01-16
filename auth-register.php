@@ -76,6 +76,16 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label for="phone">Phone Number</label>
+                      <input
+                        id="phone"
+                        type="text"
+                        class="form-control"
+                        name="phone"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
                       <label for="email">Email</label>
                       <input
                         id="email"

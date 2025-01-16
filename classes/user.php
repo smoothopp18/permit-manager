@@ -22,16 +22,16 @@ class User
     }
 
     // Method to register a new user
-    public function register($fullname, $email, $password, $role)
+    public function register($fullname, $email, $password, $role, $phone)
     {
         // Securely hash the user's password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Prepare an SQL statement to insert user data into the users table
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (fullname, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (fullname, email, phone, password, role) VALUES (?, ?, ?, ?, ?)");
 
         // Bind the user inputs to the prepared statement to prevent SQL injection
-        $stmt->bind_param("ssss", $fullname, $email, $hashedPassword, $role);
+        $stmt->bind_param("sssss", $fullname, $email, $phone, $hashedPassword, $role);
 
         // Execute the statement and check if the operation was successful
         if ($stmt->execute()) {

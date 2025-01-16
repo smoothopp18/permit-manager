@@ -101,10 +101,6 @@
       </div>
       <!-- Main Content -->
       <div class="main-content">
-        <div class="applyform">
-          <div class="section">
-          </div>
-        </div>
         <div class="settingSidebar">
           <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
           </a>
