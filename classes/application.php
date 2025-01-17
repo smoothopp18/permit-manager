@@ -18,13 +18,13 @@ class Application {
         $this->conn = $database->connect();
     }
     // Method to apply a new certificate
-    public function apply($fullName, $nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $uploadNationalId, $uploadTaxCertificate, $uploadProofOfPremises, $uploadHealthSafetyReport)
+    public function apply($nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $uploadNationalId, $uploadTaxCertificate, $uploadProofOfPremises, $uploadHealthSafetyReport)
     {
         // Prepare an SQL statement to insert application data into the applications table
-        $stmt = $this->conn->prepare("INSERT INTO applications (fullName, nationalId, businessName, businessType, businessAddress, taxCertificate, uploadNationalId, uploadTaxCertificate, uploadProofOfPremises, uploadHealthSafetyReport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO applications (nationalId, businessName, businessType, businessAddress, taxCertificate, uploadNationalId, uploadTaxCertificate, uploadProofOfPremises, uploadHealthSafetyReport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         // Bind the user inputs to the prepared statement to prevent SQL injection
-        $stmt->bind_param("ssssssssss", $fullName, $nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $uploadNationalId, $uploadTaxCertificate, $uploadProofOfPremises, $uploadHealthSafetyReport);
+        $stmt->bind_param("ssssssssss",$nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $uploadNationalId, $uploadTaxCertificate, $uploadProofOfPremises, $uploadHealthSafetyReport);
 
         // Execute the statement and check if the operation was successful
         if ($stmt->execute()) {
