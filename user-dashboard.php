@@ -9,13 +9,12 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
+  <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png'/>
-  <!-- Bootstrap 4.3 CDN Link -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-
 <body>
   <div class="loader"></div>
   <div id="app">
@@ -41,6 +40,16 @@
             </li>
           </ul>
         </div>
+         <div class="themePicker"> <div class="selectgroup layout-color w-50">
+                  <label class="#">
+                    <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                    <span class="selectgroup-button"><i class="fa-regular fa-sun"></i></span>
+                  </label>
+                  <label class="#">
+                    <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                    <span class="selectgroup-button"><i class="fa-solid fa-moon"></i></span>
+                  </label>
+                </div></div>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown"
               class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
@@ -70,8 +79,8 @@
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="dropdown active">
-              <a href="#" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+            <li class="dropdown">
+              <a href="#" class="n#"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
               <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>New Applications</span></a>
@@ -81,8 +90,8 @@
             </li>
             
             <li class="menu-header">Certificates</li>
-            <li class="dropdown">
-              <a href="certificates.html" class="nav-link"><i class="fa-solid fa-file-contract"></i><span>Certificates</span></a>
+            <li class="dropdown active" >
+              <a href="certificates.php" class="nav-link"><i class="fa-solid fa-file-contract"></i><span>Certificates</span></a>
             </li>
             <li class="dropdown">
               <a href="analytics.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
@@ -101,97 +110,47 @@
       </div>
       <!-- Main Content -->
       <div class="main-content">
-        <div class="settingSidebar">
-          <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
-          </a>
-          <div class="settingSidebar-body ps-container ps-theme-default">
-            <div class=" fade show active">
-              <div class="setting-panel-header">Setting Panel
-              </div>
-              <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Select Layout</h6>
-                <div class="selectgroup layout-color w-50">
-                  <label class="selectgroup-item">
-                    <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
-                    <span class="selectgroup-button">Light</span>
-                  </label>
-                  <label class="selectgroup-item">
-                    <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
-                    <span class="selectgroup-button">Dark</span>
-                  </label>
+      <div class="table-content">
+        <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>My Business Certificates</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Sidebar Color</h6>
-                <div class="selectgroup selectgroup-pills sidebar-color">
-                  <label class="selectgroup-item">
-                    <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
-                    <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                      data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
-                  </label>
-                  <label class="selectgroup-item">
-                    <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
-                    <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                      data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
-                  </label>
-                </div>
-              </div>
-              <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Color Theme</h6>
-                <div class="theme-setting-options">
-                  <ul class="choose-theme list-unstyled mb-0">
-                    <li title="white" class="active">
-                      <div class="white"></div>
-                    </li>
-                    <li title="cyan">
-                      <div class="cyan"></div>
-                    </li>
-                    <li title="black">
-                      <div class="black"></div>
-                    </li>
-                    <li title="purple">
-                      <div class="purple"></div>
-                    </li>
-                    <li title="orange">
-                      <div class="orange"></div>
-                    </li>
-                    <li title="green">
-                      <div class="green"></div>
-                    </li>
-                    <li title="red">
-                      <div class="red"></div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="p-15 border-bottom">
-                <div class="theme-setting-options">
-                  <label class="m-b-0">
-                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                      id="mini_sidebar_setting">
-                    <span class="custom-switch-indicator"></span>
-                    <span class="control-label p-l-10">Mini Sidebar</span>
-                  </label>
-                </div>
-              </div>
-              <div class="p-15 border-bottom">
-                <div class="theme-setting-options">
-                  <label class="m-b-0">
-                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                      id="sticky_header_setting">
-                    <span class="custom-switch-indicator"></span>
-                    <span class="control-label p-l-10">Sticky Header</span>
-                  </label>
-                </div>
-              </div>
-              <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
-                <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
-                  <i class="fas fa-undo"></i> Restore Default
-                </a>
               </div>
             </div>
           </div>
-        </div>
+        </section>
+      </div>
       </div>
       <footer class="main-footer">
         <div class="footer-left">
@@ -215,6 +174,15 @@
   <!--font Awesome JS File-->
   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
   <!--JQuery JS CDN-->
+  <script src="assets/bundles/datatables/datatables.min.js"></script>
+  <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
+  <script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
+  <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
+  <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
+  <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
+  <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+  <script src="assets/js/page/datatables.js"></script>
   
 </body>
 </html>

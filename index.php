@@ -19,6 +19,7 @@
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="assets/css/custom.css" />
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
 
   <body>
@@ -54,18 +55,23 @@
                   >
                     <div class="form-group">
                       <label for="email">Email</label>
-                      <input
-                        id="email"
-                        type="email"
-                        class="form-control"
-                        name="email"
-                        tabindex="1"
-                        placeholder="samueldavidwhite@bcc.mw"
-                        required
-                        autofocus
-                      />
-                      <div class="invalid-feedback">
-                        Please fill in a valid email
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input
+                          id="email"
+                          type="email"
+                          class="form-control"
+                          name="email"
+                          tabindex="1"
+                          placeholder="samueldavidwhite@bcc.mw"
+                          required
+                          autofocus
+                        />
+                        <div class="invalid-feedback">
+                          Please fill in a valid email
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -74,17 +80,22 @@
                           >Password</label
                         >
                       </div>
-                      <input
-                        id="password"
-                        type="password"
-                        class="form-control"
-                        name="password"
-                        tabindex="2"
-                        placeholder="********"
-                        required
-                      />
-                      <div class="invalid-feedback">
-                        please fill in your password
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input
+                          id="password"
+                          type="password"
+                          class="form-control"
+                          name="password"
+                          tabindex="2"
+                          placeholder="********"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          please fill in your password
+                        </div>
                       </div>
                     </div>
 

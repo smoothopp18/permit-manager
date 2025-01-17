@@ -15,20 +15,20 @@
                     <div class="card-body">
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="fullName">Full Name</label>
+                          <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
                           <input type="text" class="form-control" id="fullName" placeholder="Full Name">
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="nationalId">National ID Number</label>
+                          <label for="nationalId"><i class="fas fa-id-card"></i> National ID Number</label>
                           <input type="text" class="form-control" id="nationalId" placeholder="National ID Number">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="businessName">Business Name</label>
+                        <label for="businessName"><i class="fas fa-building"></i> Business Name</label>
                         <input type="text" class="form-control" id="businessName" placeholder="Business Name">
                       </div>
                       <div class="form-group">
-                        <label for="businessType">Business Type/Category</label>
+                        <label for="businessType"><i class="fas fa-briefcase"></i> Business Type/Category</label>
                         <select id="businessType" class="form-control">
                           <option selected>Choose...</option>
                           <option>Business Premises Licence</option>
@@ -38,43 +38,43 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="businessAddress">Business Physical Address</label>
+                        <label for="businessAddress"><i class="fas fa-map-marker-alt"></i> Business Physical Address</label>
                         <input type="text" class="form-control" id="businessAddress" placeholder="Business Physical Address">
                       </div>
                       <div class="form-group">
-                        <label for="taxCertificate">Tax Clearance Certificate Number</label>
+                        <label for="taxCertificate"><i class="fas fa-file-alt"></i> Tax Clearance Certificate Number</label>
                         <input type="text" class="form-control" id="taxCertificate" placeholder="Tax Clearance Certificate Number">
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
-              <h2>Second Step</h2>
+              <h2>Upload Documents</h2>
               <section>
                 <div class="step-2">
                   <div class="card">
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="uploadNationalId">Upload National ID (PDF/JPG/PNG)</label>
+                        <label for="uploadNationalId"><i class="fas fa-upload"></i> Upload National ID (PDF/JPG/PNG)</label>
                         <input type="file" class="form-control" id="uploadNationalId" accept=".pdf, .jpg, .png">
                       </div>
                       <div class="form-group">
-                        <label for="uploadTaxCertificate">Upload Tax Clearance Certificate (PDF/JPG/PNG)</label>
+                        <label for="uploadTaxCertificate"><i class="fas fa-upload"></i> Upload Tax Clearance Certificate (PDF/JPG/PNG)</label>
                         <input type="file" class="form-control" id="uploadTaxCertificate" accept=".pdf, .jpg, .png">
                       </div>
                       <div class="form-group">
-                        <label for="uploadProofOfPremises">Upload Proof of Business Premises Ownership/Lease (PDF/JPG/PNG)</label>
+                        <label for="uploadProofOfPremises"><i class="fas fa-upload"></i> Upload Proof of Business Premises Ownership/Lease (PDF/JPG/PNG)</label>
                         <input type="file" class="form-control" id="uploadProofOfPremises" accept=".pdf, .jpg, .png">
                       </div>
                       <div class="form-group">
-                        <label for="uploadHealthSafetyReport">Upload Health and Safety Inspection Report (PDF/JPG/PNG)</label>
+                        <label for="uploadHealthSafetyReport"><i class="fas fa-upload"></i> Upload Health and Safety Inspection Report (PDF/JPG/PNG)</label>
                         <input type="file" class="form-control" id="uploadHealthSafetyReport" accept=".pdf, .jpg, .png">
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
-              <h2>Third Step</h2>
+              <h2>Review & Submit</h2>
               <section>
                 <div class="step-3">
                   <div class="card">

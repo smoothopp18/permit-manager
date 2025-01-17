@@ -24,6 +24,8 @@
       type="image/x-icon"
       href="assets/img/logo.png"
     />
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
 
   <body>
@@ -55,58 +57,83 @@
                     <div class="row">
                       <div class="form-group col-6">
                         <label for="frist_name">First Name</label>
-                        <input
-                          id="frist_name"
-                          type="text"
-                          class="form-control"
-                          name= "firstname"
-                          required
-                          autofocus
-                        />
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input
+                            id="frist_name"
+                            type="text"
+                            class="form-control"
+                            name= "firstname"
+                            required
+                            autofocus
+                          />
+                        </div>
                       </div>
                       <div class="form-group col-6">
                         <label for="lastname">Last Name</label>
-                        <input
-                          id="last_name"
-                          type="text"
-                          class="form-control"
-                          name="surname"
-                          required
-                        />
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                          </div>
+                          <input
+                            id="last_name"
+                            type="text"
+                            class="form-control"
+                            name="surname"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="phone">Phone Number</label>
-                      <input
-                        id="phone"
-                        type="text"
-                        class="form-control"
-                        name="phone"
-                        required
-                      />
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        </div>
+                        <input
+                          id="phone"
+                          type="text"
+                          class="form-control"
+                          name="phone"
+                          required
+                        />
+                      </div>
                     </div>
                     <div class="form-group">
                       <label for="email">Email</label>
-                      <input
-                        id="email"
-                        type="email"
-                        class="form-control"
-                        name="email"
-                        required
-                      />
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input
+                          id="email"
+                          type="email"
+                          class="form-control"
+                          name="email"
+                          required
+                        />
+                      </div>
                       <div class="invalid-feedback"></div>
                     </div>
                     <div class="row">
                       <div class="form-group col-6">
                         <label for="password" class="d-block">Password</label>
-                        <input
-                          id="password"
-                          type="password"
-                          class="form-control pwstrength"
-                          data-indicator="pwindicator"
-                          name="password"
-                          required
-                        />
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                          </div>
+                          <input
+                            id="password"
+                            type="password"
+                            class="form-control pwstrength"
+                            data-indicator="pwindicator"
+                            name="password"
+                            required
+                          />
+                        </div>
                         <div id="pwindicator" class="pwindicator">
                           <div class="bar"></div>
                           <div class="label"></div>
@@ -114,7 +141,12 @@
                       </div>
                       <div class="form-group col-6">
                         <label for="password2" class="d-block">Password Confirmation</label>
-                        <input id="password2" type="password" class="form-control" name="passwordconfirm">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                          </div>
+                          <input id="password2" type="password" class="form-control" name="passwordconfirm">
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -141,7 +173,7 @@
                   </form>
                 </div>
                 <div class="mb-4 text-muted text-center">
-                  Already Registered? <a href="index.html">Login</a>
+                  Already Registered? <a href="index.php">Login</a>
                 </div>
               </div>
             </div>
