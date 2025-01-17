@@ -4,9 +4,7 @@ $(document).ready(function() {
   $('.nav-link').on('click', function(e) {
     e.preventDefault();
     let pageUrl = $(this).attr('href');
-
     $('.main-content').load(pageUrl);
-    $('.table-content').load(pageUrl);
   });
 
   // Validate phone number field

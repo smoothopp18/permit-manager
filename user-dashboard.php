@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
@@ -13,8 +14,11 @@
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
-  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png'/>
+  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
+  <!-- Ensure jQuery is loaded before custom.js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
   <div class="loader"></div>
   <div id="app">
@@ -23,8 +27,7 @@
       <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
-									collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"> <i data-feather="align-justify"></i></a></li>
             <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
                 <i data-feather="maximize"></i>
               </a></li>
@@ -40,24 +43,23 @@
             </li>
           </ul>
         </div>
-         <div class="themePicker"> <div class="selectgroup layout-color w-50">
-                  <label class="#">
-                    <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
-                    <span class="selectgroup-button"><i class="fa-regular fa-sun"></i></span>
-                  </label>
-                  <label class="#">
-                    <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
-                    <span class="selectgroup-button"><i class="fa-solid fa-moon"></i></span>
-                  </label>
-                </div></div>
+        <div class="themePicker">
+          <div class="selectgroup layout-color w-50">
+            <label class="#">
+              <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+              <span class="selectgroup-button"><i class="fa-regular fa-sun"></i></span>
+            </label>
+            <label class="#">
+              <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+              <span class="selectgroup-button"><i class="fa-solid fa-moon"></i></span>
+            </label>
+          </div>
+        </div>
         <ul class="navbar-nav navbar-right">
-          <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png"
-                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Samuel David White</div>
-              <a href="profile.html" class="dropdown-item has-icon"> <i class="far
-										fa-user"></i> Profile
+              <a href="profile.html" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
               </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
                 Activities
               </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
@@ -74,13 +76,12 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="user-dashboard.php"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span
-                class="logo-name">BCCCIS</span>
+            <a href="user-dashboard.php"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span class="logo-name">BCCCIS</span>
             </a>
           </div>
           <ul class="sidebar-menu">
             <li class="dropdown">
-              <a href="#" class="n#"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="#" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
               <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>New Applications</span></a>
@@ -88,15 +89,15 @@
             <li class="dropdown">
               <a href="invoices.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoices</span></a>
             </li>
-            
+
             <li class="menu-header">Certificates</li>
-            <li class="dropdown active" >
+            <li class="dropdown active">
               <a href="certificates.php" class="nav-link"><i class="fa-solid fa-file-contract"></i><span>Certificates</span></a>
             </li>
             <li class="dropdown">
               <a href="analytics.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
             </li>
-            
+
             <li class="menu-header">Support</li>
             <li class="dropdown">
               <a href="request.html" class="nav-link"><i class="fa-solid fa-hand"></i><span>Request</span></a>
@@ -105,12 +106,11 @@
               <a href="faq.html" class="nav-link"><i class="fa-solid fa-question"></i><span>FAQ</span></a>
             </li>
           </ul>
-          
+
         </aside>
       </div>
       <!-- Main Content -->
       <div class="main-content">
-      <div class="table-content">
         <section class="section">
           <div class="section-body">
             <div class="row">
@@ -125,21 +125,21 @@
                         <thead>
                           <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Category</th>
+                            <th>Issue Date</th>
+                            <th>Status</th>
+                            <th>Expiry Date</th>
+                            <th>Certificate Fee</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                            <td>Pumani Lodge</td>
+                            <td>Lodge & Accomodation</td>
+                            <td>15/05/2025</td>
+                            <td>Approved</td>
+                            <td>15/05/2026</td>
+                            <td>MWK320,800.00</td>
                           </tr>
                         </tbody>
                       </table>
@@ -151,38 +151,32 @@
           </div>
         </section>
       </div>
-      </div>
-      <footer class="main-footer">
-        <div class="footer-left">
-          <a href="#">SAMUEL DAVID WHITE (WH0009)</a></a>
-        </div>
-        <div class="footer-right">
-        </div>
-      </footer>
     </div>
-  </div>
-  <!-- General JS Scripts -->
-  <script src="assets/js/app.min.js"></script>
-  <!-- JS Libraies -->
-  <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
-  <!-- Page Specific JS File -->
-  <script src="assets/js/page/index.js"></script>
-  <!-- Template JS File -->
-  <script src="assets/js/scripts.js"></script>
-  <!-- Custom JS File -->
-  <script src="assets/js/custom.js"></script>
-  <!--font Awesome JS File-->
-  <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-  <!--JQuery JS CDN-->
-  <script src="assets/bundles/datatables/datatables.min.js"></script>
-  <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-  <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
-  <script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
-  <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
-  <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
-  <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
-  <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
-  <script src="assets/js/page/datatables.js"></script>
-  
+    <!-- General JS Scripts -->
+    <script src="assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="assets/js/page/index.js"></script>
+    <!-- Template JS File -->
+    <script src="assets/js/scripts.js"></script>
+    <!-- Ensure jQuery is loaded before custom.js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom JS File -->
+    <script src="assets/js/custom.js"></script>
+    <!--font Awesome JS File-->
+    <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+    <!--JQuery JS CDN-->
+    <script src="assets/bundles/datatables/datatables.min.js"></script>
+    <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
+    <script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
+    <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
+    <script src="assets/bundles/datatables/export-ttables/pdfmake.min.js"></script>
+    <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
+    <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+    <script src="assets/js/page/datatables.js"></script>
+
 </body>
+
 </html>

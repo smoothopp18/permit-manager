@@ -34,7 +34,6 @@ $(function () {
         bodyTag: 'fieldset',
         transitionEffect: 'slideLeft',
         onInit: function (event, currentIndex) {
-
             //Set tab width
             var $tab = $(event.currentTarget).find('ul[role="tablist"] li');
             var tabCount = $tab.length;
@@ -62,7 +61,8 @@ $(function () {
             return form.valid();
         },
         onFinished: function (event, currentIndex) {
-            alert("Good job!", "Submitted!", "success");
+            // Submit the form via AJAX or any other way compatible with applyform.php
+            form.submit();
         }
     });
 
@@ -82,8 +82,6 @@ $(function () {
             }
         }
     });
-
-
 });
 
 function setButtonWavesEffect(event) {
