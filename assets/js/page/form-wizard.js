@@ -61,8 +61,21 @@ $(function () {
             return form.valid();
         },
         onFinished: function (event, currentIndex) {
-            // Submit the form via AJAX or any other way compatible with applyform.php
-            form.submit();
+            // Collect form data and send via AJAX
+            var formData = new FormData(form[0]);
+            $.ajax({
+                url: 'applyform.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    alert('Form submitted successfully!');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Error submitting form: ' + textStatus);
+                }
+            });
         }
     });
 

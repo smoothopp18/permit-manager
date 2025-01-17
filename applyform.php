@@ -16,20 +16,20 @@
                       <div class="form-row">
                         <div class="form-group col-md-6">
                           <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
-                          <input type="text" class="form-control" id="fullName" placeholder="Full Name">
+                          <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name">
                         </div>
                         <div class="form-group col-md-6">
                           <label for="nationalId"><i class="fas fa-id-card"></i> National ID Number</label>
-                          <input type="text" class="form-control" id="nationalId" placeholder="National ID Number">
+                          <input type="text" class="form-control" id="nationalId" name="nationalId" placeholder="National ID Number">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="businessName"><i class="fas fa-building"></i> Business Name</label>
-                        <input type="text" class="form-control" id="businessName" placeholder="Business Name">
+                        <input type="text" class="form-control" id="businessName" name="businessName" placeholder="Business Name">
                       </div>
                       <div class="form-group">
                         <label for="businessType"><i class="fas fa-briefcase"></i> Business Type/Category</label>
-                        <select id="businessType" class="form-control">
+                        <select id="businessType" name="businessType" class="form-control">
                           <option selected>Choose...</option>
                           <option>Business Premises Licence</option>
                           <option>Food Licence</option>
@@ -39,11 +39,11 @@
                       </div>
                       <div class="form-group">
                         <label for="businessAddress"><i class="fas fa-map-marker-alt"></i> Business Physical Address</label>
-                        <input type="text" class="form-control" id="businessAddress" placeholder="Business Physical Address">
+                        <input type="text" class="form-control" id="businessAddress" name="businessAddress" placeholder="Business Physical Address">
                       </div>
                       <div class="form-group">
                         <label for="taxCertificate"><i class="fas fa-file-alt"></i> Tax Clearance Certificate Number</label>
-                        <input type="text" class="form-control" id="taxCertificate" placeholder="Tax Clearance Certificate Number">
+                        <input type="text" class="form-control" id="taxCertificate" name="taxCertificate" placeholder="Tax Clearance Certificate Number">
                       </div>
                     </div>
                   </div>
