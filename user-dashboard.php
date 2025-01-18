@@ -55,23 +55,6 @@
             </label>
           </div>
         </div>
-        <ul class="navbar-nav navbar-right">
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
-            <div class="dropdown-menu dropdown-menu-right pullDown">
-              <div class="dropdown-title">Samuel David White</div>
-              <a href="profile.html" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
-              </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                Activities
-              </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                Settings
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
-                Logout
-              </a>
-            </div>
-          </li>
-        </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
@@ -104,6 +87,9 @@
             </li>
             <li class="dropdown">
               <a href="faq.html" class="nav-link"><i class="fa-solid fa-question"></i><span>FAQ</span></a>
+            </li>
+            <li class="dropdown">
+              <a href="faq.html" class="nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
             </li>
           </ul>
 
@@ -175,7 +161,10 @@
     <script src="assets/bundles/datatables/export-ttables/pdfmake.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
     <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+
     <script src="assets/js/page/datatables.js"></script>
+
+    <!-- General JS Scripts -->
 
 </body>
 
