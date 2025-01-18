@@ -4,92 +4,58 @@
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
           <div class="card-header">
-            <h4>Business Certificate Application</h4>
+            <h4>Certificate Application</h4>
           </div>
           <div class="card-body">
-            <form id="businessCertificateForm" method="post" action=".../../public/application-controller.php">
-              <div id="wizard_horizontal">
-                <!-- Step 1: Business Owner Information -->
-                <h2>Business Owner Information</h2>
-                <section>
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
-                          <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="nationalId"><i class="fas fa-id-card"></i> National ID Number</label>
-                          <input type="text" class="form-control" id="nationalId" name="nationalId" placeholder="National ID Number" required>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="businessName"><i class="fas fa-building"></i> Business Name</label>
-                        <input type="text" class="form-control" id="businessName" name="businessName" placeholder="Business Name" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="businessType"><i class="fas fa-briefcase"></i> Business Type/Category</label>
-                        <select id="businessType" name="businessType" class="form-control" required>
-                          <option value="">Choose...</option>
-                          <option>Business Premises Licence</option>
-                          <option>Food Licence</option>
-                          <option>Opaque Beer Licence</option>
-                          <option>Liquor Licence</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="businessAddress"><i class="fas fa-map-marker-alt"></i> Business Physical Address</label>
-                        <input type="text" class="form-control" id="businessAddress" name="businessAddress" placeholder="Business Physical Address" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="taxCertificate"><i class="fas fa-file-alt"></i> Tax Clearance Certificate Number</label>
-                        <input type="text" class="form-control" id="taxCertificate" name="taxCertificate" placeholder="Tax Clearance Certificate Number" required>
-                      </div>
-                    </div>
+            <form class="needs-validation" novalidate="" id="applyform" method="post" action=".../../public/application-controller.php">
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-6">
+                    <label for="nationalId"><i class="fas fa-id-card"></i> National ID</label>
+                    <input id="nationalId" type="text" class="form-control" name="nationalId" placeholder="Enter National ID" required>
                   </div>
-                </section>
-
-                <!-- Step 2: Upload Documents -->
-                <h2>Upload Documents</h2>
-                <section>
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="uploadNationalId"><i class="fas fa-upload"></i> Upload National ID (PDF/JPG/PNG)</label>
-                        <input type="file" class="form-control" id="uploadNationalId" name="uploadNationalId" accept=".pdf,.jpg,.png" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="uploadTaxCertificate"><i class="fas fa-upload"></i> Upload Tax Clearance Certificate (PDF/JPG/PNG)</label>
-                        <input type="file" class="form-control" id="uploadTaxCertificate" name="uploadTaxCertificate" accept=".pdf,.jpg,.png" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="uploadProofOfPremises"><i class="fas fa-upload"></i> Upload Proof of Business Premises Ownership/Lease (PDF/JPG/PNG)</label>
-                        <input type="file" class="form-control" id="uploadProofOfPremises" name="uploadProofOfPremises" accept=".pdf,.jpg,.png" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="uploadHealthSafetyReport"><i class="fas fa-upload"></i> Upload Health and Safety Inspection Report (PDF/JPG/PNG)</label>
-                        <input type="file" class="form-control" id="uploadHealthSafetyReport" name="uploadHealthSafetyReport" accept=".pdf,.jpg,.png" required>
-                      </div>
-                    </div>
+                  <div class="form-group col-6">
+                    <label for="businessName"><i class="fas fa-building"></i> Business Name</label>
+                    <input id="businessName" type="text" class="form-control" name="businessName" placeholder="Enter Business Name" required>
                   </div>
-                </section>
-
-                <!-- Step 3: Review & Submit -->
-                <h2>Review & Submit</h2>
-                <section>
-                  <div class="card">
-                    <div class="card-body">
-                      <h5>Review Your Information</h5>
-                      <div class="form-group"><strong>Full Name:</strong> <p id="reviewFullName"></p></div>
-                      <div class="form-group"><strong>National ID Number:</strong> <p id="reviewNationalId"></p></div>
-                      <div class="form-group"><strong>Business Name:</strong> <p id="reviewBusinessName"></p></div>
-                      <div class="form-group"><strong>Business Type/Category:</strong> <p id="reviewBusinessType"></p></div>
-                      <div class="form-group"><strong>Business Physical Address:</strong> <p id="reviewBusinessAddress"></p></div>
-                      <div class="form-group"><strong>Tax Clearance Certificate Number:</strong> <p id="reviewTaxCertificate"></p></div>
-                    </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-6">
+                    <label for="businessType"><i class="fas fa-briefcase"></i> Business Type</label>
+                    <select id="businessType" class="form-control" name="businessType" required>
+                      <option value="">Select Business Type</option>
+                      <option value="business_premises">Business Premises</option>
+                      <option value="food_licence">Food Licence</option>
+                      <option value="opaque_beer_licence">Opaque Beer Licence</option>
+                      <option value="liquor_licence">Liquor Licence</option>
+                    </select>
                   </div>
-                </section>
+                  <div class="form-group col-6">
+                    <label for="businessAddress"><i class="fas fa-map-marker-alt"></i> Business Address</label>
+                    <input id="businessAddress" type="text" class="form-control" name="businessAddress" placeholder="Enter Business Address" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-6">
+                    <label for="leaseNumber"><i class="fas fa-file-contract"></i> Lease Number</label>
+                    <input id="leaseNumber" type="text" class="form-control" name="leaseNumber" placeholder="Enter Lease Number" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="taxCertificate"><i class="fas fa-certificate"></i> Tax Certificate</label>
+                  <input id="taxCertificate" type="text" class="form-control" name="taxCertificate" placeholder="Enter Tax Certificate" required>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="agree" class="custom-control-input" id="agree" required>
+                    <label class="custom-control-label" for="agree">I agree with the terms and conditions</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-sm btn-block">
+                    <i class="fas fa-paper-plane"></i> Apply
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -104,3 +70,4 @@
 <script src="assets/bundles/jquery-steps/jquery.steps.min.js"></script>
 <script src="assets/js/page/form-wizard.js"></script>
 <script src="assets/js/scripts.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
