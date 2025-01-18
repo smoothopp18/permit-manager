@@ -1,6 +1,7 @@
 <?php
+session_start();
 // Include the Database configuration file to establish a connection
-require_once '../config/Database.php';
+require_once 'Database.php';
 
 // User class to handle user-related operations (registration and login)
 class User

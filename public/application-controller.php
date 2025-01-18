@@ -1,7 +1,5 @@
 <?php
 require_once '../classes/Application.php';
-require_once '../config/Database.php';
-session_start();  // Ensure session is started to use session variables
 
 // Retrieve form data from application form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -32,4 +30,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
 ?>

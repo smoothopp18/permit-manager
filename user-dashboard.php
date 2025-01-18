@@ -1,3 +1,12 @@
+<?php
+require_once 'classes/application.php';
+
+$application = new Application();
+
+// retrieving applications by logged in user
+$applications = $application->getUserApplications();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -110,23 +119,27 @@
                       <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                         <thead>
                           <tr>
-                            <th>Name</th>
+                            <th>Business Name</th>
                             <th>Category</th>
+                            <th>Created At</th>
                             <th>Issue Date</th>
-                            <th>Status</th>
+                            <th>Application Status</th>
                             <th>Expiry Date</th>
                             <th>Certificate Fee</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Pumani Lodge</td>
-                            <td>Lodge & Accomodation</td>
-                            <td>15/05/2025</td>
-                            <td>Approved</td>
-                            <td>15/05/2026</td>
-                            <td>MWK320,800.00</td>
-                          </tr>
+                        <?php foreach ($applications as $application) : ?>
+                            <tr>
+                              <td><?php echo $application['businessName']; ?></td>
+                              <td><?php echo $application['businessType']; ?></td>
+                              <td><?php echo $application['created_at']; ?></td>
+                              <td><?php echo $application['issueDate']; ?></td>
+                              <td><?php echo $application['status']; ?></td>
+                              <td><?php echo $application['expiryDate']; ?></td>
+                              <td>Not available</td>
+                            </tr>
+                            <?php endforeach;?>
                         </tbody>
                       </table>
                     </div>

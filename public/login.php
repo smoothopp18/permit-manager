@@ -1,6 +1,5 @@
 <?php
-session_start();
-// Include the User class to access login functionality
+
 require_once '../classes/User.php';
 
 // Check if the login form was submitted via POST method
