@@ -149,19 +149,9 @@ $applications = $application->getAllApplications();
                                 <td>
                                   <div class="badge badge-danger badge-shadow"><?php echo $application['status']; ?></div>
                                 </td>
-                              <?php   } ?>
-
+                              <?php } ?>
                               <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Action
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="actionMenu">
-                                    <a class="dropdown-item" href="public/application-controller.php?approve_id=<?= $application['application_id']; ?>">Approve</a>
-                                    <a class="dropdown-item view-documents" href="application-documents.html?application_id=<?= $application['application_id']; ?>">View Documents</a>
-                                    <a class="dropdown-item" href="public/application-controller.php?reject_id=<?= $application['application_id']; ?>">Reject</a>
-                                  </div>
-                                </div>
+                                <a class="btn btn-primary view-documents" id="viewDocs" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View Full Application</a>
                               </td>
                             </tr>
                           <?php endforeach; ?>

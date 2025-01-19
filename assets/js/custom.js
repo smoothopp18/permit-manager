@@ -7,6 +7,13 @@ $(document).ready(function() {
     $('.main-content').load(pageUrl);
   });
 
+  // Handle clicks on the link with ID viewDocs
+  $('#viewDocs').on('click', function(e) {
+    e.preventDefault();
+    let pageUrl = $(this).attr('href');
+    $('.main-content').load(pageUrl);
+  });
+
   // Validate phone number field
   $('#phone-number').on('blur', function() {
     let phoneNumber = $(this).val();
@@ -17,4 +24,3 @@ $(document).ready(function() {
     }
   });
 });
-
