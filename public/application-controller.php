@@ -29,6 +29,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = "Application failed. Please try again.";
         }
     }
+
+    
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    // Sanitize inputs to prevent SQL injection
+    if(isset($_GET['approve_id'])){
+        $application_id = filter_input(INPUT_GET, 'approve_id', FILTER_SANITIZE_STRING);
+        $application = new Application();
+        if ($application->approveApplication($application_id)) {
+            // If successful, set a success message and redirect to the user dashboard
+            $_SESSION['success_message'] = "Application approved successfully.";
+            header("Location: ../tlo-dashboard.php");
+            exit;  // Stop script execution after redirection
+        } else {
+            // Application failed
+            $error = "Application approval failed. Please try again.";
+        }
+    }else if(isset($_GET['reject_id'])){
+        $application_id = filter_input(INPUT_GET, 'reject_id', FILTER_SANITIZE_STRING);
+        $application = new Application();
+        if ($application->rejectApplication($application_id)) {
+            // If successful, set a success message and redirect to the user dashboard
+            $_SESSION['success_message'] = "Application rejected successfully.";
+            header("Location: ../tlo-dashboard.php");
+            exit;  // Stop script execution after redirection
+        } else {
+            // Application failed
+            $error = "Application rejection failed. Please try again.";
+        }
+    }
+}
 ?>

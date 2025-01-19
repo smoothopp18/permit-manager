@@ -54,5 +54,56 @@ class Application {
         return $applications; 
         
     }
+
+    public function getAllApplications()
+    {
+        // Prepare an SQL statement to select the user with the provided email
+        $stmt = $this->conn->prepare("SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id");
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result set from the executed statement
+        $result = $stmt->get_result();
+
+        $applications = [];
+        // Fetch the data as an associative array
+        while($row = $result->fetch_assoc() ) {
+            $applications[] = $row;
+
+        }
+        return $applications; 
+        
+    }
+
+    public function approveApplication($application_id){
+        // Prepare an SQL statement to update the application status
+        $stmt = $this->conn->prepare("UPDATE applications SET status='Approved' WHERE application_id=?");
+        
+        // Bind the application_id parameter to the statement
+        $stmt->bind_param("s", $application_id);
+        
+        // Execute the statement
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function rejectApplication($application_id){
+        // Prepare an SQL statement to update the application status
+        $stmt = $this->conn->prepare("UPDATE applications SET status='Rejected' WHERE application_id=?");
+        
+        // Bind the application_id parameter to the statement
+        $stmt->bind_param("s", $application_id);
+        
+        // Execute the statement
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 ?>

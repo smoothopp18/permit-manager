@@ -1,44 +1,36 @@
 <?php
 session_start();
-// Include the User class to access registration functionality
 require_once '../classes/User.php';
 
 // Check if the form was submitted via POST method
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Sanitize and retrieve user input from the form
-    $firstname = filter_input(INPUT_POST, 'firstname');                   // Get and sanitize the first name
-    $lastname = filter_input(INPUT_POST, 'surname');                     // Get and sanitize the last name
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);  // Sanitize the email input
-    $password = $_POST['password'];                                    // Retrieve the password
-    $passwordconfirm = $_POST['passwordconfirm'];                     // Retrieve the password confirmation
-    $role = 'business_owner';                                        // Set default role for registration
-    $phone = filter_input(INPUT_POST, 'phone');                     // Get and sanitize the phone number 
+    $firstname = filter_input(INPUT_POST, 'firstname');
+    $lastname = filter_input(INPUT_POST, 'surname');
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = $_POST['password'];
+    $passwordconfirm = $_POST['passwordconfirm'];
+    $role = 'business_owner';
+    $phone = filter_input(INPUT_POST, 'phone');
 
     // Check if any of the fields are empty
     if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($passwordconfirm) || empty($phone)) {
-        $error = "All fields are required.";  // Error message for incomplete form
+        $error = "All fields are required.";
     }
     // Check if password and confirmation match
     elseif ($password !== $passwordconfirm) {
-        $error = "Passwords do not match.";   // Error message for mismatched passwords
+        $error = "Passwords do not match.";
     } else {
-        // All inputs are valid; proceed with registration
-
-        // Create a new User object to access the register method
         $user = new User();
-
-        // Combine first and last name into a full name
         $fullname = trim("$firstname $lastname");
 
         // Attempt to register the user
-        if ($user->register($fullname, $email, $password, $role,$phone)) {
-            // If successful, set a success message and redirect to the login page
+        if ($user->register($fullname, $email, $password, $role, $phone)) {
             $_SESSION['success_message'] = "Registration successful. You can now log in.";
             header("Location: ../index.php");
-            exit;  // Stop script execution after redirection
+            exit;
         } else {
-            // Registration failed, possibly due to duplicate email
             $error = "Registration failed. Email might already be in use.";
         }
     }
