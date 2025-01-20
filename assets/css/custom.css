@@ -2,6 +2,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  background-color: #b7c7eb; /* Sky blue background */
 }
 .role-name {
   padding: 0.5rem;

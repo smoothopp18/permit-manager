@@ -33,38 +33,7 @@ $applications = $application->getAllApplications();
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-      <nav class="navbar navbar-expand-lg main-navbar sticky">
-        <div class="form-inline mr-auto">
-          <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"> <i data-feather="align-justify"></i></a></li>
-            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
-                <i data-feather="maximize"></i>
-              </a></li>
-            <li>
-              <form class="form-inline mr-auto">
-                <div class="search-element">
-                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200">
-                  <button class="btn" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </form>
-            </li>
-          </ul>
-        </div>
-        <div class="themePicker">
-          <div class="selectgroup layout-color w-50">
-            <label class="#">
-              <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
-              <span class="selectgroup-button"><i class="fa-regular fa-sun"></i></span>
-            </label>
-            <label class="#">
-              <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
-              <span class="selectgroup-button"><i class="fa-solid fa-moon"></i></span>
-            </label>
-          </div>
-        </div>
-      </nav>
+      
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
@@ -73,7 +42,7 @@ $applications = $application->getAllApplications();
           </div>
           <ul class="sidebar-menu">
             <li class="dropdown">
-              <a href="#" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
               <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>Add Business</span></a>
@@ -91,9 +60,6 @@ $applications = $application->getAllApplications();
             </li>
 
             <li class="menu-header">Settings</li>
-            <li class="dropdown">
-              <a href="request.html" class="nav-link"><i class="fa-solid fa-hand"></i><span>Business Requests</span></a>
-            </li>
             <li class="dropdown">
               <a href="faq.html" class="nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
             </li>
@@ -186,7 +152,7 @@ $applications = $application->getAllApplications();
     <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
-    <script src="assets/bundles/datatables/export-ttables/pdfmake.min.js"></script>
+    <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
     <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
 

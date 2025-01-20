@@ -15,6 +15,20 @@ if ($application_id) {
 }
 
 ?>
+<head>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="assets/css/app.min.css">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
+  <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
+  <!-- Ensure jQuery is loaded before custom.js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <section class="section">
   <div class="section-body">
     <div class="row">
@@ -35,7 +49,7 @@ if ($application_id) {
                     <th>Business Category</th>
                     <th>National ID</th>
                     <th>Health Report</th>
-                    <th>Tax Clearence</th>
+                    <th>Tax Clearance</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -53,13 +67,13 @@ if ($application_id) {
 
                       <td>
                         <div class="dropdown">
-                          <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenu<?php echo $application['application_id']; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Action
                           </button>
-                          <div class="dropdown-menu" aria-labelledby="actionMenu">
-                            <a class="dropdown-item" href="public/application-controller.php?approve_id=<?= $application['application_id']; ?>">Approve</a>
-                            <a class="dropdown-item view-documents" id="viewDocs" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View Documents</a>
-                            <a class="dropdown-item" href="public/application-controller.php?reject_id=<?= $application['application_id']; ?>">Reject</a>
+                          <div class="dropdown-menu" aria-labelledby="actionMenu<?php echo $application['application_id']; ?>">
+                            <a class="dropdown-item" href="public/application-controller.php?approve_id=<?php echo $application['application_id']; ?>">Approve</a>
+                            <a class="dropdown-item view-documents" id="viewDocs" href="application-documents.php?application_id=<?php echo $application['application_id']; ?>">View Documents</a>
+                            <a class="dropdown-item" href="public/application-controller.php?reject_id=<?php echo $application['application_id']; ?>">Reject</a>
                           </div>
                         </div>
                       </td>
@@ -74,3 +88,33 @@ if ($application_id) {
     </div>
   </div>
 </section>
+
+<script src="assets/js/app.min.js"></script>
+<!-- JS Libraries -->
+<script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
+<!-- Page Specific JS File -->
+<script src="assets/js/page/index.js"></script>
+<!-- Template JS File -->
+<script src="assets/js/scripts.js"></script>
+<!-- Ensure jQuery is loaded before custom.js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Custom JS File -->
+<script src="assets/js/custom.js"></script>
+<!-- Font Awesome JS File -->
+<script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+<!-- jQuery JS CDN -->
+<script src="assets/bundles/datatables/datatables.min.js"></script>
+<script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
+<script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
+<script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
+<script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
+<script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
+<script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+<!-- jQuery (required for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/js/page/datatables.js"></script>
