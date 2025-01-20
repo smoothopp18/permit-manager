@@ -23,17 +23,42 @@ class Application
             mkdir($uploadDir, 0777, true);
         }
         
+        // Function to sanitize file names
+        function sanitizeFileName($filename)
+        {
+            return preg_replace("/[^a-zA-Z0-9\._-]/", "_", $filename);
+        }
 
-        // Process and move uploaded files
-        $nationalIdPath = $uploadDir . basename($nationalIdFile['name']);
-        $healthReportPath = $uploadDir . basename($healthReportFile['name']);
-        $taxClearancePath = $uploadDir . basename($taxClearanceFile['name']);
+        // Allowed file extensions
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
 
-        if (!move_uploaded_file($nationalIdFile['tmp_name'], $nationalIdPath) ||
-            !move_uploaded_file($healthReportFile['tmp_name'], $healthReportPath) ||
-            !move_uploaded_file($taxClearanceFile['tmp_name'], $taxClearancePath)) {
-            error_log("[" . date('Y-m-d H:i:s') . "] File upload error.");
-            return false; // Stop execution if files fail to upload
+        // Process and move uploaded files securely
+        $files = [
+            'nationalIdFile' => $nationalIdFile,
+            'healthReportFile' => $healthReportFile,
+            'taxClearanceFile' => $taxClearanceFile
+        ];
+
+        $filePaths = [];
+
+        foreach ($files as $key => $file) {
+            $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                error_log("Invalid file type for $key: " . $fileExtension);
+                return false;
+            }
+
+            if ($file['size'] > 5 * 1024 * 1024) { // 5MB limit
+                error_log("File size exceeds limit for $key.");
+                return false;
+            }
+
+            $filePath = $uploadDir . sanitizeFileName(basename($file['name']));
+            if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+                error_log("[" . date('Y-m-d H:i:s') . "] File upload error for $key.");
+                return false;
+            }
+            $filePaths[$key] = $filePath;
         }
 
         // Prepare the SQL statement with new file path columns
@@ -49,9 +74,9 @@ class Application
             $businessType, 
             $businessAddress, 
             $taxCertificate, 
-            $nationalIdPath, 
-            $healthReportPath, 
-            $taxClearancePath
+            $filePaths['nationalIdFile'], 
+            $filePaths['healthReportFile'], 
+            $filePaths['taxClearanceFile']
         );
 
         // Execute the statement and check if the operation was successful
@@ -67,20 +92,12 @@ class Application
 
     public function getUserApplications()
     {
-        // Prepare an SQL statement to select the user with the provided email
         $stmt = $this->conn->prepare("SELECT * FROM applications WHERE user_id = ?");
-
-        // Bind the id parameter to the statement
         $stmt->bind_param("s", $_SESSION['user']['user_id']);
-
-        // Execute the statement
         $stmt->execute();
-
-        // Get the result set from the executed statement
         $result = $stmt->get_result();
 
         $applications = [];
-        // Fetch the data as an associative array
         while ($row = $result->fetch_assoc()) {
             $applications[] = $row;
         }
@@ -89,17 +106,11 @@ class Application
 
     public function getAllApplications()
     {
-        // Prepare an SQL statement to select all applications with user details
         $stmt = $this->conn->prepare("SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id");
-
-        // Execute the statement
         $stmt->execute();
-
-        // Get the result set from the executed statement
         $result = $stmt->get_result();
 
         $applications = [];
-        // Fetch the data as an associative array
         while ($row = $result->fetch_assoc()) {
             $applications[] = $row;
         }
@@ -108,25 +119,15 @@ class Application
 
     public function approveApplication($application_id)
     {
-        // Prepare an SQL statement to update the application status
         $stmt = $this->conn->prepare("UPDATE applications SET status='Approved' WHERE application_id=?");
-
-        // Bind the application_id parameter to the statement
         $stmt->bind_param("s", $application_id);
-
-        // Execute the statement
         return $stmt->execute();
     }
 
     public function rejectApplication($application_id)
     {
-        // Prepare an SQL statement to update the application status
         $stmt = $this->conn->prepare("UPDATE applications SET status='Rejected' WHERE application_id=?");
-
-        // Bind the application_id parameter to the statement
         $stmt->bind_param("s", $application_id);
-
-        // Execute the statement
         return $stmt->execute();
     }
 }
