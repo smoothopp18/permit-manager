@@ -48,7 +48,7 @@ $applications = $application->getAllApplications();
               <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>Add Business</span></a>
             </li>
             <li class="dropdown">
-              <a href="invoices.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Generate Invoices</span></a>
+              <a href="invoices.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoice History</span></a>
             </li>
 
             <li class="menu-header">Certificates</li>
