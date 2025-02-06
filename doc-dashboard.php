@@ -48,7 +48,7 @@ $applications = $application->getAllApplications();
               <a href="doc-dashboard.php" class="nav-link"><i class="fa-solid fa-check-circle"></i><span>Payment Verification</span></a>
             </li>
             <li class="dropdown">
-              <a href="forward-applications.php" class="nav-link"><i class="fa-solid fa-share"></i><span>Forward to CEO</span></a>
+              <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Forward to CEO</span></a>
             </li>
             <li class="dropdown">
               <a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
@@ -141,6 +141,7 @@ $applications = $application->getAllApplications();
     <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/page/datatables.js"></script>
     <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/custom.js"></script>
 </body>
 
 </html>
