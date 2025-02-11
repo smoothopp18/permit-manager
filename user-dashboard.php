@@ -26,6 +26,8 @@ $applications = $application->getUserApplications();
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
   <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <!-- font awesome CDN Link -->
+   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -45,7 +47,7 @@ $applications = $application->getUserApplications();
               <a href="user-dashboard.php" class="dropdown active"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
-              <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>New Applications</span></a>
+              <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>New Application</span></a>
             </li>
             <li class="dropdown">
               <a href="invoice-view.php" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoices</span></a>
@@ -53,7 +55,7 @@ $applications = $application->getUserApplications();
 
             <li class="menu-header">Certificates</li>
             <li class="dropdown">
-              <a href="analytics.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
+              <a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
             </li>
 
             <li class="menu-header">Support</li>

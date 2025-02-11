@@ -1,10 +1,13 @@
 <?php
 require_once 'classes/application.php';
+require_once 'classes/user.php';
 
 $application = new Application();
+$user = new User();
 
 // retrieving applications by logged in user
 $applications = $application->getAllApplications();
+$loggedInUser = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
 ?>
 <!DOCTYPE html>
@@ -26,10 +29,19 @@ $applications = $application->getAllApplications();
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
   <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- font awesome CDN Link -->
+  <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+   
 </head>
 
 <body>
   <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg" style="background-color: white;"></div>
+      <!-- Removed top nav bar -->
+    </div>
+  </div>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
@@ -42,26 +54,26 @@ $applications = $application->getAllApplications();
           </div>
           <ul class="sidebar-menu">
             <li class="dropdown">
-              <a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="#" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
-              <a href="applyform.php" class="nav-link"><i class="fa-regular fa-square-plus"></i><span>Add Business</span></a>
+              <a href="#" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add Business</span></a>
             </li>
             <li class="dropdown">
-              <a href="invoices.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoice History</span></a>
+              <a href="#" class="nav-link"><i class="fa-solid fa-file-invoice"></i><span>Approved Applications</span></a>
             </li>
 
             <li class="menu-header">Certificates</li>
             <li class="dropdown active">
-              <a href="certificates.php" class="nav-link"><i class="fa-solid fa-file-contract"></i><span>Businesses</span></a>
+              <a href="#" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Business Applications</span></a>
             </li>
             <li class="dropdown">
-              <a href="analytics.html" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
+              <a href="#" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
             </li>
 
             <li class="menu-header">Settings</li>
             <li class="dropdown">
-              <a href="faq.html" class="nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+              <a href="#" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a>
             </li>
           </ul>
 
@@ -159,6 +171,8 @@ $applications = $application->getAllApplications();
     <script src="assets/js/page/datatables.js"></script>
 
     <!-- General JS Scripts -->
+     <!-- Page Specific JS File -->
+  <script src="assets/js/page/index.js"></script>
 
 </body>
 

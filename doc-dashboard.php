@@ -26,6 +26,8 @@ $applications = $application->getAllApplications();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <!-- font awesome CDN Link -->
+   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
