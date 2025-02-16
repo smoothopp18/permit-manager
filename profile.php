@@ -1,8 +1,9 @@
 <?php
+session_start();
 require_once 'classes/user.php';
 
 // Check if the user is logged in
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
     header("Location: index.php");
     exit();
 }
@@ -20,7 +21,7 @@ $user = $_SESSION['user'];
               <div class="padding-20">
                 <ul class="nav nav-tabs" id="myTab2" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
+                    <a class="nav-link active" id="home-tab2" data-bs-toggle="tab" href="#about" role="tab"
                       aria-selected="true">Personal Details</a>
                   </li>
                 </ul>
@@ -30,22 +31,22 @@ $user = $_SESSION['user'];
                       <div class="col-md-3 col-6 b-r">
                         <strong>Full Name</strong>
                         <br>
-                        <p class="text-muted"><?php echo htmlspecialchars($user['fullname']); ?></p>
+                        <p class="text-muted"><?php echo htmlspecialchars($user['fullname'] ?? 'N/A'); ?></p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Mobile</strong>
                         <br>
-                        <p class="text-muted"><?php echo htmlspecialchars($user['phone']); ?></p>
+                        <p class="text-muted"><?php echo htmlspecialchars($user['phone'] ?? 'N/A'); ?></p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Email</strong>
                         <br>
-                        <p class="text-muted"><?php echo htmlspecialchars($user['email']); ?></p>
+                        <p class="text-muted"><?php echo htmlspecialchars($user['email'] ?? 'N/A'); ?></p>
                       </div>
                       <div class="col-md-3 col-6">
                         <strong>Role</strong>
                         <br>
-                        <p class="text-muted"><?php echo htmlspecialchars($user['role']); ?></p>
+                        <p class="text-muted"><?php echo htmlspecialchars($user['role'] ?? 'N/A'); ?></p>
                       </div>
                     </div>
                     <!-- Added logout button -->

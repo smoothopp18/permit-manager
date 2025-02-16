@@ -1,5 +1,4 @@
 <?php
-session_start();
 // Include the Database configuration file to establish a connection
 require_once 'Database.php';
 

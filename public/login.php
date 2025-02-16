@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 require_once '../classes/User.php';
 
 // Check if the login form was submitted via POST method
@@ -30,6 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($logged_in_user && $logged_in_user['role'] == 'director_commerce') {
             $_SESSION['user'] = $logged_in_user;
             header("Location: ../doc-dashboard.php");
+        } else {
+            echo "<script>alert('Wrong details. Please try again.'); window.location.href = '../index.php';</script>";
         }
     }
 }
+?>

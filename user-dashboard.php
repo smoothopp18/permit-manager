@@ -1,4 +1,12 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'business_owner') {
+    header("Location: public/login.php");
+    exit();
+}
+
 require_once 'classes/application.php';
 
 $application = new Application();
@@ -26,8 +34,8 @@ $applications = $application->getUserApplications();
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
   <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <!-- font awesome CDN Link -->
-   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+  <!-- font awesome CDN Link -->
+  <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -127,13 +135,9 @@ $applications = $application->getUserApplications();
     <script src="assets/js/page/index.js"></script>
     <!-- Template JS File -->
     <script src="assets/js/scripts.js"></script>
-    <!-- Ensure jQuery is loaded before custom.js -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Custom JS File -->
     <script src="assets/js/custom.js"></script>
-    <!--font Awesome JS File-->
-    <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-    <!--JQuery JS CDN-->
+    <!-- JQuery JS CDN -->
     <script src="assets/bundles/datatables/datatables.min.js"></script>
     <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
@@ -144,8 +148,6 @@ $applications = $application->getUserApplications();
     <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
 
     <script src="assets/js/page/datatables.js"></script>
-
-    <!-- General JS Scripts -->
 
 </body>
 

@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'director_commerce') {
+    header("Location: public/login.php");
+    exit();
+}
+
 require_once 'classes/application.php';
 
 $application = new Application();
