@@ -16,6 +16,12 @@ class Application
 
     public function apply($nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $nationalIdFile, $healthReportFile, $taxClearanceFile)
     {
+        // Ensure user_id is set
+        if (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id'])) {
+            error_log("User ID is not set in session.");
+            return false;
+        }
+
         // Define the upload directory
         $uploadDir = "uploads/";
 

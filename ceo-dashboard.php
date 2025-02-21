@@ -49,18 +49,16 @@ $applications = $application->getAllApplications() ?? [];
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="tlo-dashboard.php">
+            <a href="ceo-dashboard.php">
               <img alt="image" src="assets/img/logo.png" class="header-logo" />
               <span class="logo-name">BCCCIS</span>
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="dropdown"><a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
-            <li class="dropdown"><a href="applyform.php" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add Business</span></a></li>
-            <li class="dropdown"><a href="approved-applications.php" class="nav-link"><i class="fa-solid fa-file-invoice"></i><span>Approved Applications</span></a></li>
+            <li class="dropdown"><a href="ceo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
             <li class="menu-header">Certificates</li>
-            <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Business Applications</span></a></li>
-            <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a></li>
+            <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Approved Certificates</span></a></li>
+            <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Report & Analytics</span></a></li>
             <li class="menu-header">Settings</li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>
@@ -75,7 +73,7 @@ $applications = $application->getAllApplications() ?? [];
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Business Applications</h4>
+                    <h4>Business Applications (Awaiting Approval)</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">

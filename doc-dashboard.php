@@ -2,8 +2,8 @@
 
 session_start();
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'director_commerce') {
-    header("Location: public/login.php");
-    exit();
+  header("Location: public/login.php");
+  exit();
 }
 
 require_once 'classes/application.php';
@@ -33,8 +33,8 @@ $applications = $application->getAllApplications();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <!-- font awesome CDN Link -->
-   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+  <!-- font awesome CDN Link -->
+  <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -42,7 +42,7 @@ $applications = $application->getAllApplications();
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-      
+
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
@@ -51,16 +51,16 @@ $applications = $application->getAllApplications();
           </div>
           <ul class="sidebar-menu">
             <li class="dropdown active">
-              <a href="doc-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="doc-dashboard.php" class="#"><i data-feat her="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
-              <a href="doc-dashboard.php" class="nav-link"><i class="fa-solid fa-check-circle"></i><span>Payment Verification</span></a>
+              <a href="payment-Verification.php" class="nav-link"><i class="fa-solid fa-check-circle"></i><span>Payment Verification</span></a>
             </li>
             <li class="dropdown">
-              <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Forward to CEO</span></a>
+              <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Ceo Approval</span></a>
             </li>
             <li class="dropdown">
-              <a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+              <a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
             </li>
             <li class="menu-header">Settings</li>
             <li class="dropdown">
@@ -78,7 +78,7 @@ $applications = $application->getAllApplications();
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Application Payments</h4>
+                    <h4>Application Payments List</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -126,8 +126,7 @@ $applications = $application->getAllApplications();
                                   </button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View</a>
-                                    <a class="dropdown-item" href="approve-application.php?application_id=<?= $application['application_id']; ?>">Approve</a>
-                                    <a class="dropdown-item" href="reject-application.php?application_id=<?= $application['application_id']; ?>">Reject</a>
+                                    <a class="dropdown-item" href="approve-application.php?application_id=<?= $application['application_id']; ?>">Verify & Approve</a>
                                   </div>
                                 </div>
                               </td>

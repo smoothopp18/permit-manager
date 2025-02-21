@@ -58,14 +58,7 @@ $approvedApplications = array_filter($applications, function($app) {
                                                 </div>
                                             </td>
                                             <td>
-                                                <?php if (!empty($app['application_id'])) : ?>
-                                                    <a class="btn btn-primary view-documents"
-                                                        href="application-documents.php?application_id=<?= htmlspecialchars($app['application_id']) ?>">
-                                                        View Certificate
-                                                    </a>
-                                                <?php else : ?>
-                                                    <span class="text-muted">No Application ID</span>
-                                                <?php endif; ?>
+                                                <a href="/views/eCertificate.php">View Certificate</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

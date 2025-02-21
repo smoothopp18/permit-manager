@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($logged_in_user && $logged_in_user['role'] == 'trading_officer') {
             $_SESSION['user'] = $logged_in_user;
             header("Location: ../tlo-dashboard.php");
-        } elseif ($logged_in_user && $logged_in_user['role'] == 'ceo') {
+        } elseif ($logged_in_user && $logged_in_user['role'] == 'chief_executive_officer') {
             $_SESSION['user'] = $logged_in_user;
             header("Location: ../ceo-dashboard.php");
         } elseif ($logged_in_user && $logged_in_user['role'] == 'director_commerce') {
