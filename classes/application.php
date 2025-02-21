@@ -15,86 +15,107 @@ class Application
     }
 
     public function apply($nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $nationalIdFile, $healthReportFile, $taxClearanceFile)
+{
+    // Ensure user_id is set
+    if (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id'])) {
+        error_log("User ID is not set in session.");
+        return false;
+    }
+
+    // Define the upload directory
+    $uploadDir = "uploads/";
+
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+    
+    // Function to sanitize file names
+    function sanitizeFileName($filename)
     {
-        // Ensure user_id is set
-        if (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id'])) {
-            error_log("User ID is not set in session.");
+        return preg_replace("/[^a-zA-Z0-9\._-]/", "_", $filename);
+    }
+
+    // Allowed file extensions
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+
+    // Process and move uploaded files securely
+    $files = [
+        'nationalIdFile' => $nationalIdFile,
+        'healthReportFile' => $healthReportFile,
+        'taxClearanceFile' => $taxClearanceFile
+    ];
+
+    $filePaths = [];
+
+    foreach ($files as $key => $file) {
+        // 🛑 Check if the file array is valid
+        if (!isset($file['name']) || empty($file['name'])) {
+            error_log("Missing or empty file for $key.");
             return false;
         }
 
-        // Define the upload directory
-        $uploadDir = "uploads/";
-
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-        
-        // Function to sanitize file names
-        function sanitizeFileName($filename)
-        {
-            return preg_replace("/[^a-zA-Z0-9\._-]/", "_", $filename);
+        // 🛑 Check if the file array is structured correctly
+        if (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
+            error_log("Invalid uploaded file for $key.");
+            return false;
         }
 
-        // Allowed file extensions
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
-
-        // Process and move uploaded files securely
-        $files = [
-            'nationalIdFile' => $nationalIdFile,
-            'healthReportFile' => $healthReportFile,
-            'taxClearanceFile' => $taxClearanceFile
-        ];
-
-        $filePaths = [];
-
-        foreach ($files as $key => $file) {
-            $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            if (!in_array($fileExtension, $allowedExtensions)) {
-                error_log("Invalid file type for $key: " . $fileExtension);
-                return false;
-            }
-
-            if ($file['size'] > 5 * 1024 * 1024) { // 5MB limit
-                error_log("File size exceeds limit for $key.");
-                return false;
-            }
-
-            $filePath = $uploadDir . sanitizeFileName(basename($file['name']));
-            if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-                error_log("[" . date('Y-m-d H:i:s') . "] File upload error for $key.");
-                return false;
-            }
-            $filePaths[$key] = $filePath;
+        // Get file extension and validate it
+        $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            error_log("Invalid file type for $key: " . $fileExtension);
+            return false;
         }
 
-        // Prepare the SQL statement with new file path columns
-        $stmt = $this->conn->prepare("INSERT INTO $this->table 
-            (user_id, nationalId, businessName, businessType, businessAddress, taxCertificate, nationalIdFile, healthReportFile, taxClearanceFile) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-        // Bind the user inputs and file paths to the prepared statement
-        $stmt->bind_param("sssssssss", 
-            $_SESSION['user']['user_id'], 
-            $nationalId, 
-            $businessName, 
-            $businessType, 
-            $businessAddress, 
-            $taxCertificate, 
-            $filePaths['nationalIdFile'], 
-            $filePaths['healthReportFile'], 
-            $filePaths['taxClearanceFile']
-        );
-
-        // Execute the statement and check if the operation was successful
-        if ($stmt->execute()) {
-            $stmt->close(); // Close the statement
-            return true; // Application successful
-        } else {
-            error_log("[" . date('Y-m-d H:i:s') . "] Error: " . $stmt->error . " - Query: " . $stmt->sqlstate);
-            $stmt->close(); // Close the statement
-            return false; // Application failed
+        if ($file['size'] > 5 * 1024 * 1024) { // 5MB limit
+            error_log("File size exceeds limit for $key.");
+            return false;
         }
+
+        $filePath = $uploadDir . sanitizeFileName(basename($file['name']));
+        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+            error_log("[" . date('Y-m-d H:i:s') . "] File upload error for $key.");
+            return false;
+        }
+
+        $filePaths[$key] = $filePath; // ✅ Ensures $filePaths is properly set
     }
+
+    // 🛑 Ensure all file paths are set before database insert
+    if (count($filePaths) !== 3) {
+        error_log("File upload issue: Not all files were stored.");
+        return false;
+    }
+
+    // Prepare the SQL statement with new file path columns
+    $stmt = $this->conn->prepare("INSERT INTO $this->table 
+        (user_id, nationalId, businessName, businessType, businessAddress, taxCertificate, nationalIdFile, healthReportFile, taxClearanceFile) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    // Bind the user inputs and file paths to the prepared statement
+    $stmt->bind_param("sssssssss", 
+        $_SESSION['user']['user_id'], 
+        $nationalId, 
+        $businessName, 
+        $businessType, 
+        $businessAddress, 
+        $taxCertificate, 
+        $filePaths['nationalIdFile'], 
+        $filePaths['healthReportFile'], 
+        $filePaths['taxClearanceFile']
+    );
+
+    // Execute the statement and check if the operation was successful
+    if ($stmt->execute()) {
+        $stmt->close(); // Close the statement
+        return true; // Application successful
+    } else {
+        error_log("[" . date('Y-m-d H:i:s') . "] Error: " . $stmt->error);
+        $stmt->close(); // Close the statement
+        return false; // Application failed
+    }
+}
+
 
     public function getUserApplications()
     {

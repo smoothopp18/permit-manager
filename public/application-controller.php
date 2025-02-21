@@ -1,10 +1,16 @@
 <?php
+session_start();
 require_once '../classes/Application.php';
 
+// Ensure uploads directory exists
+$uploadDir = "../uploads/";
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0777, true); // Create directory if it doesn't exist
+}
 
 // Retrieve form data from application form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitize inputs to prevent SQL injection
+    // Sanitize inputs
     $nationalId = filter_input(INPUT_POST, 'nationalId', FILTER_SANITIZE_STRING);
     $businessName = filter_input(INPUT_POST, 'businessName', FILTER_SANITIZE_STRING);
     $businessType = filter_input(INPUT_POST, 'businessType', FILTER_SANITIZE_STRING);
@@ -12,41 +18,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $taxCertificate = filter_input(INPUT_POST, 'taxCertificate', FILTER_SANITIZE_STRING);
 
     // File uploads
-    $nationalIdFile = $_FILES['nationalIdUpload'];
-    $healthReportFile = $_FILES['healthInspectionReport'];
-    $taxClearanceFile = $_FILES['mraTaxClearance'];
+    $files = [
+        'nationalIdUpload' => $_FILES['nationalIdUpload'],
+        'healthInspectionReport' => $_FILES['healthInspectionReport'],
+        'mraTaxClearance' => $_FILES['mraTaxClearance']
+    ];
 
-    // Validate the business certificate application form
+    $uploadedPaths = [];
+
+    foreach ($files as $key => $file) {
+        if ($file['error'] === 0) {
+            $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $newFileName = $key . "_" . time() . "." . $fileExtension; // Unique name
+            $destination = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($file['tmp_name'], $destination)) {
+                $uploadedPaths[$key] = $destination;
+            } else {
+                $_SESSION['error_message'] = "File upload failed for {$file['name']}.";
+                header("Location: ../applyform.php");
+                exit;
+            }
+        } else {
+            $_SESSION['error_message'] = "Error in uploading {$file['name']}.";
+            header("Location: ../applyform.php");
+            exit;
+        }
+    }
+
+    // Validate that all fields and files were uploaded
     if (
         empty($nationalId) || empty($businessName) || empty($businessType) || empty($businessAddress) || empty($taxCertificate) ||
-        empty($nationalIdFile['name']) || empty($healthReportFile['name']) || empty($taxClearanceFile['name'])
+        empty($uploadedPaths['nationalIdUpload']) || empty($uploadedPaths['healthInspectionReport']) || empty($uploadedPaths['mraTaxClearance'])
     ) {
         $_SESSION['error_message'] = "All fields and file uploads are required.";
         header("Location: ../applyform.php");
         exit;
     } else {
-        // Create a new Application object to access the apply method
+        // Create Application object
         $application = new Application();
 
-        // Attempt to apply for the certificate with file uploads
+        // Attempt to apply for the certificate with file paths
         if ($application->apply(
             $nationalId,
             $businessName,
             $businessType,
             $businessAddress,
             $taxCertificate,
-            $nationalIdFile,
-            $healthReportFile,
-            $taxClearanceFile
+            $uploadedPaths['nationalIdUpload'],
+            $uploadedPaths['healthInspectionReport'],
+            $uploadedPaths['mraTaxClearance']
         )) {
-            // If successful, set a success message and redirect to the user dashboard
             $_SESSION['success_message'] = "Application successful. You will be notified once your application is processed.";
             header("Location: ../user-dashboard.php");
             exit;
         } else {
-            // Application failed
             $_SESSION['error_message'] = "Application failed. Please try again.";
-            // redirect to user dashboard
             header("Location: ../user-dashboard.php");
             exit;
         }
@@ -55,31 +82,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Handling GET requests for approval and rejection
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $application = new Application();
+
     if (isset($_GET['approve_id'])) {
         $application_id = filter_input(INPUT_GET, 'approve_id', FILTER_SANITIZE_STRING);
-        $application = new Application();
-
         if ($application->approveApplication($application_id)) {
             $_SESSION['success_message'] = "Application approved successfully.";
-            header("Location: ../tlo-dashboard.php");
-            exit;
         } else {
             $_SESSION['error_message'] = "Application approval failed. Please try again.";
-            header("Location: ../tlo-dashboard.php");
-            exit;
         }
-    } else if (isset($_GET['reject_id'])) {
+        header("Location: ../tlo-dashboard.php");
+        exit;
+    } elseif (isset($_GET['reject_id'])) {
         $application_id = filter_input(INPUT_GET, 'reject_id', FILTER_SANITIZE_STRING);
-        $application = new Application();
-
         if ($application->rejectApplication($application_id)) {
             $_SESSION['success_message'] = "Application rejected successfully.";
-            header("Location: ../tlo-dashboard.php");
-            exit;
         } else {
             $_SESSION['error_message'] = "Application rejection failed. Please try again.";
-            header("Location: ../tlo-dashboard.php");
-            exit;
         }
+        header("Location: ../tlo-dashboard.php");
+        exit;
     }
 }
