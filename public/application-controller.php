@@ -11,23 +11,23 @@ if (!is_dir($uploadDir)) {
 // Retrieve form data from application form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize inputs
-    $nationalId = filter_input(INPUT_POST, 'nationalId', FILTER_SANITIZE_STRING);
-    $businessName = filter_input(INPUT_POST, 'businessName', FILTER_SANITIZE_STRING);
-    $businessType = filter_input(INPUT_POST, 'businessType', FILTER_SANITIZE_STRING);
-    $businessAddress = filter_input(INPUT_POST, 'businessAddress', FILTER_SANITIZE_STRING);
-    $taxCertificate = filter_input(INPUT_POST, 'taxCertificate', FILTER_SANITIZE_STRING);
-
+    $nationalId = filter_input(INPUT_POST, 'nationalId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $businessName = filter_input(INPUT_POST, 'businessName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $businessType = filter_input(INPUT_POST, 'businessType', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $businessAddress = filter_input(INPUT_POST, 'businessAddress', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $taxCertificate = filter_input(INPUT_POST, 'taxCertificate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
     // File uploads
     $files = [
-        'nationalIdUpload' => $_FILES['nationalIdUpload'],
-        'healthInspectionReport' => $_FILES['healthInspectionReport'],
-        'mraTaxClearance' => $_FILES['mraTaxClearance']
+        'nationalIdUpload' => $_FILES['nationalIdUpload'] ?? null,
+        'healthInspectionReport' => $_FILES['healthInspectionReport'] ?? null,
+        'mraTaxClearance' => $_FILES['mraTaxClearance'] ?? null
     ];
 
     $uploadedPaths = [];
 
     foreach ($files as $key => $file) {
-        if ($file['error'] === 0) {
+        if ($file && $file['error'] === 0) {
             $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
             $newFileName = $key . "_" . time() . "." . $fileExtension; // Unique name
             $destination = $uploadDir . $newFileName;
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: ../applyform.php");
                 exit;
             }
-        } else {
+        } elseif ($file) {
             $_SESSION['error_message'] = "Error in uploading {$file['name']}.";
             header("Location: ../applyform.php");
             exit;
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $application = new Application();
 
     if (isset($_GET['approve_id'])) {
-        $application_id = filter_input(INPUT_GET, 'approve_id', FILTER_SANITIZE_STRING);
+        $application_id = intval($_GET['approve_id']); // Ensure it's an integer
         if ($application->approveApplication($application_id)) {
             $_SESSION['success_message'] = "Application approved successfully.";
         } else {
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         header("Location: ../tlo-dashboard.php");
         exit;
     } elseif (isset($_GET['reject_id'])) {
-        $application_id = filter_input(INPUT_GET, 'reject_id', FILTER_SANITIZE_STRING);
+        $application_id = intval($_GET['reject_id']); // Ensure it's an integer
         if ($application->rejectApplication($application_id)) {
             $_SESSION['success_message'] = "Application rejected successfully.";
         } else {
@@ -104,3 +104,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 }
+?>
