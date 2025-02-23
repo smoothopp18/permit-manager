@@ -122,4 +122,19 @@ class Application
         $stmt->bind_param("s", $application_id);
         return $stmt->execute();
     }
+
+    public function getCountByStatus($status) {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE status = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $status);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['count'];
+    }
+
+    public function getTotalRevenue() {
+        // Return a dummy value for the total revenue
+        return 10000.00; // Dummy value
+    }
 }

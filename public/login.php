@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: ../tlo-dashboard.php");
                 break;
             case 'chief_executive_officer':
-                header("Location: ../ceo_doc/ceo-dashboard.html");
+                header("Location: ../ceo-dashboard.php");
                 break;
             case 'director_commerce':
-                header("Location: ../ceo_doc/doc_dashboard.html");
+                header("Location: ../doc-dashboard.php");
                 break;
             default:
                 error_log("Unknown role: " . $logged_in_user['role']);
