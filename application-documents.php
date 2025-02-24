@@ -29,7 +29,7 @@ if ($application_id) {
   <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<section class="section">
+<section class="section" id="main-section">
   <div class="section-body">
     <div class="row">
       <div class="col-12">
@@ -72,7 +72,6 @@ if ($application_id) {
                           </button>
                           <div class="dropdown-menu" aria-labelledby="actionMenu<?php echo $application['application_id']; ?>">
                             <a class="dropdown-item" href="public/application-controller.php?approve_id=<?php echo $application['application_id']; ?>">Approve</a>
-                            <a class="dropdown-item view-documents" id="viewDocs" href="application-documents.php?application_id=<?php echo $application['application_id']; ?>">View Documents</a>
                             <a class="dropdown-item" href="public/application-controller.php?reject_id=<?php echo $application['application_id']; ?>">Reject</a>
                           </div>
                         </div>
@@ -96,8 +95,6 @@ if ($application_id) {
 <script src="assets/js/page/index.js"></script>
 <!-- Template JS File -->
 <script src="assets/js/scripts.js"></script>
-<!-- Ensure jQuery is loaded before custom.js -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Custom JS File -->
 <script src="assets/js/custom.js"></script>
 <!-- Font Awesome JS File -->
@@ -111,9 +108,6 @@ if ($application_id) {
 <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
 <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
-<!-- jQuery (required for Bootstrap's JavaScript plugins) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 

@@ -130,7 +130,7 @@ class Application
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-        return $row['count'];
+        return $row['count'] ?? 0;
     }
 
     public function getTotalRevenue() {

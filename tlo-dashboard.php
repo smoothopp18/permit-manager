@@ -14,6 +14,17 @@ $application = new Application();
 
 // Ensure getAllApplications() always returns an array
 $applications = $application->getAllApplications() ?? [];
+
+// Get counts for different application statuses
+$newApplicationsCount = $application->getCountByStatus('Pending'); // Ensure this status matches the database
+$approvedApplicationsCount = $application->getCountByStatus('Approved');
+$rejectedApplicationsCount = $application->getCountByStatus('Rejected');
+
+// Calculate the percentage changes for each status
+$totalApplications = count($applications);
+$newApplicationsPercentage = $totalApplications > 0 ? ($newApplicationsCount / $totalApplications) * 100 : 0;
+$approvedApplicationsPercentage = $totalApplications > 0 ? ($approvedApplicationsCount / $totalApplications) * 100 : 0;
+$rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplicationsCount / $totalApplications) * 100 : 0;
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +57,28 @@ $applications = $application->getAllApplications() ?? [];
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
+      <div class="navbar-bg"></div>
+       <nav class="navbar navbar-expand-lg main-navbar sticky">
+        <div class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i data-feather="maximize"></i>
+              </a></li>
+            <li>
+              <form class="form-inline mr-auto">
+                <div class="search-element">
+                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200">
+                  <button class="btn" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </nav>
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
@@ -70,6 +103,74 @@ $applications = $application->getAllApplications() ?? [];
       <!-- Main Content -->
       <div class="main-content" id="main-content">
         <section class="section">
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"> <!-- Adjusted column width -->
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">New Applications</h5>
+                          <h2 class="mb-3 font-18"><?php echo $newApplicationsCount; ?></h2>
+                          <p class="mb-0"><span class="col-green"><?php echo round($newApplicationsPercentage, 2); ?>%</span> of Total</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="assets/img/banner/1.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"> <!-- Adjusted column width -->
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Approved Applications</h5>
+                          <h2 class="mb-3 font-18"><?php echo $approvedApplicationsCount; ?></h2>
+                          <p class="mb-0"><span class="col-orange"><?php echo round($approvedApplicationsPercentage, 2); ?>%</span> of Total</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="assets/img/banner/2.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"> <!-- Adjusted column width -->
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Rejected Applications</h5>
+                          <h2 class="mb-3 font-18"><?php echo $rejectedApplicationsCount; ?></h2>
+                          <p class="mb-0"><span class="col-red"><?php echo round($rejectedApplicationsPercentage, 2); ?>%</span> of Total</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="assets/img/banner/4.png" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="section-body">
             <div class="row">
               <div class="col-12">
