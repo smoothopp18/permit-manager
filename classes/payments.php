@@ -11,34 +11,25 @@ class Payments {
 
     // Create a new payment record
     public function create($data) {
-        $query = "INSERT INTO " . $this->table_name . " SET 
-            payment_id = :payment_id, 
-            amount = :amount, 
-            payment_date = :payment_date, 
-            permit_id = :permit_id";
+        $query = "INSERT INTO " . $this->table_name . " (application_id, user_id, businessType, paymentDate) 
+                  VALUES (:application_id, :user_id, :businessType, NOW())";
 
         $stmt = $this->conn->prepare($query);
 
-        // sanitize
-        $data['payment_id'] = htmlspecialchars(strip_tags($data['payment_id']));
-        $data['amount'] = htmlspecialchars(strip_tags($data['amount']));
-        $data['payment_date'] = htmlspecialchars(strip_tags($data['payment_date']));
-        $data['permit_id'] = htmlspecialchars(strip_tags($data['permit_id']));
+        // Sanitize input data
+        $data['application_id'] = htmlspecialchars(strip_tags($data['application_id']));
+        $data['user_id'] = htmlspecialchars(strip_tags($data['user_id']));
+        $data['businessType'] = htmlspecialchars(strip_tags($data['businessType']));
 
-        // bind values
-        $stmt->bindParam(":payment_id", $data['payment_id']);
-        $stmt->bindParam(":amount", $data['amount']);
-        $stmt->bindParam(":payment_date", $data['payment_date']);
-        $stmt->bindParam(":permit_id", $data['permit_id']);
+        // Bind values
+        $stmt->bindParam(":application_id", $data['application_id']);
+        $stmt->bindParam(":user_id", $data['user_id']);
+        $stmt->bindParam(":businessType", $data['businessType']);
 
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        return $stmt->execute();
     }
 
-    // Read payment records
+    // Read all payment records
     public function read() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
@@ -49,30 +40,26 @@ class Payments {
     // Update a payment record
     public function update($data) {
         $query = "UPDATE " . $this->table_name . " SET 
-            amount = :amount, 
-            payment_date = :payment_date, 
-            permit_id = :permit_id 
-            WHERE payment_id = :payment_id";
+                  application_id = :application_id, 
+                  user_id = :user_id, 
+                  businessType = :businessType
+                  WHERE payment_id = :payment_id";
 
         $stmt = $this->conn->prepare($query);
 
-        // sanitize
+        // Sanitize input
         $data['payment_id'] = htmlspecialchars(strip_tags($data['payment_id']));
-        $data['amount'] = htmlspecialchars(strip_tags($data['amount']));
-        $data['payment_date'] = htmlspecialchars(strip_tags($data['payment_date']));
-        $data['permit_id'] = htmlspecialchars(strip_tags($data['permit_id']));
+        $data['application_id'] = htmlspecialchars(strip_tags($data['application_id']));
+        $data['user_id'] = htmlspecialchars(strip_tags($data['user_id']));
+        $data['businessType'] = htmlspecialchars(strip_tags($data['businessType']));
 
-        // bind values
+        // Bind values
         $stmt->bindParam(":payment_id", $data['payment_id']);
-        $stmt->bindParam(":amount", $data['amount']);
-        $stmt->bindParam(":payment_date", $data['payment_date']);
-        $stmt->bindParam(":permit_id", $data['permit_id']);
+        $stmt->bindParam(":application_id", $data['application_id']);
+        $stmt->bindParam(":user_id", $data['user_id']);
+        $stmt->bindParam(":businessType", $data['businessType']);
 
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        return $stmt->execute();
     }
 
     // Delete a payment record
@@ -80,18 +67,13 @@ class Payments {
         $query = "DELETE FROM " . $this->table_name . " WHERE payment_id = :payment_id";
         $stmt = $this->conn->prepare($query);
 
-        // sanitize
+        // Sanitize
         $payment_id = htmlspecialchars(strip_tags($payment_id));
 
-        // bind value
+        // Bind value
         $stmt->bindParam(":payment_id", $payment_id);
 
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        return $stmt->execute();
     }
 }
-
 ?>
