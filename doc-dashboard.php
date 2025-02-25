@@ -94,11 +94,69 @@ $applications = $application->getAllApplications();
       <div class="main-content" id="main-content">
         <section class="section">
           <div class="section-body">
+          <div class="row">
+              <div class="col-xl-3 col-lg-6">
+                <div class="card">
+                  <div class="card-bg">
+                    <div class="p-t-20 d-flex justify-content-between">
+                      <div class="col">
+                        <h6 class="mb-0">New Payments</h6>
+                        <span class="font-weight-bold mb-0 font-20">1,562</span>
+                      </div>
+                      <i class="fa-solid fa-wallet card-icon col-orange font-30 p-r-30"></i>
+                    </div>
+                    <canvas id="cardChart1" height="80"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card">
+                  <div class="card-bg">
+                    <div class="p-t-20 d-flex justify-content-between">
+                      <div class="col">
+                        <h6 class="mb-0">Verified Payments</h6>
+                        <span class="font-weight-bold mb-0 font-20">895</span>
+                      </div>
+                      <i class="fa-solid fa-check-circle card-icon col-green font-30 p-r-30"></i>
+                    </div>
+                    <canvas id="cardChart2" height="80"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card">
+                  <div class="card-bg">
+                    <div class="p-t-20 d-flex justify-content-between">
+                      <div class="col">
+                        <h6 class="mb-0">Failed Payments</h6>
+                        <span class="font-weight-bold mb-0 font-20">+22.58%</span>
+                      </div>
+                      <i class="fa-solid fa-times-circle card-icon col-red font-30 p-r-30"></i>
+                    </div>
+                    <canvas id="cardChart3" height="80"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card">
+                  <div class="card-bg">
+                    <div class="p-t-20 d-flex justify-content-between">
+                      <div class="col">
+                        <h6 class="mb-0">Total Revenue</h6>
+                        <span class="font-weight-bold mb-0 font-20">MWK2,687</span>
+                      </div>
+                      <i class="fa-solid fa-dollar-sign card-icon col-cyan font-30 p-r-30"></i>
+                    </div>
+                    <canvas id="cardChart4" height="80"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Business Application Payment List</h4>
+                    <h4>Approved Business Applications</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -110,7 +168,6 @@ $applications = $application->getAllApplications();
                             <th>Category</th>
                             <th>Owner</th>
                             <th>Application Date</th>
-                            <th>Status</th>
                             <th>Payment Status</th>
                             <th>Actions</th>
                           </tr>
@@ -118,39 +175,34 @@ $applications = $application->getAllApplications();
                         <tbody>
                           <?php $count = 0; ?>
                           <?php foreach ($applications as $application) : ?>
-                            <?php $count++; ?>
-                            <tr>
-                              <td><?php echo $count ?></td>
-                              <td><?php echo $application['businessName']; ?></td>
-                              <td><?php echo $application['businessType']; ?></td>
-                              <td><?php echo $application['business_owner']; ?></td>
-                              <td><?php echo $application['created_at']; ?></td>
-                              <td>
-                                <?php if ($application['status'] == 'Pending Director Approval') { ?>
-                                  <div class="badge badge-warning badge-shadow">Pending Review</div>
-                                <?php } else if ($application['status'] == 'Approved') { ?>
-                                  <div class="badge badge-success badge-shadow">Approved</div>
-                                <?php } ?>
-                              </td>
-                              <td>
-                                <?php if ($application['paymentStatus'] == 'Paid') { ?>
-                                  <div class="badge badge-success">Paid</div>
-                                <?php } else { ?>
-                                  <div class="badge badge-danger">Not Paid</div>
-                                <?php } ?>
-                              </td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View</a>
-                                    <a class="dropdown-item" href="approve-application.php?application_id=<?= $application['application_id']; ?>">Verify & Approve</a>
+                            <?php if ($application['status'] == 'Approved') : ?>
+                              <?php $count++; ?>
+                              <tr>
+                                <td><?php echo $count ?></td>
+                                <td><?php echo $application['businessName']; ?></td>
+                                <td><?php echo $application['businessType']; ?></td>
+                                <td><?php echo $application['business_owner']; ?></td>
+                                <td><?php echo $application['created_at']; ?></td>
+                                <td>
+                                  <?php if ($application['paymentStatus'] == 'Paid') { ?>
+                                    <div class="badge badge-success">Paid</div>
+                                  <?php } else { ?>
+                                    <div class="badge badge-danger">Not Paid</div>
+                                  <?php } ?>
+                                </td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <a class="dropdown-item" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View</a>
+                                      <a class="dropdown-item" href="approve-application.php?application_id=<?= $application['application_id']; ?>">Verify & Approve</a>
+                                    </div>
                                   </div>
-                                </div>
-                              </td>
-                            </tr>
+                                </td>
+                              </tr>
+                            <?php endif; ?>
                           <?php endforeach; ?>
                         </tbody>
                       </table>
@@ -165,11 +217,11 @@ $applications = $application->getAllApplications();
     </div>
     <!-- General JS Scripts -->
     <script src="assets/js/app.min.js"></script>
+    <script src="assets/bundles/chartjs/chart.min.js"></script>
     <script src="assets/bundles/datatables/datatables.min.js"></script>
     <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/page/datatables.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script src="assets/js/custom.js"></script>
-</body>
-
+  </body>
 </html>
