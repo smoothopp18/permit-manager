@@ -1,5 +1,4 @@
 <?php
-session_start(); // Ensure session starts at the top
 require_once '../classes/User.php';
 
 // Debugging: Check if session is already active
@@ -8,14 +7,19 @@ error_log("Session started. ID: " . session_id());
 // Check if form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Sanitize email input
+    // Sanitize and validate email input
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password']; // Do not sanitize passwords (preserve input)
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        error_log("Login failed: Invalid email format.");
+        echo "<script>alert('Invalid email format.'); window.location.href = '../index.php';</script>";
+        exit;
+    }
 
-    // Validate inputs
-    if (empty($email) || empty($password)) {
-        error_log("Login failed: Empty email or password.");
-        echo "<script>alert('Please enter both email and password.'); window.location.href = '../index.php';</script>";
+    // Validate password length
+    $password = $_POST['password']; // Do not sanitize passwords (preserve input)
+    if (empty($password) || strlen($password) < 3) {
+        error_log("Login failed: Password too short.");
+        echo "<script>alert('Password must be at least 3 characters long.'); window.location.href = '../index.php';</script>";
         exit;
     }
 
@@ -46,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: ../doc-dashboard.php");
                 break;
             default:
+                // Log unknown role
                 error_log("Unknown role: " . $logged_in_user['role']);
                 echo "<script>alert('Unauthorized role. Please contact support.'); window.location.href = '../index.php';</script>";
                 exit;
@@ -54,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Debug: Log failed login attempt
         error_log("Login failed: Incorrect email or password.");
-        echo "<script>alert('Wrong details. Please try again.'); window.location.href = '../index.php';</script>";
+        echo "<script>alert('Incorrect email or password. Please try again.'); window.location.href = '../index.php';</script>";
         exit;
     }
 }
