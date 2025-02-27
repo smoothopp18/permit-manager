@@ -13,6 +13,12 @@ $application = new Application();
 // retrieving applications pending director review
 $applications = $application->getAllApplications();
 
+// Retrieve dynamic data for the cards
+$newPayments = $application->getNewPaymentsCount();
+$verifiedPayments = $application->getVerifiedPaymentsCount();
+$failedPayments = $application->getFailedPaymentsCount();
+$totalRevenue = $application->getTotalRevenue();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +83,7 @@ $applications = $application->getAllApplications();
               <a href="payment-Verification.php" class="nav-link"><i class="fa-solid fa-history"></i><span>Payment History</span></a>
             </li>
             <li class="dropdown">
-              <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Ceo Approval</span></a>
+              <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Verified Payments</span></a>
             </li>
             <li class="dropdown">
               <a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
@@ -101,7 +107,7 @@ $applications = $application->getAllApplications();
                     <div class="p-t-20 d-flex justify-content-between">
                       <div class="col">
                         <h6 class="mb-0">New Payments</h6>
-                        <span class="font-weight-bold mb-0 font-20">1,562</span>
+                        <span class="font-weight-bold mb-0 font-20"><?php echo $newPayments; ?></span>
                       </div>
                       <i class="fa-solid fa-wallet card-icon col-orange font-30 p-r-30"></i>
                     </div>
@@ -115,7 +121,7 @@ $applications = $application->getAllApplications();
                     <div class="p-t-20 d-flex justify-content-between">
                       <div class="col">
                         <h6 class="mb-0">Verified Payments</h6>
-                        <span class="font-weight-bold mb-0 font-20">895</span>
+                        <span class="font-weight-bold mb-0 font-20"><?php echo $verifiedPayments; ?></span>
                       </div>
                       <i class="fa-solid fa-check-circle card-icon col-green font-30 p-r-30"></i>
                     </div>
@@ -129,7 +135,7 @@ $applications = $application->getAllApplications();
                     <div class="p-t-20 d-flex justify-content-between">
                       <div class="col">
                         <h6 class="mb-0">Failed Payments</h6>
-                        <span class="font-weight-bold mb-0 font-20">+22.58%</span>
+                        <span class="font-weight-bold mb-0 font-20"><?php echo $failedPayments; ?></span>
                       </div>
                       <i class="fa-solid fa-times-circle card-icon col-red font-30 p-r-30"></i>
                     </div>
@@ -143,7 +149,7 @@ $applications = $application->getAllApplications();
                     <div class="p-t-20 d-flex justify-content-between">
                       <div class="col">
                         <h6 class="mb-0">Total Revenue</h6>
-                        <span class="font-weight-bold mb-0 font-20">MWK2,687</span>
+                        <span class="font-weight-bold mb-0 font-20">MWK<?php echo number_format($totalRevenue, 2); ?></span>
                       </div>
                       <i class="fa-solid fa-dollar-sign card-icon col-cyan font-30 p-r-30"></i>
                     </div>

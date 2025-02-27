@@ -14,13 +14,8 @@ class Application
         $this->conn = $database->connect();
     }
 
-    public function apply($nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $nationalIdFile, $healthReportFile, $taxClearanceFile)
+    public function apply($nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $nationalIdFile, $healthReportFile, $taxClearanceFile, $amount)
     {
-        if (!isset($_SESSION['user']['user_id']) || empty($_SESSION['user']['user_id'])) {
-            error_log("User ID is not set in session.");
-            return false;
-        }
-
         $uploadDir = "uploads/";
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
@@ -69,7 +64,7 @@ class Application
             return false;
         }
 
-        $stmt = $this->conn->prepare("INSERT INTO $this->table (user_id, nationalId, businessName, businessType, businessAddress, taxCertificate, nationalIdFile, healthReportFile, taxClearanceFile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO $this->table (user_id, nationalId, businessName, businessType, businessAddress, taxCertificate, nationalIdFile, healthReportFile, taxClearanceFile, amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt === false) {
             error_log("Error preparing statement: " . $this->conn->error);
             $this->conn->close();
@@ -77,7 +72,7 @@ class Application
         }
 
         $stmt->bind_param(
-            "sssssssss",
+            "sssssssssi",
             $_SESSION['user']['user_id'],
             $nationalId,
             $businessName,
@@ -86,7 +81,8 @@ class Application
             $taxCertificate,
             $filePaths['nationalIdFile'],
             $filePaths['healthReportFile'],
-            $filePaths['taxClearanceFile']
+            $filePaths['taxClearanceFile'],
+            $amount
         );
 
         if ($stmt->execute()) {
@@ -121,14 +117,14 @@ class Application
     public function approveApplication($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET status='Approved' WHERE application_id=?");
-        $stmt->bind_param("s", $application_id);
+        $stmt->bind_param("i", $application_id);
         return $stmt->execute();
     }
 
     public function rejectApplication($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET status='Rejected' WHERE application_id=?");
-        $stmt->bind_param("s", $application_id);
+        $stmt->bind_param("i", $application_id);
         return $stmt->execute();
     }
 
@@ -145,8 +141,9 @@ class Application
 
     public function getTotalRevenue()
     {
-        // Return a dummy value for the total revenue
-        return 10000.00; // Dummy value
+        $query = "SELECT SUM(amount) as total FROM applications WHERE paymentStatus = 'Paid'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['total'];
     }
 
     public function getApprovedApplications()
@@ -159,7 +156,25 @@ class Application
     public function verifyPaymentStatus($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET verificationStatus='paidVerified' WHERE application_id=?");
-        $stmt->bind_param("s", $application_id);
+        $stmt->bind_param("i", $application_id);
         return $stmt->execute();
+    }
+
+    public function getNewPaymentsCount() {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Pending'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'];
+    }
+
+    public function getVerifiedPaymentsCount() {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Paid'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'];
+    }
+
+    public function getFailedPaymentsCount() {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Not Paid'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'];
     }
 }

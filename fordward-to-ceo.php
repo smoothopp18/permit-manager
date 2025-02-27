@@ -36,7 +36,7 @@ if ($application_id) {
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Application Payments</h4>
+                        <h4>Verified Application Payments</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -50,7 +50,7 @@ if ($application_id) {
                                         <th>Application Date</th>
                                         <th>Status</th>
                                         <th>Payment Status</th>
-                                        <th>Actions</th>
+                                        <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,18 +77,7 @@ if ($application_id) {
                                                     <div class="badge badge-danger">Not Paid</div>
                                                 <?php } ?>
                                             </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="application-documents.php?application_id=<?= $application['application_id']; ?>">Review</a>
-                                                        <a class="dropdown-item" href="approve-application.php?application_id=<?= $application['application_id']; ?>">Grant Permission</a>
-                                                        <a class="dropdown-item" href="reject-application.php?application_id=<?= $application['application_id']; ?>">Reject</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td><?php echo 'MWK ' . $application['amount']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

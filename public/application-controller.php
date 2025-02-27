@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $businessType = filter_input(INPUT_POST, 'businessType', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $businessAddress = filter_input(INPUT_POST, 'businessAddress', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $taxCertificate = filter_input(INPUT_POST, 'taxCertificate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     
     // File uploads
     $files = [
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Validate that all fields and files were uploaded
     if (
-        empty($nationalId) || empty($businessName) || empty($businessType) || empty($businessAddress) || empty($taxCertificate) ||
+        empty($nationalId) || empty($businessName) || empty($businessType) || empty($businessAddress) || empty($taxCertificate) || empty($amount) ||
         empty($uploadedPaths['nationalIdFile']) || empty($uploadedPaths['healthReportFile']) || empty($uploadedPaths['taxClearanceFile'])
     ) {
         $_SESSION['error_message'] = "All fields and file uploads are required.";
@@ -67,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $taxCertificate,
             $uploadedPaths['nationalIdFile'],
             $uploadedPaths['healthReportFile'],
-            $uploadedPaths['taxClearanceFile']
+            $uploadedPaths['taxClearanceFile'],
+            $amount
         )) {
             $_SESSION['success_message'] = "Application successful. You will be notified once your application is processed.";
             header("Location: ../user-dashboard.php");
