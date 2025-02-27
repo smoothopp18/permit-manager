@@ -70,6 +70,12 @@ class Application
         }
 
         $stmt = $this->conn->prepare("INSERT INTO $this->table (user_id, nationalId, businessName, businessType, businessAddress, taxCertificate, nationalIdFile, healthReportFile, taxClearanceFile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if ($stmt === false) {
+            error_log("Error preparing statement: " . $this->conn->error);
+            $this->conn->close();
+            return false;
+        }
+
         $stmt->bind_param("sssssssss", 
             $_SESSION['user']['user_id'], 
             $nationalId, 
@@ -84,10 +90,12 @@ class Application
 
         if ($stmt->execute()) {
             $stmt->close();
+            $this->conn->close();
             return true;
         } else {
-            error_log("Error: " . $stmt->error);
+            error_log("Error executing statement: " . $stmt->error);
             $stmt->close();
+            $this->conn->close();
             return false;
         }
     }
@@ -137,4 +145,35 @@ class Application
         // Return a dummy value for the total revenue
         return 10000.00; // Dummy value
     }
+
+    public function getApprovedApplications() {
+        $query = "SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id WHERE a.status = 'Approved'";
+        $result = $this->conn->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function verifyPayment($application_id)
+    {
+        // Validate application_id as an integer
+        if (!filter_var($application_id, FILTER_VALIDATE_INT)) {
+            return false; // Invalid ID, reject request
+        }
+    
+        // Check if the application is in 'paid' status
+        $checkStmt = $this->conn->prepare("SELECT application_id FROM applications WHERE application_id = ? AND verificationStatus = 'paid'");
+        $checkStmt->bind_param("i", $application_id);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+    
+        if ($result->num_rows === 0) {
+            return false; // No matching application found or already verified
+        }
+    
+        // Update the verification status to 'paidVerified'
+        $stmt = $this->conn->prepare("UPDATE applications SET verificationStatus='paidVerified' WHERE application_id=? AND verificationStatus='paid'");
+        $stmt->bind_param("i", $application_id);
+        
+        return $stmt->execute();
+    }
+    
 }

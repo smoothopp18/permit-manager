@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // File uploads
     $files = [
-        'nationalIdUpload' => $_FILES['nationalIdUpload'] ?? null,
-        'healthInspectionReport' => $_FILES['healthInspectionReport'] ?? null,
-        'mraTaxClearance' => $_FILES['mraTaxClearance'] ?? null
+        'nationalIdFile' => $_FILES['nationalIdUpload'] ?? null,
+        'healthReportFile' => $_FILES['healthInspectionReport'] ?? null,
+        'taxClearanceFile' => $_FILES['mraTaxClearance'] ?? null
     ];
 
     $uploadedPaths = [];
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validate that all fields and files were uploaded
     if (
         empty($nationalId) || empty($businessName) || empty($businessType) || empty($businessAddress) || empty($taxCertificate) ||
-        empty($uploadedPaths['nationalIdUpload']) || empty($uploadedPaths['healthInspectionReport']) || empty($uploadedPaths['mraTaxClearance'])
+        empty($uploadedPaths['nationalIdFile']) || empty($uploadedPaths['healthReportFile']) || empty($uploadedPaths['taxClearanceFile'])
     ) {
         $_SESSION['error_message'] = "All fields and file uploads are required.";
         header("Location: ../applyform.php");
@@ -65,17 +65,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $businessType,
             $businessAddress,
             $taxCertificate,
-            $uploadedPaths['nationalIdUpload'],
-            $uploadedPaths['healthInspectionReport'],
-            $uploadedPaths['mraTaxClearance']
+            $uploadedPaths['nationalIdFile'],
+            $uploadedPaths['healthReportFile'],
+            $uploadedPaths['taxClearanceFile']
         )) {
             $_SESSION['success_message'] = "Application successful. You will be notified once your application is processed.";
             header("Location: ../user-dashboard.php");
             exit;
+            // print_r($_POST);
+            // print_r($_FILES);
         } else {
             $_SESSION['error_message'] = "Application failed. Please try again.";
             header("Location: ../user-dashboard.php");
             exit;
+            // print_r($_POST);
+            // print_r($_FILES);
         }
     }
 }

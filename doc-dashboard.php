@@ -197,7 +197,8 @@ $applications = $application->getAllApplications();
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                       <a class="dropdown-item" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View</a>
-                                      <a class="dropdown-item" href="approve-application.php?application_id=<?= $application['application_id']; ?>">Verify & Approve</a>
+                                      <a class="dropdown-item" href="approve-application.php?verify_payment=<?= $application['application_id']; ?>">Verify Payment</a>
+
                                     </div>
                                   </div>
                                 </td>

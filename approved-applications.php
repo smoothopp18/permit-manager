@@ -12,13 +12,8 @@ if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
 $user = $_SESSION['user'];
 $application = new Application();
 
-// Ensure getAllApplications() always returns an array
-$applications = $application->getAllApplications() ?? [];
-
-// Filter applications to only include approved ones
-$approvedApplications = array_filter($applications, function($app) {
-    return $app['status'] === 'Approved';
-});
+// Retrieve only approved applications
+$approvedApplications = $application->getApprovedApplications() ?? [];
 ?>
 <section class="section">
     <div class="section-body">
