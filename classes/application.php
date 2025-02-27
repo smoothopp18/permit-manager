@@ -76,15 +76,16 @@ class Application
             return false;
         }
 
-        $stmt->bind_param("sssssssss", 
-            $_SESSION['user']['user_id'], 
-            $nationalId, 
-            $businessName, 
-            $businessType, 
-            $businessAddress, 
-            $taxCertificate, 
-            $filePaths['nationalIdFile'], 
-            $filePaths['healthReportFile'], 
+        $stmt->bind_param(
+            "sssssssss",
+            $_SESSION['user']['user_id'],
+            $nationalId,
+            $businessName,
+            $businessType,
+            $businessAddress,
+            $taxCertificate,
+            $filePaths['nationalIdFile'],
+            $filePaths['healthReportFile'],
             $filePaths['taxClearanceFile']
         );
 
@@ -131,7 +132,8 @@ class Application
         return $stmt->execute();
     }
 
-    public function getCountByStatus($status) {
+    public function getCountByStatus($status)
+    {
         $query = "SELECT COUNT(*) as count FROM applications WHERE status = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("s", $status);
@@ -141,39 +143,23 @@ class Application
         return $row['count'] ?? 0;
     }
 
-    public function getTotalRevenue() {
+    public function getTotalRevenue()
+    {
         // Return a dummy value for the total revenue
         return 10000.00; // Dummy value
     }
 
-    public function getApprovedApplications() {
+    public function getApprovedApplications()
+    {
         $query = "SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id WHERE a.status = 'Approved'";
         $result = $this->conn->query($query);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function verifyPayment($application_id)
+    public function verifyPaymentStatus($application_id)
     {
-        // Validate application_id as an integer
-        if (!filter_var($application_id, FILTER_VALIDATE_INT)) {
-            return false; // Invalid ID, reject request
-        }
-    
-        // Check if the application is in 'paid' status
-        $checkStmt = $this->conn->prepare("SELECT application_id FROM applications WHERE application_id = ? AND verificationStatus = 'paid'");
-        $checkStmt->bind_param("i", $application_id);
-        $checkStmt->execute();
-        $result = $checkStmt->get_result();
-    
-        if ($result->num_rows === 0) {
-            return false; // No matching application found or already verified
-        }
-    
-        // Update the verification status to 'paidVerified'
-        $stmt = $this->conn->prepare("UPDATE applications SET verificationStatus='paidVerified' WHERE application_id=? AND verificationStatus='paid'");
-        $stmt->bind_param("i", $application_id);
-        
+        $stmt = $this->conn->prepare("UPDATE applications SET verificationStatus='paidVerified' WHERE application_id=?");
+        $stmt->bind_param("s", $application_id);
         return $stmt->execute();
     }
-    
 }

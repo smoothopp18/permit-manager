@@ -72,19 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['success_message'] = "Application successful. You will be notified once your application is processed.";
             header("Location: ../user-dashboard.php");
             exit;
-            // print_r($_POST);
-            // print_r($_FILES);
         } else {
             $_SESSION['error_message'] = "Application failed. Please try again.";
             header("Location: ../user-dashboard.php");
             exit;
-            // print_r($_POST);
-            // print_r($_FILES);
         }
     }
 }
 
-// Handling GET requests for approval and rejection
+// Handling GET requests for approval, rejection, and payment verification
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $application = new Application();
 
@@ -103,6 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $_SESSION['success_message'] = "Application rejected successfully.";
         } else {
             $_SESSION['error_message'] = "Application rejection failed. Please try again.";
+        }
+        header("Location: ../tlo-dashboard.php");
+        exit;
+    } elseif (isset($_GET['verify_payment'])) {
+        $application_id = intval($_GET['verify_payment']); // Ensure it's an integer
+        if ($application->verifyPaymentStatus($application_id)) {
+            $_SESSION['success_message'] = "Payment verified successfully.";
+        } else {
+            $_SESSION['error_message'] = "Payment verification failed. Please try again.";
         }
         header("Location: ../tlo-dashboard.php");
         exit;
