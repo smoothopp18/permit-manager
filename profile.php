@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Ensure session is started before accessing session variables
 require_once 'classes/user.php';
 
 // Check if the user is logged in

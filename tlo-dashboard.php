@@ -57,8 +57,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-      <div class="navbar-bg"></div>
-       <nav class="navbar navbar-expand-lg main-navbar sticky">
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
@@ -78,6 +77,13 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
             </li>
           </ul>
         </div>
+        <ul class="navbar-nav navbar-right">
+          <!-- Add TLO Dashboard Indicator -->
+          <li class="nav-item">
+            <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">TLO Dashboard</span>
+          </li>
+          <!-- Removed messages and profile from the top nav bar -->
+        </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">

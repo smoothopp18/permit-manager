@@ -1,9 +1,9 @@
 <?php
 
-session_start();
+session_start(); // Ensure session is started before accessing session variables
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'business_owner') {
-    header("Location: public/login.php");
+    header("Location: public/index.php");
     exit();
 }
 
@@ -13,6 +13,18 @@ $application = new Application();
 
 // retrieving applications by logged in user
 $applications = $application->getUserApplications();
+
+// Calculate dynamic data for cards
+$newApplicationsCount = count($applications);
+$approvedApplicationsCount = count(array_filter($applications, function($app) {
+    return $app['status'] == 'approved';
+}));
+$rejectedApplicationsCount = count(array_filter($applications, function($app) {
+    return $app['status'] == 'rejected';
+}));
+$certificateCount = count(array_filter($applications, function($app) {
+    return $app['status'] == 'certificate_issued';
+}));
 
 ?>
 <!DOCTYPE html>
@@ -43,8 +55,7 @@ $applications = $application->getUserApplications();
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-      <div class="navbar-bg"></div>
-       <nav class="navbar navbar-expand-lg main-navbar sticky">
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
@@ -64,6 +75,13 @@ $applications = $application->getUserApplications();
             </li>
           </ul>
         </div>
+        <ul class="navbar-nav navbar-right">
+          <!-- Add User Dashboard Indicator -->
+          <li class="nav-item">
+            <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">USER Dashboard</span>
+          </li>
+          <!-- Removed messages and profile from the top nav bar -->
+        </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
@@ -86,6 +104,9 @@ $applications = $application->getUserApplications();
             <li class="dropdown">
               <a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
             </li>
+            <li class="dropdown">
+              <a href="my-certificates.php" class="nav-link"><i class="fa-solid fa-certificate"></i><span>My Certificates</span></a>
+            </li>
 
             <li class="menu-header">Support</li>
             <li class="dropdown">
@@ -105,6 +126,68 @@ $applications = $application->getUserApplications();
       <div class="main-content">
         <section class="section">
           <div class="section-body">
+          <div class="row ">
+              <div class="col-xl-3 col-lg-6">
+                <div class="card l-bg-green">
+                  <div class="card-statistic-3">
+                    <div class="card-icon card-icon-large"><i class="fa fa-award" style="font-size: 2.5rem;"></i></div>
+                    <div class="card-content">
+                      <h4 class="card-title">New Applications</h4>
+                      <span><?php echo $newApplicationsCount; ?></span>
+                      <div class="progress mt-1 mb-1" data-height="8">
+                        <div class="progress-bar l-bg-purple" role="progressbar" data-width="25%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card l-bg-cyan">
+                  <div class="card-statistic-3">
+                    <div class="card-icon card-icon-large"><i class="fa fa-briefcase" style="font-size: 2.5rem;"></i></div>
+                    <div class="card-content">
+                      <h4 class="card-title">Approved Applications</h4>
+                      <span><?php echo $approvedApplicationsCount; ?></span>
+                      <div class="progress mt-1 mb-1" data-height="8">
+                        <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card l-bg-purple">
+                  <div class="card-statistic-3">
+                    <div class="card-icon card-icon-large"><i class="fa fa-globe" style="font-size: 2.5rem;"></i></div>
+                    <div class="card-content">
+                      <h4 class="card-title">Rejected Applications</h4>
+                      <span><?php echo $rejectedApplicationsCount; ?></span>
+                      <div class="progress mt-1 mb-1" data-height="8">
+                        <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card l-bg-orange">
+                  <div class="card-statistic-3">
+                    <div class="card-icon card-icon-large"><i class="fa fa-money-bill-alt" style="font-size: 2.5rem;"></i></div>
+                    <div class="card-content">
+                      <h4 class="card-title">Certificates</h4>
+                      <span><?php echo $certificateCount; ?></span>
+                      <div class="progress mt-1 mb-1" data-height="8">
+                        <div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -164,9 +247,10 @@ $applications = $application->getUserApplications();
     <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
-    <script src="assets/bundles/datatables/export-ttables/pdfmake.min.js"></script>
+    <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
-    <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+    <!-- Remove the print button script -->
+    <!-- <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script> -->
 
     <script src="assets/js/page/datatables.js"></script>
 

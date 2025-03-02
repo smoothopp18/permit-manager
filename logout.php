@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Ensure session is started before accessing session variables
 
 // Unset all session variables
 $_SESSION = array();

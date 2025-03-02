@@ -2,7 +2,7 @@
 
 session_start();
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'director_commerce') {
-  header("Location: public/login.php");
+  header("Location: public/index.php");
   exit();
 }
 
@@ -48,7 +48,7 @@ $totalRevenue = $application->getTotalRevenue();
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       <div class="navbar-bg"></div>
-       <nav class="navbar navbar-expand-lg main-navbar sticky">
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
@@ -68,6 +68,13 @@ $totalRevenue = $application->getTotalRevenue();
             </li>
           </ul>
         </div>
+        <ul class="navbar-nav navbar-right">
+          <!-- Add DOC Dashboard Indicator -->
+          <li class="nav-item">
+            <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">DOC Dashboard</span>
+          </li>
+          <!-- Removed messages and profile from the top nav bar -->
+        </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
@@ -202,7 +209,6 @@ $totalRevenue = $application->getTotalRevenue();
                                       Actions
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item" href="application-documents.php?application_id=<?= $application['application_id']; ?>">View</a>
                                       <a class="dropdown-item" href="public/application-controller.php?verify_payment=<?= $application['application_id']; ?>">Verify Payment</a>
 
                                     </div>

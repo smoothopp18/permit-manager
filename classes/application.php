@@ -177,4 +177,22 @@ class Application
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }
+
+    public function getApprovalRate()
+    {
+        $totalApplicationsQuery = "SELECT COUNT(*) as total FROM applications";
+        $approvedApplicationsQuery = "SELECT COUNT(*) as approved FROM applications WHERE status = 'Approved'";
+
+        $totalResult = $this->conn->query($totalApplicationsQuery);
+        $approvedResult = $this->conn->query($approvedApplicationsQuery);
+
+        $totalApplications = $totalResult->fetch_assoc()['total'];
+        $approvedApplications = $approvedResult->fetch_assoc()['approved'];
+
+        if ($totalApplications == 0) {
+            return 0;
+        }
+
+        return ($approvedApplications / $totalApplications) * 100;
+    }
 }

@@ -1,6 +1,6 @@
 <?php
+session_start(); // Ensure session is started before accessing session variables
 require_once '../classes/User.php';
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);

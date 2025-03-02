@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Ensure session is started before accessing session variables
 require_once '../classes/Application.php';
 
 // Ensure uploads directory exists
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         } else {
             $_SESSION['error_message'] = "Payment verification failed. Please try again.";
         }
-        header("Location: ../tlo-dashboard.php");
+        header("Location: ../doc-dashboard.php");
         exit;
     }
 }
