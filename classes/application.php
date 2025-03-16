@@ -1,12 +1,14 @@
 <?php
 // Include the Database configuration file to establish a connection
 require_once 'Database.php';
-require_once 'user.php';
-
+require_once 'User.php';
+require_once 'business_type.php';
+require_once 'session.php';
 class Application
 {
     private $conn;
     private $table = "applications";
+    private $lastError;
 
     public function __construct()
     {
@@ -14,56 +16,14 @@ class Application
         $this->conn = $database->connect();
     }
 
-    public function apply($nationalId, $businessName, $businessType, $businessAddress, $taxCertificate, $nationalIdFile, $healthReportFile, $taxClearanceFile, $amount)
+    // Function to handle the application creation
+    public function apply($nationalId, $businessName, $businessTypeId, $businessAddress, $taxCertificate, $nationalIdFile, $healthReportFile, $taxClearanceFile)
     {
-        $uploadDir = "uploads/";
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        function sanitizeFileName($filename)
-        {
-            return preg_replace("/[^a-zA-Z0-9\._-]/", "_", $filename);
-        }
-
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
-        $files = [
-            'nationalIdFile' => $nationalIdFile,
-            'healthReportFile' => $healthReportFile,
-            'taxClearanceFile' => $taxClearanceFile
-        ];
-
-        $filePaths = [];
-        foreach ($files as $key => $file) {
-            if (!isset($file['name']) || empty($file['name']) || !isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
-                error_log("Invalid or missing file for $key.");
-                return false;
-            }
-
-            $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            if (!in_array($fileExtension, $allowedExtensions)) {
-                error_log("Invalid file type for $key: " . $fileExtension);
-                return false;
-            }
-
-            if ($file['size'] > 5 * 1024 * 1024) {
-                error_log("File size exceeds limit for $key.");
-                return false;
-            }
-
-            $filePath = $uploadDir . sanitizeFileName(basename($file['name']));
-            if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-                error_log("File upload error for $key.");
-                return false;
-            }
-            $filePaths[$key] = $filePath;
-        }
-
-        if (count($filePaths) !== 3) {
-            error_log("File upload issue: Not all files were stored.");
-            return false;
-        }
-
+        $bType = new BusinessType();
+        $businessType = $bType->getBusinessTypeById($businessTypeId);
+        
+    
+        // Prepare the SQL statement
         $stmt = $this->conn->prepare("INSERT INTO $this->table (user_id, nationalId, businessName, businessType, businessAddress, taxCertificate, nationalIdFile, healthReportFile, taxClearanceFile, amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt === false) {
             error_log("Error preparing statement: " . $this->conn->error);
@@ -72,17 +32,17 @@ class Application
         }
 
         $stmt->bind_param(
-            "sssssssssi",
+            "ssssssssss",
             $_SESSION['user']['user_id'],
             $nationalId,
             $businessName,
-            $businessType,
+            $businessType['business_type_name'],
             $businessAddress,
             $taxCertificate,
-            $filePaths['nationalIdFile'],
-            $filePaths['healthReportFile'],
-            $filePaths['taxClearanceFile'],
-            $amount
+            $nationalIdFile,
+            $healthReportFile,
+            $taxClearanceFile,
+            $businessType['amount']
         );
 
         if ($stmt->execute()) {
@@ -90,13 +50,15 @@ class Application
             $this->conn->close();
             return true;
         } else {
-            error_log("Error executing statement: " . $stmt->error);
+            $this->lastError = $stmt->error;
+            echo($this->lastError);
             $stmt->close();
             $this->conn->close();
             return false;
         }
     }
 
+    // Get all applications by a user
     public function getUserApplications()
     {
         $stmt = $this->conn->prepare("SELECT * FROM applications WHERE user_id = ?");
@@ -106,6 +68,7 @@ class Application
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Get all applications with user details
     public function getAllApplications()
     {
         $stmt = $this->conn->prepare("SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id");
@@ -114,6 +77,7 @@ class Application
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Approve an application
     public function approveApplication($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET status='Approved' WHERE application_id=?");
@@ -121,6 +85,7 @@ class Application
         return $stmt->execute();
     }
 
+    // Reject an application
     public function rejectApplication($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET status='Rejected' WHERE application_id=?");
@@ -128,6 +93,7 @@ class Application
         return $stmt->execute();
     }
 
+    // Get the count of applications by status
     public function getCountByStatus($status)
     {
         $query = "SELECT COUNT(*) as count FROM applications WHERE status = ?";
@@ -139,6 +105,7 @@ class Application
         return $row['count'] ?? 0;
     }
 
+    // Get the total revenue from paid applications
     public function getTotalRevenue()
     {
         $query = "SELECT SUM(amount) as total FROM applications WHERE paymentStatus = 'Paid'";
@@ -146,6 +113,7 @@ class Application
         return $result->fetch_assoc()['total'];
     }
 
+    // Get approved applications
     public function getApprovedApplications()
     {
         $query = "SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id WHERE a.status = 'Approved'";
@@ -153,6 +121,7 @@ class Application
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Verify payment status
     public function verifyPaymentStatus($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET verificationStatus='paidVerified' WHERE application_id=?");
@@ -160,24 +129,31 @@ class Application
         return $stmt->execute();
     }
 
-    public function getNewPaymentsCount() {
+    // Get count of new payments (Pending)
+    public function getNewPaymentsCount()
+    {
         $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Pending'";
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }
 
-    public function getVerifiedPaymentsCount() {
+    // Get count of verified payments (Paid)
+    public function getVerifiedPaymentsCount()
+    {
         $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Paid'";
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }
 
-    public function getFailedPaymentsCount() {
+    // Get count of failed payments (Not Paid)
+    public function getFailedPaymentsCount()
+    {
         $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Not Paid'";
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }
 
+    // Calculate approval rate
     public function getApprovalRate()
     {
         $totalApplicationsQuery = "SELECT COUNT(*) as total FROM applications";
@@ -195,4 +171,10 @@ class Application
 
         return ($approvedApplications / $totalApplications) * 100;
     }
+
+    public function getLastError()
+    {
+        return $this->lastError;
+    }
 }
+?>

@@ -1,3 +1,9 @@
+<?php
+require_once 'classes/business_type.php';
+
+$businessType = new BusinessType();
+$businessTypes = $businessType->getBusinessTypes();
+?>
 <section class="section">
   <div class="section-body">
     <div class="row clearfix">
@@ -126,22 +132,17 @@
                     <label for="businessType"
                       ><i class="fas fa-briefcase"></i> Business Type</label
                     >
+                    <!-- select business type -->
                     <select
-                      id="businessType"
+                      id="businessTypeId"
                       class="form-control"
                       name="businessType"
                       required
-                    >
-                      <option value="">Select Business Type</option>
-                      <option value="business_premises">
-                        Business Premises
-                      </option>
-                      <option value="food_licence">Food Licence</option>
-                      <option value="opaque_beer_licence">
-                        Opaque Beer Licence
-                      </option>
-                      <option value="liquor_licence">Liquor Licence</option>
-                    </select>
+                      >
+                      <?php foreach ($businessTypes as $type) :?>
+                        <option value="<?php echo $type['business_type_id']; ?>"><?php echo $type['business_type_name']; ?></option>
+                        <?php endforeach;?>
+                        </select>
                   </div>
                 </div>
                 <div class="form-group">

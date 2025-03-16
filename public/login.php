@@ -1,5 +1,5 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
+require_once '../classes/session.php';
 require_once '../classes/User.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

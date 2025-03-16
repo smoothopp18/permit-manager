@@ -35,11 +35,31 @@ $(function () {
         });
     });
 
-
+    // Example of how to call the function with new data
+    initializeDonutChart({
+        series: [44, 55, 41, 17, 15],
+        labels: ['A', 'B', 'C', 'D', 'E']
+    });
 
 });
 
-
+// Function to initialize the donut chart
+function initializeDonutChart(data) {
+    if (window.donutChart) {
+        window.donutChart.destroy();
+    }
+    var options = {
+        chart: {
+            type: 'donut',
+            // ...existing code...
+        },
+        series: data.series,
+        labels: data.labels,
+        // ...existing code...
+    };
+    window.donutChart = new ApexCharts(document.querySelector("#donutChart"), options);
+    window.donutChart.render();
+}
 
 function chart1() {
     var options = {

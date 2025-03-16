@@ -1,24 +1,22 @@
-<?php
-session_start(); // Ensure session is started before accessing session variables
+<?php 
 require_once '../classes/Application.php';
+require_once '../classes/session.php';
 
 // Ensure uploads directory exists
 $uploadDir = "../uploads/";
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0777, true); // Create directory if it doesn't exist
+    mkdir($uploadDir, 0777, true);
 }
 
-// Retrieve form data from application form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitize inputs
     $nationalId = filter_input(INPUT_POST, 'nationalId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $businessName = filter_input(INPUT_POST, 'businessName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $businessType = filter_input(INPUT_POST, 'businessType', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $businessTypeId= filter_input(INPUT_POST, 'businessType', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $businessAddress = filter_input(INPUT_POST, 'businessAddress', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $taxCertificate = filter_input(INPUT_POST, 'taxCertificate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    
-    // File uploads
+
+    // File upload handling
     $files = [
         'nationalIdFile' => $_FILES['nationalIdUpload'] ?? null,
         'healthReportFile' => $_FILES['healthInspectionReport'] ?? null,
@@ -26,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ];
 
     $uploadedPaths = [];
-
     foreach ($files as $key => $file) {
         if ($file && $file['error'] === 0) {
             $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -41,44 +38,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit;
             }
         } elseif ($file) {
-            $_SESSION['error_message'] = "Error in uploading {$file['name']}.";
+            $_SESSION['error_message'] = "Error uploading {$file['name']}.";
             header("Location: ../applyform.php");
             exit;
         }
     }
 
-    // Validate that all fields and files were uploaded
+
+
+    // Validate all inputs and file uploads
     if (
-        empty($nationalId) || empty($businessName) || empty($businessType) || empty($businessAddress) || empty($taxCertificate) || empty($amount) ||
+        empty($nationalId) || empty($businessName) || empty($businessTypeId) || empty($businessAddress) || empty($taxCertificate) || 
         empty($uploadedPaths['nationalIdFile']) || empty($uploadedPaths['healthReportFile']) || empty($uploadedPaths['taxClearanceFile'])
     ) {
         $_SESSION['error_message'] = "All fields and file uploads are required.";
         header("Location: ../applyform.php");
         exit;
-    } else {
-        // Create Application object
-        $application = new Application();
+    }
 
-        // Attempt to apply for the certificate with file paths
-        if ($application->apply(
-            $nationalId,
-            $businessName,
-            $businessType,
-            $businessAddress,
-            $taxCertificate,
-            $uploadedPaths['nationalIdFile'],
-            $uploadedPaths['healthReportFile'],
-            $uploadedPaths['taxClearanceFile'],
-            $amount
-        )) {
-            $_SESSION['success_message'] = "Application successful. You will be notified once your application is processed.";
-            header("Location: ../user-dashboard.php");
-            exit;
-        } else {
-            $_SESSION['error_message'] = "Application failed. Please try again.";
-            header("Location: ../user-dashboard.php");
-            exit;
-        }
+    // Create Application object and attempt application submission
+    $application = new Application();
+    $result = $application->apply(
+        $nationalId,
+        $businessName,
+        $businessTypeId,
+        $businessAddress,
+        $taxCertificate,
+        $uploadedPaths['nationalIdFile'],
+        $uploadedPaths['healthReportFile'],
+        $uploadedPaths['taxClearanceFile'],
+    );
+
+    if ($result) {
+        $_SESSION['success_message'] = "Application successful. You will be notified once your application is processed.";
+        header("Location: ../user-dashboard.php");
+        exit;
+    } else {
+        $error_message = "Application failed. Please try again.";
+        echo "<p>{$error_message}</p>";
+        echo "<p>Error details: " . htmlspecialchars($application->getLastError()) . "</p>";
+        $_SESSION['error_message'] = $error_message;
+        header("Location: ../applyform.php");
+        exit;
     }
 }
 
@@ -86,8 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $application = new Application();
 
+    // Approve application
     if (isset($_GET['approve_id'])) {
-        $application_id = intval($_GET['approve_id']); // Ensure it's an integer
+        $application_id = intval($_GET['approve_id']);
         if ($application->approveApplication($application_id)) {
             $_SESSION['success_message'] = "Application approved successfully.";
         } else {
@@ -95,8 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
         header("Location: ../tlo-dashboard.php");
         exit;
-    } elseif (isset($_GET['reject_id'])) {
-        $application_id = intval($_GET['reject_id']); // Ensure it's an integer
+    }
+
+    // Reject application
+    if (isset($_GET['reject_id'])) {
+        $application_id = intval($_GET['reject_id']);
         if ($application->rejectApplication($application_id)) {
             $_SESSION['success_message'] = "Application rejected successfully.";
         } else {
@@ -104,8 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
         header("Location: ../tlo-dashboard.php");
         exit;
-    } elseif (isset($_GET['verify_payment'])) {
-        $application_id = intval($_GET['verify_payment']); // Ensure it's an integer
+    }
+
+    // Verify payment status
+    if (isset($_GET['verify_payment'])) {
+        $application_id = intval($_GET['verify_payment']);
         if ($application->verifyPaymentStatus($application_id)) {
             $_SESSION['success_message'] = "Payment verified successfully.";
         } else {

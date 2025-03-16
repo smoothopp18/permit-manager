@@ -102,10 +102,11 @@ $certificateCount = count(array_filter($applications, function($app) {
 
             <li class="menu-header">Certificates</li>
             <li class="dropdown">
-              <a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
+              <!-- Remove the Analytics link -->
+              <!-- <a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a> -->
             </li>
             <li class="dropdown">
-              <a href="my-certificates.php" class="nav-link"><i class="fa-solid fa-certificate"></i><span>My Certificates</span></a>
+              <a href="my-certificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>My Certificates</span></a>
             </li>
 
             <li class="menu-header">Support</li>
@@ -217,7 +218,7 @@ $certificateCount = count(array_filter($applications, function($app) {
                               <td><?php echo $application['issueDate']; ?></td>
                               <td><?php echo $application['status']; ?></td>
                               <td><?php echo $application['expiryDate']; ?></td>
-                              <td>Not available</td>
+                              <td><?php echo $application['amount']; ?></td>
                             </tr>
                             <?php endforeach;?>
                         </tbody>
