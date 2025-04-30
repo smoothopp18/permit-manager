@@ -1,9 +1,7 @@
 <?php
-
-session_start(); // Ensure session is started before accessing session variables
-
+require_once 'classes/session.php';
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'business_owner') {
-    header("Location: public/index.php");
+    header("Location:index.php");
     exit();
 }
 
