@@ -27,6 +27,19 @@ $newApplicationsCount = $application->getCountByStatus('Pending');
 $newBusinessesCount = $application->getCountByStatus('Approved');
 $approvalRate = $application->getApprovalRate(); // Assuming this method exists
 $totalRevenue = $application->getTotalRevenue(); // Load total revenue logic
+
+if (isset($_GET['action']) && isset($_GET['application_id'])) {
+    $action = $_GET['action'];
+    $application_id = intval($_GET['application_id']);
+
+    $application = new Application();
+
+    if ($action === 'certify') {
+        $application->updateCertificateStatus($application_id, 'certified');
+    } elseif ($action === 'revoke') {
+        $application->updateCertificateStatus($application_id, 'revoked');
+    }
+}
 ?>
 
 
@@ -94,7 +107,7 @@ $totalRevenue = $application->getTotalRevenue(); // Load total revenue logic
           <ul class="sidebar-menu">
             <li class="dropdown"><a href="ceo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
             <li class="menu-header">Certificates</li>
-            <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Approved Certificates</span></a></li>
+            <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Applications</span></a></li>
             <li class="dropdown"><a href="/views/revoked-certificates.php" class="nav-link"><i class="fa-solid fa-ban"></i><span>Revoked Certificates</span></a></li>
             <li class="dropdown"><a href="/views/eligible-certificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>Eligible Certificates</span></a></li>
             <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Report & Analytics</span></a></li>
@@ -212,8 +225,8 @@ $totalRevenue = $application->getTotalRevenue(); // Load total revenue logic
                                       Actions
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="actionMenu">
-                                      <a class="dropdown-item" href="certify-application.php?application_id=<?= htmlspecialchars($app['application_id']) ?>">Certify</a>
-                                      <a class="dropdown-item" href="revoke-application.php?application_id=<?= htmlspecialchars($app['application_id']) ?>">Revoke</a>
+                                      <a class="dropdown-item" href="ceo-dashboard.php?action=certify&application_id=<?= htmlspecialchars($app['application_id']) ?>">Certify</a>
+                                      <a class="dropdown-item" href="ceo-dashboard.php?action=revoke&application_id=<?= htmlspecialchars($app['application_id']) ?>">Revoke</a>
                                     </div>
                                   </div>
                                 <?php else : ?>

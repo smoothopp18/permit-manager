@@ -15,6 +15,7 @@ if ($application_id) {
 }
 
 ?>
+
 <head>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
@@ -61,10 +62,15 @@ if ($application_id) {
                       <td><?php echo $count ?></td>
                       <td><?php echo $application['businessName']; ?></td>
                       <td><?php echo $application['businessType']; ?></td>
-                      <td><?php echo $application['nationalIdFile']; ?></td>
-                      <td><?php echo $application['healthReportFile']; ?></td>
-                      <td><?php echo $application['taxClearanceFile']; ?></td>
-
+                      <td>
+                        <a href="<?php echo $application['nationalIdFile']; ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                      </td>
+                      <td>
+                        <a href="<?php echo $application['healthReportFile']; ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                      </td>
+                      <td>
+                        <a href="<?php echo $application['taxClearanceFile']; ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                      </td>
                       <td>
                         <div class="dropdown">
                           <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenu<?php echo $application['application_id']; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

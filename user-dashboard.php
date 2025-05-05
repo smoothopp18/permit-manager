@@ -1,5 +1,7 @@
 <?php
 require_once 'classes/session.php';
+require_once 'classes/invoice.php'; 
+
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'business_owner') {
     header("Location:index.php");
     exit();
@@ -256,30 +258,55 @@ $certificateCount = count(array_filter($applications, function($app) {
 
     <script src="assets/js/page/datatables.js"></script>
     <script>
-      function makePayment(){
-      PaychanguCheckout({
-        "public_key": "pub-test-Dtj5mdn97klCKcpJckzLC8xD16e4DPkr",
-        "tx_ref": '' + Math.floor((Math.random() * 1000000000) + 1),
-        "amount": 1000,
-        "currency": "MWK",
-        "callback_url": "https://example.com/callbackurl",
-        "return_url": "https://example.com/returnurl",
-        "customer":{
-          "email": "yourmail@example.com",
-          "first_name":"Mac",
-          "last_name":"Phiri",
-        },
-        "customization": {
-          "title": "Test Payment",
-          "description": "Payment Description",
-        },
-        "meta": {
-          "uuid": "uuid",
-          "response": "Response"
-        }
-      });
+  function makePayment() {
+    // Retrieve customer details and amount from the invoice form
+    const businessOwnerInput = document.querySelector('input[name="business_owner"]');
+    const businessNameInput = document.querySelector('input[name="business_name"]');
+    const emailInput = document.querySelector('input[name="customer_email"]'); // New email input
+    const amountElement = document.querySelector('.invoice-detail-value-lg');
+
+    if (!businessOwnerInput || !businessNameInput || !amountElement || !emailInput) {
+      alert("Missing invoice or customer information.");
+      return;
     }
-    </script>
+
+    const businessOwner = businessOwnerInput.value.trim();
+    const businessName = businessNameInput.value.trim();
+    const email = emailInput.value.trim(); // Retrieve email dynamically
+    const amountText = amountElement.textContent.replace(/[^\d.]/g, ''); // Remove non-numeric characters
+    const amount = parseFloat(amountText);
+
+    if (isNaN(amount)) {
+      alert("Invalid amount.");
+      return;
+    }
+
+    const [firstName = "FirstName", lastName = "LastName"] = businessOwner.split(' ');
+
+    PaychanguCheckout({
+      "public_key": "pub-test-iZ9GiRzMnRsEbS7i1yE3IPdLLuAtBBLq",
+      "tx_ref": 'TX-' + Date.now(),
+      "amount": amount, // Use the dynamic amount from the invoice
+      "currency": "MWK",
+      "callback_url": "http://localhost/permit-manager/user-dashboard.php", 
+      "return_url": "http://localhost/permit-manager/invoice-view.php",
+      "customer": {
+        "email": email, // Use the dynamic email
+        "first_name": firstName,
+        "last_name": lastName,
+      },
+      "customization": {
+        "title": "Invoice Payment",
+        "description": `Payment for ${businessName}`,
+      },
+      "meta": {
+        "uuid": "uuid",
+        "response": "Response"
+      }
+    });
+  }
+</script>
+
 </body>
 
 </html>

@@ -176,5 +176,25 @@ class Application
     {
         return $this->lastError;
     }
+
+    public function updateCertificateStatus($application_id, $newStatus)
+    {
+        $allowedStatuses = ['certified', 'revoked'];
+        if (!in_array($newStatus, $allowedStatuses)) {
+            return false; // Invalid status
+        }
+
+        $stmt = $this->conn->prepare("UPDATE applications SET certificateStatus = ? WHERE application_id = ?");
+        if ($stmt === false) {
+            error_log("Error preparing statement: " . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("si", $newStatus, $application_id);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
 }
 ?>
