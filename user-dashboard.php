@@ -40,12 +40,14 @@ $certificateCount = count(array_filter($applications, function($app) {
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
   <!-- Custom style CSS -->
+  <script src="https://in.paychangu.com/js/popup.js" defer></script>
   <link rel="stylesheet" href="assets/css/custom.css">
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
   <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- font awesome CDN Link -->
   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -250,9 +252,34 @@ $certificateCount = count(array_filter($applications, function($app) {
     <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
     <!-- Remove the print button script -->
     <!-- <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script> -->
+    <script src="https://in.paychangu.com/js/popup.js"></script>
 
     <script src="assets/js/page/datatables.js"></script>
-
+    <script>
+      function makePayment(){
+      PaychanguCheckout({
+        "public_key": "pub-test-Dtj5mdn97klCKcpJckzLC8xD16e4DPkr",
+        "tx_ref": '' + Math.floor((Math.random() * 1000000000) + 1),
+        "amount": 1000,
+        "currency": "MWK",
+        "callback_url": "https://example.com/callbackurl",
+        "return_url": "https://example.com/returnurl",
+        "customer":{
+          "email": "yourmail@example.com",
+          "first_name":"Mac",
+          "last_name":"Phiri",
+        },
+        "customization": {
+          "title": "Test Payment",
+          "description": "Payment Description",
+        },
+        "meta": {
+          "uuid": "uuid",
+          "response": "Response"
+        }
+      });
+    }
+    </script>
 </body>
 
 </html>

@@ -5,10 +5,10 @@ require_once 'classes/application.php';
 $invoice = new Invoice();
 $approvedApplications = $invoice->getApprovedApplications();
 ?>
-
+ <div id="wrapper"></div>
 <section class="section">
   <div class="section-body">
-    <form action="process_invoice.php" method="POST">
+    <form>
       <div class="invoice">
         <div class="invoice-print">
           <div class="row">
@@ -82,7 +82,9 @@ $approvedApplications = $invoice->getApprovedApplications();
           <div class="float-lg-left mb-lg-0 mb-3">
             <input type="hidden" name="application_id" value="<?php echo $approvedApplications[0]['application_id']; ?>">
             <input type="hidden" name="businessType" value="<?php echo $approvedApplications[0]['businessType']; ?>">
-            <button type="submit" class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
+            <button type="button" class="btn btn-primary btn-icon icon-left" onClick="makePayment()">
+               <i class="fas fa-credit-card"></i> Process Payment
+            </button>
           </div>
           <button type="button" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
           <button type="button" class="btn btn-warning btn-icon icon-left" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
