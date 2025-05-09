@@ -1,5 +1,5 @@
 <?php
-require_once 'fpdf186/fpdf.php'; 
+require_once 'fpdf186/fpdf.php';
 
 // Get dynamic values
 $name = "Jane Banda"; // You can fetch this from a database or a form

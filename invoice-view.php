@@ -5,7 +5,8 @@ require_once 'classes/application.php';
 $invoice = new Invoice();
 $approvedApplications = $invoice->getApprovedApplications();
 ?>
- <div id="wrapper"></div>
+
+<div id="wrapper"></div>
 <section class="section">
   <div class="section-body">
     <form>
@@ -21,14 +22,24 @@ $approvedApplications = $invoice->getApprovedApplications();
               <div class="col-md-6">
                 <address>
                   <strong>Billed To:</strong><br>
-                  <input type="text" name="business_owner" class="form-control" value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['business_owner']) : ''; ?>" required><br>
-                  <input type="text" name="business_name" class="form-control" value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['businessName']) : ''; ?>" required><br>
+                  <input type="text" name="business_owner" class="form-control" 
+                         value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['business_owner']) : ''; ?>" required><br>
+
+                  <input type="text" name="business_name" class="form-control" 
+                         value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['businessName']) : ''; ?>" required><br>
+
+                  <!-- Hidden or visible email input -->
+                  <input type="email" name="customer_email" class="form-control" placeholder="Email" 
+                         value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['email']) : ''; ?>" required><br>
+
                   <strong>Order Date:</strong><br>
-                  <input type="text" name="order_date" class="form-control" value="<?php echo date('F d, Y'); ?>" readonly>
+                  <input type="text" name="order_date" class="form-control" 
+                         value="<?php echo date('F d, Y'); ?>" readonly>
                 </address>
               </div>
             </div>
           </div>
+
           <div class="row mt-4">
             <div class="col-md-12">
               <div class="section-title">Summary</div>
@@ -45,7 +56,7 @@ $approvedApplications = $invoice->getApprovedApplications();
                   <?php
                   $subtotal = 0;
                   foreach ($approvedApplications as $app):
-                    $total = $app['amount'] * 1;  // Assuming quantity = 1 for all
+                    $total = $app['amount'] * 1;
                     $subtotal += $total;
                   ?>
                     <tr>
@@ -58,6 +69,7 @@ $approvedApplications = $invoice->getApprovedApplications();
                   <?php endforeach; ?>
                 </table>
               </div>
+
               <div class="row">
                 <div class="col-lg-4 offset-lg-8 text-right">
                   <div class="invoice-detail-item">
@@ -77,19 +89,77 @@ $approvedApplications = $invoice->getApprovedApplications();
             </div>
           </div>
         </div>
+
         <hr>
         <div class="text-md-right">
           <div class="float-lg-left mb-lg-0 mb-3">
             <input type="hidden" name="application_id" value="<?php echo $approvedApplications[0]['application_id']; ?>">
             <input type="hidden" name="businessType" value="<?php echo $approvedApplications[0]['businessType']; ?>">
+
             <button type="button" class="btn btn-primary btn-icon icon-left" onClick="makePayment()">
-               <i class="fas fa-credit-card"></i> Process Payment
+              <i class="fas fa-credit-card"></i> Process Payment
             </button>
           </div>
-          <button type="button" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
-          <button type="button" class="btn btn-warning btn-icon icon-left" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+
+          <button type="button" class="btn btn-danger btn-icon icon-left">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+
+          <button type="button" class="btn btn-warning btn-icon icon-left" onclick="window.print()">
+            <i class="fas fa-print"></i> Print
+          </button>
         </div>
       </div>
     </form>
   </div>
 </section>
+
+<!-- PAYMENT SCRIPT -->
+<script>
+  function makePayment() {
+    const businessOwnerInput = document.querySelector('input[name="business_owner"]');
+    const businessNameInput = document.querySelector('input[name="business_name"]');
+    const emailInput = document.querySelector('input[name="customer_email"]');
+    const amountElement = document.querySelector('.invoice-detail-value-lg');
+
+    if (!businessOwnerInput || !businessNameInput || !amountElement || !emailInput) {
+      alert("Missing invoice or customer information.");
+      return;
+    }
+
+    const businessOwner = businessOwnerInput.value.trim();
+    const businessName = businessNameInput.value.trim();
+    const email = emailInput.value.trim();
+    const amountText = amountElement.textContent.replace(/[^\d.]/g, '');
+    const amount = parseFloat(amountText);
+
+    if (isNaN(amount)) {
+      alert("Invalid amount.");
+      return;
+    }
+
+    const [firstName = "FirstName", lastName = "LastName"] = businessOwner.split(' ');
+
+    PaychanguCheckout({
+      "public_key": "pub-test-iZ9GiRzMnRsEbS7i1yE3IPdLLuAtBBLq",
+      "tx_ref": 'TX-' + Date.now(),
+      "amount": amount,
+      "currency": "MWK",
+      "callback_url": "http://localhost/permit-manager/user-dashboard.php",
+      "return_url": "http://localhost/permit-manager/invoice-view.php",
+      "customer": {
+        "email": email,
+        "first_name": firstName,
+        "last_name": lastName,
+      },
+      "customization": {
+        "title": "Invoice Payment",
+        "description": `Payment for ${businessName}`,
+      },
+      "meta": {
+        "uuid": "uuid",
+        "response": "Response"
+      }
+    });
+  }
+</script>
