@@ -15,15 +15,17 @@ $application = new Application();
 $applications = $application->getUserApplications();
 
 // Calculate dynamic data for cards
-$newApplicationsCount = count($applications);
+$newApplicationsCount = count(array_filter($applications, function($app) {
+    return $app['status'] == 'Pending';
+}));
 $approvedApplicationsCount = count(array_filter($applications, function($app) {
-    return $app['status'] == 'approved';
+    return $app['status'] == 'Approved';
 }));
 $rejectedApplicationsCount = count(array_filter($applications, function($app) {
-    return $app['status'] == 'rejected';
+    return $app['status'] == 'Rejected';
 }));
 $certificateCount = count(array_filter($applications, function($app) {
-    return $app['status'] == 'certificate_issued';
+    return $app['certificateStatus'] == 'certified';
 }));
 
 ?>
@@ -292,7 +294,7 @@ $certificateCount = count(array_filter($applications, function($app) {
     tx_ref: 'TX-' + Date.now(),
     amount: amount,
     currency: "MWK",
-    callback_url: "http://localhost/permit-manager/user-dashboard.php", 
+    callback_url: "http://localhost/permit-manager/paymentSuccessful.php", 
     return_url: "http://localhost/permit-manager/invoice-view.php",
     customer: {
       email: email,
