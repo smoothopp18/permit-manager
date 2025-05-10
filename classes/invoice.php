@@ -15,8 +15,7 @@ class Invoice
 
     public function getApprovedApplications()
     {
-        // Prepare query to fetch approved applications including email and fullname
-        // Only retrieve invoices where the value is not paid
+        // Prepare query to fetch approved applications excluding those with paymentStatus = 'Paid'
         $stmt = $this->conn->prepare("
             SELECT 
                 a.*, 
@@ -24,7 +23,7 @@ class Invoice
                 u.email
             FROM applications a
             INNER JOIN users u ON a.user_id = u.user_id
-            WHERE a.status = 'approved' AND a.paymentStatus = 'not Paid'
+            WHERE a.status = 'Approved' AND (a.paymentStatus IS NULL OR a.paymentStatus != 'Paid')
         ");
 
         if (!$stmt) {

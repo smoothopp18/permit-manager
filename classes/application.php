@@ -184,13 +184,27 @@ class Application
             return false; // Invalid status
         }
 
-        $stmt = $this->conn->prepare("UPDATE applications SET certificateStatus = ? WHERE application_id = ?");
+        // Prepare the SQL statement
+        $stmt = $this->conn->prepare("UPDATE applications SET certificateStatus = ?, expiryDate = ?, issueDate = ? WHERE application_id = ?");
         if ($stmt === false) {
             error_log("Error preparing statement: " . $this->conn->error);
             return false;
         }
 
-        $stmt->bind_param("si", $newStatus, $application_id);
+        // Set the dates based on the status
+        $expiryDate = null;
+        $issueDate = null;
+
+        if ($newStatus === 'certified') {
+            $issueDate = date('Y-m-d H:i:s'); // Current time
+            $expiryDate = date('Y-m-d H:i:s', strtotime('+1 year')); // One year from now
+        } elseif ($newStatus === 'revoked') {
+            $issueDate = null; // No issue date for revoked
+            $expiryDate = null; // No expiry date for revoked
+        }
+
+        // Bind parameters and execute the statement
+        $stmt->bind_param("sssi", $newStatus, $expiryDate, $issueDate, $application_id);
         $result = $stmt->execute();
         $stmt->close();
 
