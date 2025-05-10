@@ -1,0 +1,98 @@
+<?php
+require_once 'classes/application.php';
+
+$application = new Application();
+
+// retrieving applications by logged in user
+$applications = $application->getAllApplications();
+
+// Filter applications by application_id if provided
+$application_id = isset($_GET['application_id']) ? $_GET['application_id'] : null;
+if ($application_id) {
+  $applications = array_filter($applications, function ($app) use ($application_id) {
+    return $app['application_id'] == $application_id;
+  });
+}
+?>
+
+<head>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="../assets/css/app.min.css">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/bundles/datatables/datatables.min.css">
+  <link rel="stylesheet" href="../assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon.png' />
+  <!-- Ensure jQuery is loaded before custom.js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<section class="section">
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Approved Certificates</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped" id="table-1">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Business Type</th>
+                    <th>Business Name</th>
+                    <th>Issue Date</th>
+                    <th>Fee</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $count = 0; ?>
+                  <?php foreach ($applications as $application) : ?>
+                    <?php $count++; ?>
+                    <tr>
+                      <td><?php echo $count; ?></td>
+                      <td><?php echo htmlspecialchars($application['businessType']); ?></td>
+                      <td><?php echo htmlspecialchars($application['businessName']); ?></td>
+                      <td><?php echo !empty($application['issue_date']) ? date('F d, Y', strtotime($application['issue_date'])) : 'N/A'; ?></td>
+                      <td><?php echo isset($application['amount']) ? number_format($application['amount'], 2) . ' MWK' : 'N/A'; ?></td>
+                      <td>
+                        <a href="ecertificate.php" class="btn btn-primary btn-sm">
+                          View
+                        </a>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JS Scripts -->
+<script src="../assets/js/app.min.js"></script>
+<script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+<script src="../assets/js/page/index.js"></script>
+<script src="../assets/js/scripts.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/js/custom.js"></script>
+<script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
+<script src="../assets/bundles/datatables/datatables.min.js"></script>
+<script src="../assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script src="../assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
+<script src="../assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
+<script src="../assets/bundles/datatables/export-tables/jszip.min.js"></script>
+<script src="../assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
+<script src="../assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
+<script src="../assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/page/datatables.js"></script>

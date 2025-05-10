@@ -1,5 +1,5 @@
 <?php
-require_once 'fpdf186/fpdf.php';
+require_once 'classes/fpdf/fpdf.php';
 
 // Get dynamic values
 $name = "Jane Banda"; // You can fetch this from a database or a form
@@ -10,7 +10,7 @@ $pdf = new FPDF('L', 'mm', 'A4'); // Landscape mode
 $pdf->AddPage();
 
 // Set background image
-$pdf->Image('cert-bg.jpg', 0, 0, 297, 210); // Full page background
+$pdf->Image('certificate-background.png', 0, 0, 297, 210); // Full page background
 
 // Add logo
 $pdf->Image('logo.png', 20, 20, 30); // x, y, width
