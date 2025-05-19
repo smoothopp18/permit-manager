@@ -260,57 +260,6 @@ $certificateCount = count(array_filter($applications, function($app) {
 
     <script src="assets/js/page/datatables.js"></script>
     <script>
-  function makePayment() {
-  // Scope to the invoice form to avoid conflicts
-  const form = document.querySelector('form');
-  if (!form) {
-    alert("Invoice form not found.");
-    return;
-  }
-
-  // Retrieve all required fields inside the form
-  const businessOwner = form.querySelector('input[name="business_owner"]')?.value.trim() || '';
-  const businessName = form.querySelector('input[name="business_name"]')?.value.trim() || '';
-  const email = form.querySelector('input[name="customer_email"]')?.value.trim() || '';
-  const amountText = form.querySelector('.invoice-detail-value-lg')?.textContent || '';
-
-  if (!businessOwner || !businessName || !email || !amountText) {
-    alert("Missing Customer Details.");
-    return;
-  }
-
-  const amount = parseFloat(amountText.replace(/[^\d.]/g, '')); // Strip currency symbols and commas
-  if (isNaN(amount)) {
-    alert("Invalid invoice amount.");
-    return;
-  }
-
-  // Handle splitting the name
-  const [firstName = "Customer", lastName = ""] = businessOwner.split(' ');
-
-  // Initialize payment
-  PaychanguCheckout({
-    public_key: "pub-test-iZ9GiRzMnRsEbS7i1yE3IPdLLuAtBBLq",
-    tx_ref: 'TX-' + Date.now(),
-    amount: amount,
-    currency: "MWK",
-    callback_url: "http://localhost/permit-manager/paymentSuccessful.php", 
-    return_url: "http://localhost/permit-manager/invoice-view.php",
-    customer: {
-      email: email,
-      first_name: firstName,
-      last_name: lastName
-    },
-    customization: {
-      title: "Invoice Payment",
-      description: `Payment for ${businessName}`
-    },
-    meta: {
-      uuid: "uuid",
-      response: "Response"
-    }
-  });
-}
 </script>
 
 </body>
