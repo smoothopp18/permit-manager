@@ -63,13 +63,13 @@ if ($application_id) {
                       <td><?php echo $application['businessName']; ?></td>
                       <td><?php echo $application['businessType']; ?></td>
                       <td>
-                        <a href="<?php echo $application['nationalIdFile']; ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="uploads/<?php echo basename($application['nationalIdFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
                       </td>
                       <td>
-                        <a href="<?php echo $application['healthReportFile']; ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="uploads/<?php echo basename($application['healthReportFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
                       </td>
                       <td>
-                        <a href="<?php echo $application['taxClearanceFile']; ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="uploads/<?php echo basename($application['taxClearanceFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
                       </td>
                       <td>
                         <div class="dropdown">

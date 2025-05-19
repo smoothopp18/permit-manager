@@ -40,6 +40,5 @@ class Invoice
 
         return $applications;
     }
-    
 }
 ?>
