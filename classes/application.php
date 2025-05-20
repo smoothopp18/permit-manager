@@ -210,5 +210,15 @@ class Application
 
         return $result;
     }
+
+    // Add this method to fetch a single application by its ID
+    public function getApplicationById($application_id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM applications WHERE application_id = ?");
+        $stmt->bind_param("i", $application_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }
 ?>
