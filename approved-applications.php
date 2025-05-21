@@ -1,5 +1,4 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 

@@ -36,7 +36,7 @@ if ($application_id) {
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4>Approved Certificates</h4>
+            <h4>Certificates</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -59,7 +59,7 @@ if ($application_id) {
                       <td><?php echo $count; ?></td>
                       <td><?php echo htmlspecialchars($application['businessType']); ?></td>
                       <td><?php echo htmlspecialchars($application['businessName']); ?></td>
-                      <td><?php echo !empty($application['issue_date']) ? date('F d, Y', strtotime($application['issue_date'])) : 'N/A'; ?></td>
+                      <td><?php echo !empty($application['issueDate']) ? date('F d, Y', strtotime($application['issueDate'])) : 'N/A'; ?></td>
                       <td><?php echo isset($application['amount']) ? number_format($application['amount'], 2) . ' MWK' : 'N/A'; ?></td>
                       <td>
                         <a href="ecertificate.php" class="btn btn-primary btn-sm">

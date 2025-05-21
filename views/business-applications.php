@@ -1,7 +1,6 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
-require_once 'classes/application.php';
-require_once 'classes/user.php';
+require_once '../classes/application.php';
+require_once '../classes/user.php';
 
 // Ensure the user is logged in
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
@@ -14,6 +13,11 @@ $application = new Application();
 
 // Ensure getAllApplications() always returns an array
 $applications = $application->getAllApplications() ?? [];
+
+// Filter applications to only include those with status "Pending"
+$pendingApplications = array_filter($applications, function($app) {
+    return isset($app['status']) && $app['status'] === 'Pending';
+});
 ?>
 
 <section class="section">
@@ -40,7 +44,7 @@ $applications = $application->getAllApplications() ?? [];
                         </thead>
                         <tbody>
                           <?php $count = 0; ?>
-                          <?php foreach ($applications as $app) : ?>
+                          <?php foreach ($pendingApplications as $app) : ?>
                             <?php $count++; ?>
                             <tr>
                               <td><?= $count ?></td>

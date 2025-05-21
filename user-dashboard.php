@@ -84,7 +84,6 @@ $certificateCount = count(array_filter($applications, function($app) {
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">USER Dashboard</span>
           </li>
-          <!-- Removed messages and profile from the top nav bar -->
         </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
@@ -106,17 +105,14 @@ $certificateCount = count(array_filter($applications, function($app) {
 
             <li class="menu-header">Certificates</li>
             <li class="dropdown">
-              <!-- Remove the Analytics link -->
-              <!-- <a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a> -->
+
             </li>
             <li class="dropdown">
               <a href="my-certificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>My Certificates</span></a>
             </li>
 
             <li class="menu-header">Support</li>
-            <li class="dropdown">
-              <a href="request.html" class="nav-link"><i class="fa-solid fa-hand"></i><span>Request</span></a>
-            </li>
+
             <li class="dropdown">
               <a href="faq.html" class="nav-link"><i class="fa-solid fa-question"></i><span>FAQ</span></a>
             </li>
@@ -201,7 +197,7 @@ $certificateCount = count(array_filter($applications, function($app) {
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                      <table class="table table-striped table-hover" id="" style="width:100%;">
                         <thead>
                           <tr>
                             <th>Business Name</th>

@@ -73,7 +73,6 @@ $totalRevenue = $application->getTotalRevenue();
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">DOC Dashboard</span>
           </li>
-          <!-- Removed messages and profile from the top nav bar -->
         </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
@@ -91,9 +90,6 @@ $totalRevenue = $application->getTotalRevenue();
             </li>
             <li class="dropdown">
               <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Verified Payments</span></a>
-            </li>
-            <li class="dropdown">
-              <a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
             </li>
             <li class="menu-header">Settings</li>
             <li class="dropdown">
@@ -116,7 +112,7 @@ $totalRevenue = $application->getTotalRevenue();
                         <h6 class="mb-0">New Payments</h6>
                         <span class="font-weight-bold mb-0 font-20"><?php echo $newPayments; ?></span>
                       </div>
-                      <i class="fa-solid fa-wallet card-icon col-orange font-30 p-r-30"></i>
+                      <i class="fa-solid fa-wallet card-icon col-orange font-30 p-r-30" style="font-size: 3rem;"></i>
                     </div>
                     <canvas id="cardChart1" height="80"></canvas>
                   </div>
@@ -130,7 +126,7 @@ $totalRevenue = $application->getTotalRevenue();
                         <h6 class="mb-0">Verified Payments</h6>
                         <span class="font-weight-bold mb-0 font-20"><?php echo $verifiedPayments; ?></span>
                       </div>
-                      <i class="fa-solid fa-check-circle card-icon col-green font-30 p-r-30"></i>
+                      <i class="fa-solid fa-check-circle card-icon col-green font-30 p-r-30" style="font-size: 3rem;"></i>
                     </div>
                     <canvas id="cardChart2" height="80"></canvas>
                   </div>
@@ -144,7 +140,7 @@ $totalRevenue = $application->getTotalRevenue();
                         <h6 class="mb-0">Failed Payments</h6>
                         <span class="font-weight-bold mb-0 font-20"><?php echo $failedPayments; ?></span>
                       </div>
-                      <i class="fa-solid fa-times-circle card-icon col-red font-30 p-r-30"></i>
+                      <i class="fa-solid fa-times-circle card-icon col-red font-30 p-r-30" style="font-size: 3rem;"></i>
                     </div>
                     <canvas id="cardChart3" height="80"></canvas>
                   </div>
@@ -158,7 +154,7 @@ $totalRevenue = $application->getTotalRevenue();
                         <h6 class="mb-0">Total Revenue</h6>
                         <span class="font-weight-bold mb-0 font-20">MWK<?php echo number_format($totalRevenue, 2); ?></span>
                       </div>
-                      <i class="fa-solid fa-dollar-sign card-icon col-cyan font-30 p-r-30"></i>
+                      <i class="fa-solid fa-dollar-sign card-icon col-cyan font-30 p-r-30" style="font-size: 3rem;"></i>
                     </div>
                     <canvas id="cardChart4" height="80"></canvas>
                   </div>

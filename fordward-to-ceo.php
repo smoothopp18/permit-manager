@@ -6,6 +6,11 @@ $application = new Application();
 // retrieving applications by logged in user
 $applications = $application->getAllApplications();
 
+// Only keep applications with VerificationStatus 'PaidVerified'
+$applications = array_filter($applications, function ($app) {
+    return isset($app['VerificationStatus']) && $app['VerificationStatus'] === 'PaidVerified';
+});
+
 // Filter applications by application_id if provided
 $application_id = isset($_GET['application_id']) ? $_GET['application_id'] : null;
 if ($application_id) {
@@ -36,7 +41,7 @@ if ($application_id) {
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Verified Application Payments</h4>
+                        <h4>Verified Payments</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

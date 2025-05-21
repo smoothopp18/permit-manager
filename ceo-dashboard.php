@@ -110,8 +110,7 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
             <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Applications</span></a></li>
             <li class="dropdown"><a href="/views/revoked-certificates.php" class="nav-link"><i class="fa-solid fa-ban"></i><span>Revoked Certificates</span></a></li>
             <li class="dropdown"><a href="/views/eligible-certificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>Eligible Certificates</span></a></li>
-            <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Report & Analytics</span></a></li>
-            <li class="dropdown"><a href="/views/revenue.php" class="nav-link"><i class="fa-solid fa-dollar-sign"></i><span>Revenue</span></a></li>
+            <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
             <li class="menu-header">Settings</li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>

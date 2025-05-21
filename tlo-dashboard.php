@@ -1,5 +1,4 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 
@@ -15,8 +14,13 @@ $application = new Application();
 // Ensure getAllApplications() always returns an array
 $applications = $application->getAllApplications() ?? [];
 
+// Filter applications to show only those with status "Approved" or "Rejected"
+$applications = array_filter($applications, function($app) {
+    return isset($app['status']) && in_array($app['status'], ['Approved', 'Rejected']);
+});
+
 // Get counts for different application statuses
-$newApplicationsCount = $application->getCountByStatus('Pending'); // Ensure this status matches the database
+$newApplicationsCount = $application->getCountByStatus('Pending');
 $approvedApplicationsCount = $application->getCountByStatus('Approved');
 $rejectedApplicationsCount = $application->getCountByStatus('Rejected');
 
@@ -94,12 +98,11 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="dropdown"><a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
-            <li class="dropdown"><a href="applyform.php" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add Business</span></a></li>
+            <li class="dropdown active"><a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
+            <li class="dropdown"><a href="applyform.php" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add New Business</span></a></li>
             <li class="dropdown"><a href="approved-applications.php" class="nav-link"><i class="fa-solid fa-file-invoice"></i><span>Approved Applications</span></a></li>
-            <li class="menu-header">Certificates</li>
-            <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Business Applications</span></a></li>
-            <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a></li>
+            <li class="menu-header">Applications</li>
+            <li class=""><a href="views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>New Applications</span></a></li>
             <li class="menu-header">Settings</li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>
@@ -122,10 +125,9 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                           <p class="mb-0"><span class="col-green"><?php echo round($newApplicationsPercentage, 2); ?>%</span> of Total</p>
                         </div>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                        <div class="banner-img">
-                          <img src="assets/img/banner/1.png" alt="">
-                        </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
+                        <!-- Large icon for New Applications -->
+                        <i class="fa-solid fa-file-circle-plus" style="font-size: 3rem; color:rgb(216, 139, 24);"></i>
                       </div>
                     </div>
                   </div>
@@ -144,10 +146,9 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                           <p class="mb-0"><span class="col-orange"><?php echo round($approvedApplicationsPercentage, 2); ?>%</span> of Total</p>
                         </div>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                        <div class="banner-img">
-                          <img src="assets/img/banner/2.png" alt="">
-                        </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
+                        <!-- Large icon for Approved Applications -->
+                        <i class="fa-solid fa-circle-check" style="font-size: 3rem; color:rgb(62, 211, 16);"></i>
                       </div>
                     </div>
                   </div>
@@ -166,10 +167,9 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                           <p class="mb-0"><span class="col-red"><?php echo round($rejectedApplicationsPercentage, 2); ?>%</span> of Total</p>
                         </div>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                        <div class="banner-img">
-                          <img src="assets/img/banner/4.png" alt="">
-                        </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
+                        <!-- Large icon for Rejected Applications -->
+                        <i class="fa-solid fa-circle-xmark" style="font-size: 3rem; color: #F44336;"></i>
                       </div>
                     </div>
                   </div>
@@ -195,7 +195,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                             <th>Business Owner</th>
                             <th>Application Date</th>
                             <th>Application Status</th>
-                            <th>Action</th>
+                            <!-- Removed Action column -->
                           </tr>
                         </thead>
                         <tbody>
@@ -216,16 +216,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                                   <?= htmlspecialchars($app['status'] ?? 'Pending') ?>
                                 </div>
                               </td>
-                              <td>
-                                <?php if (!empty($app['application_id'])) : ?>
-                                  <a class="btn btn-primary view-documents" 
-                                     href="application-documents.php?application_id=<?= htmlspecialchars($app['application_id']) ?>">
-                                    View Full Application
-                                  </a>
-                                <?php else : ?>
-                                  <span class="text-muted">No Application ID</span>
-                                <?php endif; ?>
-                              </td>
+                              <!-- Removed Action cell -->
                             </tr>
                           <?php endforeach; ?>
                         </tbody>
@@ -257,5 +248,4 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
   <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
   <script src="assets/js/page/datatables.js"></script>
 </body>
-
 </html>
