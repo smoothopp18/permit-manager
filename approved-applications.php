@@ -55,7 +55,7 @@ $approvedApplications = $application->getApprovedApplications() ?? [];
                                                 <?php if (!empty($app['application_id'])) : ?>
                                                     <a class="btn btn-primary view-documents"
                                                         href="application-documents.php?application_id=<?= htmlspecialchars($app['application_id']) ?>">
-                                                        View Certificate
+                                                        View Full Application
                                                     </a>
                                                 <?php else : ?>
                                                     <span class="text-muted">No Application ID</span>

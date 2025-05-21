@@ -1,5 +1,4 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 
@@ -105,13 +104,13 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="dropdown"><a href="ceo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
+            <li class="dropdown active"><a href="ceo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
             <li class="menu-header">Certificates</li>
-            <li class="dropdown active"><a href="/views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Applications</span></a></li>
-            <li class="dropdown"><a href="/views/revoked-certificates.php" class="nav-link"><i class="fa-solid fa-ban"></i><span>Revoked Certificates</span></a></li>
-            <li class="dropdown"><a href="/views/eligible-certificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>Eligible Certificates</span></a></li>
-            <li class="dropdown"><a href="analytics.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
+            <li class="dropdown"><a href="views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Applications</span></a></li>
+            <li class="dropdown"><a href="allCertificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>Eligible Certificates</span></a></li>
+    
             <li class="menu-header">Settings</li>
+            <li class="dropdown"><a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>
         </aside>
@@ -183,7 +182,7 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4>Business Applications (Awaiting Certificatification)</h4>
+                    <h4>Business Licences & Certificates</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">

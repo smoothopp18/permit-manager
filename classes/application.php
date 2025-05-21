@@ -125,6 +125,8 @@ class Application
     public function verifyPaymentStatus($application_id)
     {
         $stmt = $this->conn->prepare("UPDATE applications SET verificationStatus='paidVerified' WHERE application_id=?");
+        // $stmt = $this->conn->prepare("UPDATE applications SET paymentStatus='Resolved' WHERE application_id=?"); 
+        
         $stmt->bind_param("i", $application_id);
         return $stmt->execute();
     }
@@ -132,7 +134,7 @@ class Application
     // Get count of new payments (Pending)
     public function getNewPaymentsCount()
     {
-        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Pending'";
+        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Paid'";
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }
@@ -140,7 +142,7 @@ class Application
     // Get count of verified payments (Paid)
     public function getVerifiedPaymentsCount()
     {
-        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Paid'";
+        $query = "SELECT COUNT(*) as count FROM applications WHERE verificationStatus = 'paidVerified'";
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }
@@ -148,7 +150,7 @@ class Application
     // Get count of failed payments (Not Paid)
     public function getFailedPaymentsCount()
     {
-        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Not Paid'";
+        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Failed'";
         $result = $this->conn->query($query);
         return $result->fetch_assoc()['count'];
     }

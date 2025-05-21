@@ -3,7 +3,7 @@ require_once 'classes/application.php';
 
 $application = new Application();
 
-// retrieving applications by logged in user
+// retrieving applications
 $applications = $application->getAllApplications();
 
 // Filter applications by application_id if provided
@@ -35,7 +35,7 @@ if ($application_id) {
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4>Business Certificates</h4>
+            <h4>Issued Business Certificates</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">

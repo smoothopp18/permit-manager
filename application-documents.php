@@ -30,7 +30,7 @@ if ($application_id) {
   <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<section class="section" id="main-section">
+<section class="section" >
   <div class="section-body">
     <div class="row">
       <div class="col-12">
@@ -62,18 +62,26 @@ if ($application_id) {
                       <td><?php echo $count ?></td>
                       <td><?php echo $application['businessName']; ?></td>
                       <td><?php echo $application['businessType']; ?></td>
-                      <td>
-                        <a href="uploads/<?php echo basename($application['nationalIdFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                      <td class="text-center">
+                        <button class="btn btn-info btn-sm national-id-btn mb-2" style="min-width:140px; font-size:1.1rem;">
+                          <?php echo htmlspecialchars($application['nationalId']); ?>
+                        </button>
+                        <br>
+                        <a href="uploads/<?php echo basename($application['nationalIdFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary mt-1" style="min-width:140px;">View</a>
                       </td>
                       <td>
-                        <a href="uploads/<?php echo basename($application['healthReportFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="uploads/<?php echo basename($application['healthReportFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary d-block mx-auto text-center" style="min-width:140px;">View</a>
                       </td>
-                      <td>
-                        <a href="uploads/<?php echo basename($application['taxClearanceFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                      <td class="text-center">
+                        <button class="btn btn-success btn-sm tax-certificate-btn mb-2" style="min-width:140px; font-size:1.1rem;">
+                          <?php echo htmlspecialchars($application['taxCertificate']); ?>
+                        </button>
+                        <br>
+                        <a href="uploads/<?php echo basename($application['taxClearanceFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary mt-1" style="min-width:140px;">View</a>
                       </td>
-                      <td>
-                        <div class="dropdown">
-                          <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenu<?php echo $application['application_id']; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <td class="text-center">
+                        <div class="dropdown d-inline-block">
+                          <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenu<?php echo $application['application_id']; ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width:120px;">
                             Action
                           </button>
                           <div class="dropdown-menu" aria-labelledby="actionMenu<?php echo $application['application_id']; ?>">
