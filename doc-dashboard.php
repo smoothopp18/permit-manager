@@ -109,7 +109,7 @@ $totalRevenue = $application->getTotalRevenue();
                   <div class="card-bg">
                     <div class="p-t-20 d-flex justify-content-between">
                       <div class="col">
-                        <h6 class="mb-0">New Payments</h6>
+                        <h6 class="mb-0">Application Payments</h6>
                         <span class="font-weight-bold mb-0 font-20"><?php echo $newPayments; ?></span>
                       </div>
                       <i class="fa-solid fa-wallet card-icon col-orange font-30 p-r-30" style="font-size: 3rem;"></i>

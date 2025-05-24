@@ -9,9 +9,21 @@ $businessTypes = $businessType->getBusinessTypes();
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
-          <div class="card-header">
-            <h4>Business Premises Licence Application</h4>
+          <!-- BCC Logo Start (inside card, above form) -->
+          <div style="text-align:center; margin: 40px 0 20px 0;">
+            <img 
+              src="assets/img/logo.png" 
+              alt="BCC Logo" 
+              style="max-width: 210px; width: 45%; height: auto; display: inline-block; box-shadow: 0 8px 32px rgba(0,0,0,0.18); border-radius: 32px; background: #fff; padding: 16px;"
+            />
+            <h1 style="font-size: 2rem; font-weight: bold; color: #1a237e; margin-top: 18px; letter-spacing: 3px; text-shadow: 0 2px 8px rgba(26,35,126,0.08);">
+              BLANTYRE CITY COUNCIL
+            </h1>
           </div>
+          <!-- BCC Logo End -->
+          <!-- <div class="card-header">
+            <h4>Business Premises Licence Application</h4>
+          </div> -->
           <div class="card-body">
             <style>
               .btn-apply {
@@ -171,13 +183,68 @@ $businessTypes = $businessType->getBusinessTypes();
             </form>
             <script>
               function validateForm() {
-                var form = document.getElementById('applyform');
-                var inputs = form.querySelectorAll('input[required], select[required]');
-                for (var i = 0; i < inputs.length; i++) {
-                  if (!inputs[i].value) {
-                    alert('Please fill in the form');
-                    return false;
+                const form = document.getElementById('applyform');
+                let valid = true;
+
+                // Validate text inputs
+                const requiredTextInputs = [
+                  'nationalId',
+                  'businessName',
+                  'taxCertificate',
+                  'businessAddress'
+                ];
+                requiredTextInputs.forEach(id => {
+                  const el = document.getElementById(id);
+                  if (!el.value.trim()) {
+                    valid = false;
                   }
+                });
+
+                // Validate file inputs
+                const requiredFileInputs = [
+                  'nationalIdUpload',
+                  'healthInspectionReport',
+                  'mraTaxClearance'
+                ];
+                requiredFileInputs.forEach(id => {
+                  const el = document.getElementById(id);
+                  if (!el.files || el.files.length === 0) {
+                    valid = false;
+                  }
+                });
+
+                // Validate select
+                const businessTypeSelect = document.getElementById('businessTypeId');
+                if (!businessTypeSelect.value) {
+                  valid = false;
+                }
+
+                // Validate checkbox
+                const agreeCheckbox = document.getElementById('agree');
+                if (!agreeCheckbox.checked) {
+                  valid = false;
+                }
+
+                // Example radio validation (if you add radios)
+                // const radios = form.querySelectorAll('input[name="exampleRadio"]');
+                // let radioChecked = false;
+                // radios.forEach(radio => { if (radio.checked) radioChecked = true; });
+                // if (radios.length && !radioChecked) {
+                //   valid = false;
+                // }
+
+                // Remove previous alert if exists
+                const prevAlert = document.getElementById('formAlert');
+                if (prevAlert) prevAlert.remove();
+
+                if (!valid) {
+                  const alertDiv = document.createElement('div');
+                  alertDiv.id = 'formAlert';
+                  alertDiv.className = 'alert alert-danger mt-3';
+                  alertDiv.role = 'alert';
+                  alertDiv.innerText = 'Please complete the form.';
+                  form.prepend(alertDiv);
+                  return false;
                 }
                 return true;
               }

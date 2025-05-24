@@ -14,6 +14,16 @@ $approvedApplications = $invoice->getApprovedApplications();
         <div class="invoice-print">
           <div class="row">
             <div class="col-lg-12">
+               <div style="text-align:center; margin: 40px 0 20px 0;">
+            <img 
+              src="assets/img/logo.png" 
+              alt="BCC Logo" 
+              style="max-width: 210px; width: 45%; height: auto; display: inline-block; box-shadow: 0 8px 32px rgba(0,0,0,0.18); border-radius: 32px; background: #fff; padding: 16px;"
+            />
+            <h1 style="font-size: 2rem; font-weight: bold; color: #1a237e; margin-top: 18px; letter-spacing: 3px; text-shadow: 0 2px 8px rgba(26,35,126,0.08);">
+              BLANTYRE CITY COUNCIL
+            </h1>
+          </div>
               <div class="invoice-title">
                 <h2>Invoice</h2>
                 <div class="invoice-number">Order #<?php echo rand(10000, 99999); ?></div>
@@ -141,7 +151,7 @@ $approvedApplications = $invoice->getApprovedApplications();
     const [firstName = "FirstName", lastName = "LastName"] = businessOwner.split(' ');
 
     PaychanguCheckout({
-      "public_key": "pub-test-iZ9GiRzMnRsEbS7i1yE3IPdLLuAtBBLq",
+      "public_key": "pub-test-Kwolf1IlIvNgIiSDNO0yIm2jmkOBy0bO",
       "tx_ref": 'TX-' + Date.now(),
       "amount": amount,
       "currency": "MWK",
