@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login - Blantyre City Council</title>
+    <title>Apply Now - Blantyre City Council</title>
     <link rel="stylesheet" href="assets/css/app.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/components.css" />
@@ -23,7 +23,7 @@
       }
 
       .main-container {
-        max-width: 1150px;
+        max-width: 1150px; /* Wider floating page */
         margin: 48px auto;
         background: #fff;
         border-radius: 24px;
@@ -40,12 +40,12 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center;
+        align-items: center; /* Center content horizontally */
         padding: 48px 36px 48px 48px;
       }
 
       .welcome-section .form-logo {
-        width: 140px;
+        width: 140px;  /* Bigger logo */
         height: 140px;
         margin-bottom: 18px;
         margin-top: 0;
@@ -61,14 +61,14 @@
       }
       .welcome-section p {
         font-size: 1.15rem;
-        margin-top: 56px;
+        margin-top: 56px; /* Huge space between heading and paragraph */
         margin-bottom: 32px;
         color: #333;
         font-family: 'Poppins', Arial, sans-serif;
       }
 
       .welcome-buttons {
-        display: none;
+        display: none; /* Hide the buttons */
       }
 
       .form-section {
@@ -154,6 +154,7 @@
           Business Premises Certificate Issuance System
         </div>
         <i class="fas fa-check-circle approved-animate" style="width: 100%; text-align: center; display: block;"></i>
+
         <p><i>"Taking The City Back To People"</i></p>
       </div>
       <div class="form-section">
@@ -162,34 +163,66 @@
             <img src="assets/img/logo.png" alt="BCC Logo" class="form-logo mb-2 mx-auto" style="width: 110px; height: 110px;">
           </div>
           <div class="card-body">
-            <h3 class="text-center mb-4" style="font-weight: 600; color: #0056b3;">Sign In</h3> <!-- Sign In indication -->
-            <form method="POST" action="public/login.php" id="loginForm" class="needs-validation" novalidate>
+            <h4 class="text-center mb-4" style="font-weight: 600; color: #0056b3;">Sign Up</h4> <!-- Sign Up indication -->
+            <form method="POST" action="public/register.php" id="registerForm">
+              <div class="row">
+                <div class="form-group col-6">
+                  <label for="frist_name">First Name</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                    <input id="frist_name" type="text" class="form-control" name="firstname" required autofocus />
+                  </div>
+                </div>
+                <div class="form-group col-6">
+                  <label for="lastname">Last Name</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                    <input id="last_name" type="text" class="form-control" name="surname" required />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
+                  <input id="phone" type="text" class="form-control" name="phone" required />
+                </div>
+              </div>
               <div class="form-group">
                 <label for="email">Email</label>
                 <div class="input-group">
                   <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
-                  <input id="email" type="email" class="form-control" name="email" placeholder="samueldavidwhite@bcc.mw" required autofocus />
-                  <div class="invalid-feedback">
-                    Please fill in a valid email
+                  <input id="email" type="email" class="form-control" name="email" required />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-6">
+                  <label for="password">Password</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
+                    <input id="password" type="password" class="form-control" name="password" required />
+                  </div>
+                </div>
+                <div class="form-group col-6">
+                  <label for="password2">Confirm Password</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
+                    <input id="password2" type="password" class="form-control" name="passwordconfirm" required />
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-group">
-                  <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
-                  <input id="password" type="password" class="form-control" name="password" placeholder="********" required />
-                  <div class="invalid-feedback">
-                    Please fill in your password
-                  </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" name="agree" class="custom-control-input" id="agree" />
+                  <label class="custom-control-label" for="agree">I agree to the terms and conditions</label>
                 </div>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
               </div>
             </form>
             <div class="text-center mt-2">
-              Don't have an account? <a href="index.php">Create One</a>
+              Already registered? <a href="index.php">Login here</a>
             </div>
           </div>
         </div>
@@ -200,50 +233,7 @@
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
-      // Show a custom Bootstrap-styled alert with blurred background
-      function showCustomAlert(message) {
-        const existing = document.getElementById('customAlertModal');
-        if (existing) existing.remove();
-        const modal = document.createElement('div');
-        modal.id = 'customAlertModal';
-        modal.style.position = 'fixed';
-        modal.style.top = 0;
-        modal.style.left = 0;
-        modal.style.width = '100vw';
-        modal.style.height = '100vh';
-        modal.style.background = 'rgba(0,0,0,0.3)';
-        modal.style.backdropFilter = 'blur(4px)';
-        modal.style.display = 'flex';
-        modal.style.alignItems = 'center';
-        modal.style.justifyContent = 'center';
-        modal.style.zIndex = 9999;
-        modal.innerHTML = `
-          <div class="alert alert-danger text-center shadow-lg" style="max-width: 400px; width: 90%; font-size: 1.1rem;">
-            <div>${message}</div>
-            <button type="button" class="btn btn-danger mt-3" id="closeCustomAlert">OK</button>
-          </div>
-        `;
-        document.body.appendChild(modal);
-        document.getElementById('closeCustomAlert').onclick = function() {
-          modal.remove();
-        };
-      }
-
-      // Custom validation for login form
-      document.querySelector('form.needs-validation').addEventListener('submit', function(e) {
-        var email = document.getElementById('email').value.trim();
-        var password = document.getElementById('password').value;
-        if (!email.match(/^[^@]+@[^@]+\.[^@]+$/)) {
-          showCustomAlert('Please enter a valid email address.');
-          e.preventDefault();
-          return false;
-        }
-        if (password.length < 6) {
-          showCustomAlert('Password must be at least 6 characters.');
-          e.preventDefault();
-          return false;
-        }
-      });
+      // Reuse your validation logic here...
     </script>
   </body>
 </html>
