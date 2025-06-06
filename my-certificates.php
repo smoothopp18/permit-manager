@@ -1,17 +1,21 @@
 <?php
 require_once 'classes/application.php';
+// session_start();
+// // Check if user is logged in
+// if (!isset($_SESSION['user_id'])) {
+//   header('Location: login.php');
+//   exit();
+// }
 
 $application = new Application();
 
-// retrieving applications by logged in user
-$applications = $application->getAllApplications();
+// retrieving all certiticates by logged in user
+$applications = $application->getUserCertificates();
+if ($applications === false) {
+    // Handle error if needed
+    echo "Error retrieving applications.";
+    exit();
 
-// Filter applications by application_id if provided
-$application_id = isset($_GET['application_id']) ? $_GET['application_id'] : null;
-if ($application_id) {
-  $applications = array_filter($applications, function ($app) use ($application_id) {
-    return $app['application_id'] == $application_id;
-  });
 }
 ?>
 

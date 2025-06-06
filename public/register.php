@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Attempt to register the user
         if ($user->register($fullname, $email, $password, $role, $phone)) {
             $_SESSION['success_message'] = "Registration successful. You can now log in.";
-            header("Location: ../loginPage.php");
+            header("Location: ../index.php");
             exit;
         } else {
             $error = "Registration failed. Email might already be in use.";

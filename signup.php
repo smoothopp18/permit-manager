@@ -233,7 +233,6 @@
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
-      // Reuse your validation logic here...
     </script>
   </body>
 </html>

@@ -213,7 +213,7 @@ class Application
         return $result;
     }
 
-    // Add this method to fetch a single application by its ID
+    // fetch a single application by its ID
     public function getApplicationById($application_id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM applications WHERE application_id = ?");
@@ -222,5 +222,17 @@ class Application
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+
+
+  // function to fetch all certificates by logged in user 
+    public function getUserCertificates()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM applications WHERE user_id = ? AND certificateStatus = 'certified'");
+        $stmt->bind_param("s", $_SESSION['user']['user_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
-?>
+
+    
