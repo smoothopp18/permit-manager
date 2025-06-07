@@ -114,7 +114,7 @@ $certificateCount = count(array_filter($applications, function($app) {
             <li class="menu-header">Support</li>
 
             <li class="dropdown">
-              <a href="faq.html" class="nav-link"><i class="fa-solid fa-question"></i><span>FAQ</span></a>
+              <a href="faq.php" class="nav-link"><i class="fa-solid fa-question"></i><span>FAQ</span></a>
             </li>
             <li class="dropdown">
               <a href="profile.php" class="nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
