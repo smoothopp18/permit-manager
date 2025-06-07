@@ -1,10 +1,10 @@
 <?php
 
-session_start();
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'director_commerce') {
-  header("Location: public/index.php");
-  exit();
-}
+// session_start();
+// if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'director_commerce') {
+//   header("Location: public/index.php");
+//   exit();
+// }
 
 require_once 'classes/application.php';
 
@@ -86,7 +86,7 @@ $totalRevenue = $application->getTotalRevenue();
               <a href="doc-dashboard.php" class="nav-link"><i class="fa-solid fa-tv"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown">
-              <a href="payment-Verification.php" class="nav-link"><i class="fa-solid fa-history"></i><span>Payment History</span></a>
+              <a href="doc-reports.php" class="nav-link"><i class="fa-solid fa-history"></i><span>Payment History</span></a>
             </li>
             <li class="dropdown">
               <a href="fordward-to-ceo.php" class="nav-link" id="forward-to-ceo-link"><i class="fa-solid fa-share"></i><span>Verified Payments</span></a>
