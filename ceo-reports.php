@@ -19,7 +19,7 @@ $recentActivities = $app->getRecentActivities(); // You may need to create this 
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped table-hover" id="applications-table" style="width:100%;">
+              <table class="table table-striped table-hover" id="tableExport-applications" style="width:100%;">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -67,7 +67,7 @@ $recentActivities = $app->getRecentActivities(); // You may need to create this 
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped table-hover" id="payments-table" style="width:100%;">
+              <table class="table table-striped table-hover" id="tableExport-payments" style="width:100%;">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -113,7 +113,7 @@ $recentActivities = $app->getRecentActivities(); // You may need to create this 
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped table-hover" id="activities-table" style="width:100%;">
+              <table class="table table-striped table-hover" id="tableExport-activities" style="width:100%;">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -152,4 +152,21 @@ $recentActivities = $app->getRecentActivities(); // You may need to create this 
 <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
 <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
-<script src="assets/js/page/datatables.js"></script>
+<script>
+  $(document).ready(function() {
+    // Helper function to safely (re)initialize DataTables
+    function initOrReinitDataTable(selector) {
+      if ($.fn.DataTable.isDataTable(selector)) {
+        $(selector).DataTable().destroy(); // Only destroy, don't clear
+      }
+      $(selector).DataTable({
+        dom: 'Bfrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+      });
+    }
+
+    initOrReinitDataTable('#tableExport-applications');
+    initOrReinitDataTable('#tableExport-payments'); 
+    initOrReinitDataTable('#tableExport-activities');
+  });
+</script>

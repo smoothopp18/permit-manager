@@ -249,5 +249,32 @@ class Application
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    // Get all payments (applications with payment info)
+    public function getAllPayments()
+    {
+        $query = "SELECT a.application_id, u.fullname as payer, a.businessName, a.amount, a.paymentStatus as status, a.created_at as date
+                  FROM applications a
+                  INNER JOIN users u ON a.user_id = u.user_id
+                  WHERE a.paymentStatus IS NOT NULL";
+        $result = $this->conn->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Get recent activities (example: last 20 actions on applications)
+    public function getRecentActivities()
+    {
+        $query = "SELECT 
+                    'Application' as action, 
+                    u.fullname as user, 
+                    a.created_at as date, 
+                    CONCAT('Status: ', a.status, ', Payment: ', a.paymentStatus) as details
+                  FROM applications a
+                  INNER JOIN users u ON a.user_id = u.user_id
+                  ORDER BY a.created_at DESC
+                  LIMIT 20";
+        $result = $this->conn->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 
