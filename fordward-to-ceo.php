@@ -4,12 +4,7 @@ require_once 'classes/application.php';
 $application = new Application();
 
 // retrieving applications by logged in user
-$applications = $application->getAllApplications();
-
-// Only keep applications with VerificationStatus 'PaidVerified'
-$applications = array_filter($applications, function ($app) {
-    return isset($app['VerificationStatus']) && $app['VerificationStatus'] === 'PaidVerified';
-});
+$applications = $application->getAllApplicationsDOC();
 
 // Filter applications by application_id if provided
 $application_id = isset($_GET['application_id']) ? $_GET['application_id'] : null;
@@ -18,7 +13,6 @@ if ($application_id) {
         return $app['application_id'] == $application_id;
     });
 }
-
 ?>
 
 <head>
@@ -55,6 +49,7 @@ if ($application_id) {
                                         <th>Application Date</th>
                                         <th>Status</th>
                                         <th>Payment Status</th>
+                                        <th>Verification Status</th> <!-- Added column -->
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
@@ -81,6 +76,9 @@ if ($application_id) {
                                                 <?php } else { ?>
                                                     <div class="badge badge-danger">Not Paid</div>
                                                 <?php } ?>
+                                            </td>
+                                            <td>
+                                                <div class="badge badge-info"><?php echo $application['verificationStatus']; ?></div>
                                             </td>
                                             <td><?php echo 'MWK ' . $application['amount']; ?></td>
                                         </tr>

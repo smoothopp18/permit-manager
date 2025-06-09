@@ -233,6 +233,21 @@ class Application
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    // function to fetch all verified payments for the DOC, excluding the logged-in user's applications
+    public function getAllApplicationsDOC()
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT a.*, u.fullname as business_owner 
+             FROM applications a 
+             INNER JOIN users u ON a.user_id = u.user_id 
+             WHERE a.verificationStatus = 'paidVerified' 
+             AND a.user_id != ?"
+        );
+        $stmt->bind_param("s", $_SESSION['user']['user_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 
-    

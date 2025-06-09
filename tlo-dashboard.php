@@ -86,7 +86,6 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">TLO Dashboard</span>
           </li>
-          <!-- Removed messages and profile from the top nav bar -->
         </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
@@ -99,10 +98,10 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
           </div>
           <ul class="sidebar-menu">
             <li class="dropdown active"><a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
-            <li class="dropdown"><a href="applyform.php" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add New Business</span></a></li>
+            <!-- <li class="dropdown"><a href="applyform.php" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add New Business</span></a></li> -->
             <li class="dropdown"><a href="approved-applications.php" class="nav-link"><i class="fa-solid fa-file-invoice"></i><span>Approved Applications</span></a></li>
             <li class="menu-header">Applications</li>
-            <li class=""><a href="views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>New Applications</span></a></li>
+            <li class=""><a href="views/business-applications.php" class="nav-link"> <i class="fa-solid fa-briefcase"> </i><span>New Applications</span></a></li>
             <li class="menu-header">Settings</li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>
@@ -113,7 +112,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
       <div class="main-content" id="main-content">
         <section class="section">
         <div class="row">
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"> <!-- Adjusted column width -->
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -125,8 +124,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                           <p class="mb-0"><span class="col-green"><?php echo round($newApplicationsPercentage, 2); ?>%</span> of Total</p>
                         </div>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
-                        <!-- Large icon for New Applications -->
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">>
                         <i class="fa-solid fa-file-circle-plus" style="font-size: 3rem; color:rgb(216, 139, 24);"></i>
                       </div>
                     </div>
@@ -134,7 +132,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"> <!-- Adjusted column width -->
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -147,7 +145,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
-                        <!-- Large icon for Approved Applications -->
+                       
                         <i class="fa-solid fa-circle-check" style="font-size: 3rem; color:rgb(62, 211, 16);"></i>
                       </div>
                     </div>
@@ -155,7 +153,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"> <!-- Adjusted column width -->
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -195,7 +193,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                             <th>Business Owner</th>
                             <th>Application Date</th>
                             <th>Application Status</th>
-                            <!-- Removed Action column -->
+                           
                           </tr>
                         </thead>
                         <tbody>
@@ -216,7 +214,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                                   <?= htmlspecialchars($app['status'] ?? 'Pending') ?>
                                 </div>
                               </td>
-                              <!-- Removed Action cell -->
+                           
                             </tr>
                           <?php endforeach; ?>
                         </tbody>

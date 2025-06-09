@@ -88,11 +88,9 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
-          <!-- Add CEO Dashboard Indicator with new color -->
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">CEO Dashboard</span>
-          </li>
-          <!-- Removed messages and profile from the top nav bar -->
+</li>
         </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">
@@ -110,7 +108,7 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
             <li class="dropdown"><a href="allCertificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>Eligible Certificates</span></a></li>
     
             <li class="menu-header">Settings</li>
-            <li class="dropdown"><a href="reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
+            <li class="dropdown"><a href="ceo-reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>
         </aside>
