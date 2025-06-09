@@ -61,7 +61,7 @@ if ($application_id) {
                       <td><?php echo !empty($application['issueDate']) ? date('F d, Y', strtotime($application['issueDate'])) : 'N/A'; ?></td>
                       <td><?php echo isset($application['amount']) ? number_format($application['amount'], 2) . ' MWK' : 'N/A'; ?></td>
                       <td>
-                        <a href="ecertificate.php" class="btn btn-primary btn-sm">
+                        <a href="ecertificate.php?id=<?php echo urlencode($application['application_id']); ?>" class="btn btn-primary btn-sm" target="_blank">
                           View
                         </a>
                       </td>
