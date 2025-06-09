@@ -86,11 +86,16 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
               </form>
             </li>
           </ul>
+          <!-- Custom Back/Forward Buttons -->
+          <div class="btn-group ml-2" role="group" aria-label="Navigation">
+            <button id="custom-back-btn" class="btn btn-secondary" title="Back"><i class="fas fa-arrow-left"></i></button>
+            <button id="custom-forward-btn" class="btn btn-secondary" title="Forward"><i class="fas fa-arrow-right"></i></button>
+          </div>
         </div>
         <ul class="navbar-nav navbar-right">
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">CEO Dashboard</span>
-</li>
+          </li>
         </ul>
       </nav>
       <div class="main-sidebar sidebar-style-2">

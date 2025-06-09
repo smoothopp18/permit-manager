@@ -156,7 +156,7 @@ $approvedApplications = $invoice->getApprovedApplications();
       "amount": amount,
       "currency": "MWK",
       "callback_url": "http://localhost/permit-manager/paymentSuccessful.php?application_id=" + document.querySelector('input[name="application_id"]').value,
-      "return_url": "http://localhost/permit-manager/invoice-view.php",
+      "return_url": "http://localhost/permit-manager/paymentFailed.php?application_id=" + document.querySelector('input[name="application_id"]').value,
       "customer": {
         "email": email,
         "first_name": firstName,
