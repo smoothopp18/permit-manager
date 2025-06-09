@@ -62,22 +62,29 @@ if ($application_id) {
                       <td><?php echo $count ?></td>
                       <td><?php echo $application['businessName']; ?></td>
                       <td><?php echo $application['businessType']; ?></td>
-                      <td class="text-center">
-                        <button class="btn btn-info btn-sm national-id-btn mb-2" style="min-width:140px; font-size:1.1rem;">
+                      <td class="text-center align-middle">
+                        <a href="uploads/<?php echo basename($application['nationalIdFile']); ?>" target="_blank"
+                           class="btn btn-primary btn-sm d-flex align-items-center justify-content-center mx-auto"
+                           style="min-width:unset; max-width:220px; font-size:1.35rem; font-weight:bold; padding: 0.6rem 1.2rem;">
+                          <i class="fas fa-id-card mr-2" style="font-size:1.6rem;"></i>
                           <?php echo htmlspecialchars($application['nationalId']); ?>
-                        </button>
-                        <br>
-                        <a href="uploads/<?php echo basename($application['nationalIdFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary mt-1" style="min-width:140px;">View</a>
+                        </a>
                       </td>
-                      <td>
-                        <a href="uploads/<?php echo basename($application['healthReportFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary d-block mx-auto text-center" style="min-width:140px;">View</a>
+                      <td class="text-center align-middle">
+                        <a href="uploads/<?php echo basename($application['healthReportFile']); ?>" target="_blank"
+                           class="btn btn-success btn-sm d-flex align-items-center justify-content-center mx-auto"
+                           style="min-width:unset; max-width:220px; font-size:1.35rem; font-weight:bold; padding: 0.6rem 1.2rem;">
+                          <i class="fas fa-notes-medical mr-2" style="font-size:1.6rem;"></i>
+                          <span style="font-size:1.15rem;">Health Report</span>
+                        </a>
                       </td>
-                      <td class="text-center">
-                        <button class="btn btn-success btn-sm tax-certificate-btn mb-2" style="min-width:140px; font-size:1.1rem;">
+                      <td class="text-center align-middle">
+                        <a href="uploads/<?php echo basename($application['taxClearanceFile']); ?>" target="_blank"
+                           class="btn btn-warning btn-sm d-flex align-items-center justify-content-center mx-auto"
+                           style="min-width:unset; max-width:220px; font-size:1.35rem; font-weight:bold; color:#212529; padding: 0.6rem 1.2rem;">
+                          <i class="fas fa-file-invoice-dollar mr-2" style="font-size:1.6rem;"></i>
                           <?php echo htmlspecialchars($application['taxCertificate']); ?>
-                        </button>
-                        <br>
-                        <a href="uploads/<?php echo basename($application['taxClearanceFile']); ?>" target="_blank" class="btn btn-sm btn-outline-primary mt-1" style="min-width:140px;">View</a>
+                        </a>
                       </td>
                       <td class="text-center">
                         <div class="dropdown d-inline-block">
