@@ -11,15 +11,15 @@ require_once 'classes/fpdf/fpdf.php';
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 
-// // Validate application ID
-// if (!isset($_GET['id'])) {
-//     die("Error: No application ID provided.");
-// }
+// Validate application ID
+if (!isset($_GET['id'])) {
+    die("Error: No application ID provided.");
+}
 
-// $appId = intval($_GET['id']);
-// if ($appId <= 0) {
-//     die("Error: Invalid application ID (" . htmlspecialchars($_GET['id']) . ").");
-// }
+$appId = intval($_GET['id']);
+if ($appId <= 0) {
+    die("Error: Invalid application ID (" . htmlspecialchars($_GET['id']) . ").");
+}
 
 // Fetch application details
 $applicationObj = new Application();
