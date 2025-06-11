@@ -7,6 +7,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'business_owner') 
     exit();
 }
 
+//calling the application class 
 require_once 'classes/application.php';
 
 $application = new Application();
