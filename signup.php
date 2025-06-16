@@ -23,7 +23,7 @@
       }
 
       .main-container {
-        max-width: 1150px; /* Wider floating page */
+        max-width: 1150px;
         margin: 48px auto;
         background: #fff;
         border-radius: 24px;
@@ -40,12 +40,12 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center; /* Center content horizontally */
+        align-items: center;
         padding: 48px 36px 48px 48px;
       }
 
       .welcome-section .form-logo {
-        width: 140px;  /* Bigger logo */
+        width: 140px;
         height: 140px;
         margin-bottom: 18px;
         margin-top: 0;
@@ -61,14 +61,14 @@
       }
       .welcome-section p {
         font-size: 1.15rem;
-        margin-top: 56px; /* Huge space between heading and paragraph */
+        margin-top: 56px;
         margin-bottom: 32px;
         color: #333;
         font-family: 'Poppins', Arial, sans-serif;
       }
 
       .welcome-buttons {
-        display: none; /* Hide the buttons */
+        display: none;
       }
 
       .form-section {
@@ -154,7 +154,6 @@
           Business Premises Certificate Issuance System
         </div>
         <i class="fas fa-check-circle approved-animate" style="width: 100%; text-align: center; display: block;"></i>
-
         <p><i>"Taking The City Back To People"</i></p>
       </div>
       <div class="form-section">
@@ -163,7 +162,8 @@
             <img src="assets/img/logo.png" alt="BCC Logo" class="form-logo mb-2 mx-auto" style="width: 110px; height: 110px;">
           </div>
           <div class="card-body">
-            <h4 class="text-center mb-4" style="font-weight: 600; color: #0056b3;">Sign Up</h4> <!-- Sign Up indication -->
+            <h4 class="text-center mb-4" style="font-weight: 600; color: #0056b3;">Sign Up</h4>
+            <!-- Registration Form -->
             <form method="POST" action="public/register.php" id="registerForm">
               <div class="row">
                 <div class="form-group col-6">
@@ -174,7 +174,7 @@
                   </div>
                 </div>
                 <div class="form-group col-6">
-                  <label for="lastname">Last Name</label>
+                  <label for="last_name">Last Name</label>
                   <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
                     <input id="last_name" type="text" class="form-control" name="surname" required />
@@ -229,10 +229,8 @@
       </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- JavaScript Files -->
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/scripts.js"></script>
-    <script>
-    </script>
   </body>
 </html>

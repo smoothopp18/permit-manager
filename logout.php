@@ -1,13 +1,13 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
+session_start(); // Start the session to access session data
 
-// Unset all session variables
-$_SESSION = array();
+// Clear all session variables
+$_SESSION = [];
 
-// Destroy the session
+// Terminate the session
 session_destroy();
 
-// Redirect to the login page
+// Redirect to login page
 header("Location: index.php");
 exit();
 ?>

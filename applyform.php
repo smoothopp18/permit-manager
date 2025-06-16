@@ -9,7 +9,7 @@ $businessTypes = $businessType->getBusinessTypes();
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
-          <!-- BCC Logo Start (inside card, above form) -->
+          <!-- Organization Branding -->
           <div style="text-align:center; margin: 40px 0 20px 0;">
             <img 
               src="assets/img/logo.png" 
@@ -20,10 +20,6 @@ $businessTypes = $businessType->getBusinessTypes();
               BLANTYRE CITY COUNCIL
             </h1>
           </div>
-          <!-- BCC Logo End -->
-          <!-- <div class="card-header">
-            <h4>Business Premises Licence Application</h4>
-          </div> -->
           <div class="card-body">
             <style>
               .btn-apply {
@@ -144,7 +140,6 @@ $businessTypes = $businessType->getBusinessTypes();
                     <label for="businessType"
                       ><i class="fas fa-briefcase"></i> Business Type</label
                     >
-                    <!-- select business type -->
                     <select
                       id="businessTypeId"
                       class="form-control"
@@ -182,11 +177,12 @@ $businessTypes = $businessType->getBusinessTypes();
               </div>
             </form>
             <script>
+              // Client-side form validation
               function validateForm() {
                 const form = document.getElementById('applyform');
                 let valid = true;
 
-                // Validate text inputs
+                // Validate required text fields
                 const requiredTextInputs = [
                   'nationalId',
                   'businessName',
@@ -200,7 +196,7 @@ $businessTypes = $businessType->getBusinessTypes();
                   }
                 });
 
-                // Validate file inputs
+                // Validate required file uploads
                 const requiredFileInputs = [
                   'nationalIdUpload',
                   'healthInspectionReport',
@@ -213,27 +209,19 @@ $businessTypes = $businessType->getBusinessTypes();
                   }
                 });
 
-                // Validate select
+                // Validate business type selection
                 const businessTypeSelect = document.getElementById('businessTypeId');
                 if (!businessTypeSelect.value) {
                   valid = false;
                 }
 
-                // Validate checkbox
+                // Validate agreement checkbox
                 const agreeCheckbox = document.getElementById('agree');
                 if (!agreeCheckbox.checked) {
                   valid = false;
                 }
 
-                // Example radio validation (if you add radios)
-                // const radios = form.querySelectorAll('input[name="exampleRadio"]');
-                // let radioChecked = false;
-                // radios.forEach(radio => { if (radio.checked) radioChecked = true; });
-                // if (radios.length && !radioChecked) {
-                //   valid = false;
-                // }
-
-                // Remove previous alert if exists
+                // Remove previous alert if present
                 const prevAlert = document.getElementById('formAlert');
                 if (prevAlert) prevAlert.remove();
 

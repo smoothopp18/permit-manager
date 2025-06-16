@@ -2,35 +2,33 @@
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 
-// Ensure the user is logged in
+// Redirect to login if the user session is not set or invalid
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
-    header("Location: index.php"); // Redirect to login if user is not logged in
+    header("Location: index.php");
     exit();
 }
 
 $user = $_SESSION['user'];
 $application = new Application();
 
-// Ensure getAllApplications() always returns an array
+// Retrieve all applications and filter for paid and verified
 $applications = $application->getAllApplications() ?? [];
-
-// Ensure proper filtering keys exist
 $applications = array_filter($applications, function($app) {
     return isset($app['verificationStatus'], $app['paymentStatus']) &&
            $app['verificationStatus'] === 'paidVerified' &&
            $app['paymentStatus'] === 'Paid';
 });
 
-// Fetch dynamic data for the dashboard
+// Fetch dashboard metrics
 $newApplicationsCount = $application->getCountByStatus('Pending');
 $newBusinessesCount = $application->getCountByStatus('Approved');
-$approvalRate = $application->getApprovalRate(); // Assuming this method exists
-$totalRevenue = $application->getTotalRevenue(); // Load total revenue logic
+$approvalRate = $application->getApprovalRate();
+$totalRevenue = $application->getTotalRevenue();
 
+// Handle certificate status actions
 if (isset($_GET['action']) && isset($_GET['application_id'])) {
     $action = $_GET['action'];
     $application_id = intval($_GET['application_id']);
-
     $application = new Application();
 
     if ($action === 'certify') {
@@ -50,19 +48,17 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Blantyre City Council</title>
 
-  <!-- General CSS Files -->
+  <!-- Core CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
-  <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-  <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-  <!-- Ensure jQuery is loaded first -->
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="assets/js/custom.js"></script>
 </head>
@@ -86,7 +82,7 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
               </form>
             </li>
           </ul>
-          <!-- Custom Back/Forward Buttons -->
+          <!-- Navigation Controls -->
           <div class="btn-group ml-2" role="group" aria-label="Navigation">
             <button id="custom-back-btn" class="btn btn-secondary" title="Back"><i class="fas fa-arrow-left"></i></button>
             <button id="custom-forward-btn" class="btn btn-secondary" title="Forward"><i class="fas fa-arrow-right"></i></button>
@@ -107,11 +103,10 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="dropdown active"><a href="ceo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
+            <li class="dropdown active"><a href="ceo-dashboard.php"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
             <li class="menu-header">Certificates</li>
             <li class="dropdown"><a href="views/business-applications.php" class="nav-link"><i class="fa-solid fa-briefcase"></i><span>Applications</span></a></li>
             <li class="dropdown"><a href="allCertificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>Eligible Certificates</span></a></li>
-    
             <li class="menu-header">Settings</li>
             <li class="dropdown"><a href="ceo-reports.php" class="nav-link"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a></li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
@@ -119,7 +114,7 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
         </aside>
       </div>
 
-      <!-- Main Content -->
+      <!-- Dashboard Content -->
       <div class="main-content" id="main-content">
         <section class="section">
           <div class="section-body">
@@ -249,7 +244,7 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
     </div>
   </div>
 
-  <!-- General JS Scripts -->
+  <!-- Core JS Scripts -->
   <script src="assets/js/app.min.js"></script>
   <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
   <script src="assets/js/page/index.js"></script>

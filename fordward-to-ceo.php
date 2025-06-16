@@ -1,12 +1,11 @@
 <?php
 require_once 'classes/application.php';
 
+// Instantiate Application class and retrieve applications for the logged-in user
 $application = new Application();
-
-// retrieving applications by logged in user
 $applications = $application->getAllApplicationsDOC();
 
-// Filter applications by application_id if provided
+// Optional: Filter applications by application_id if provided via GET parameter
 $application_id = isset($_GET['application_id']) ? $_GET['application_id'] : null;
 if ($application_id) {
     $applications = array_filter($applications, function ($app) use ($application_id) {
@@ -16,17 +15,15 @@ if ($application_id) {
 ?>
 
 <head>
-    <!-- General CSS Files -->
+    <!-- Core CSS Files -->
     <link rel="stylesheet" href="assets/css/app.min.css">
-    <!-- Template CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
     <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-    <!-- Custom style CSS -->
     <link rel="stylesheet" href="assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
-    <!-- Ensure jQuery is loaded before custom.js -->
+    <!-- jQuery (required for custom scripts) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <section class="section">
@@ -49,7 +46,7 @@ if ($application_id) {
                                         <th>Application Date</th>
                                         <th>Status</th>
                                         <th>Payment Status</th>
-                                        <th>Verification Status</th> <!-- Added column -->
+                                        <th>Verification Status</th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
@@ -92,21 +89,12 @@ if ($application_id) {
         </div>
     </div>
 </section>
-<!-- General JS Scripts -->
+<!-- Core JS Libraries -->
 <script src="assets/js/app.min.js"></script>
 <script src="assets/bundles/datatables/datatables.min.js"></script>
 <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="assets/js/page/datatables.js"></script>
 <script src="assets/js/scripts.js"></script>
-<!-- JS Libraries -->
-<script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
-<!-- Page Specific JS File -->
-<script src="assets/js/page/index.js"></script>
-<!-- Template JS File -->
-<script src="assets/js/scripts.js"></script>
-<!-- Custom JS File -->
 <script src="assets/js/custom.js"></script>
-<!-- Font Awesome JS File -->
 <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-<!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

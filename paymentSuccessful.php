@@ -1,13 +1,14 @@
 <?php
+// Check if application_id is provided in the query string
 if (!isset($_GET['application_id'])) {
-    // Redirect to the invoice view page if application_id is not set
+    // Redirect to the invoice view page if application_id is missing
     header("Location: invoice-view.php");
     exit();
-}else {
+} else {
     // Sanitize the application_id to prevent XSS attacks
     $application_id = htmlspecialchars($_GET['application_id']);
 
-    // update the application status to 'Paid' in the database
+    // Update the application status to 'Paid' in the database
     require_once 'classes/Database.php';
     $db = new Database();
     $conn = $db->connect();
@@ -48,14 +49,13 @@ if (!isset($_GET['application_id'])) {
       color: #28a745;
       margin-bottom: 10px;
     }
-    .verify-btn {
+    .home-btn {
       margin-top: 30px;
     }
   </style>
 </head>
 
 <body>
-  <div class="loader"></div>
   <div id="app">
     <section class="section">
       <div class="container mt-5">
@@ -70,9 +70,7 @@ if (!isset($_GET['application_id'])) {
             <div class="page-description">
               Thank you. Your payment was received successfully.
             </div>
-            <form class="verify-btn" action="" method="post">
-              <input type="hidden" name="application_id" value="<?php echo htmlspecialchars($application_id); ?>"
-            </form>
+            <a href="dashboard.php" class="btn btn-success home-btn">Go to Dashboard</a>
           </div>
         </div>
       </div>

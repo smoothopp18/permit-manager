@@ -1,10 +1,10 @@
-  <section class="section">
+<section class="section">
           <div class="section-header">
             <h1>Frequently Asked Questions (FAQ)</h1>
           </div>
           <div class="section-body">
             <div class="row">
-              <!-- FAQ Card 1 -->
+              <!-- FAQ: What is Permit Manager? -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -21,7 +21,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 2 -->
+              <!-- FAQ: Who can apply for a business licence? -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -38,7 +38,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 3 -->
+              <!-- FAQ: What documents are required? -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -55,7 +55,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 4 -->
+              <!-- FAQ: How to register -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -72,7 +72,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 5 -->
+              <!-- FAQ: How to apply for a permit -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -89,7 +89,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 6 -->
+              <!-- FAQ: Application approval notification -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -106,7 +106,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 7 -->
+              <!-- FAQ: Invoice issuance -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -123,7 +123,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 8 -->
+              <!-- FAQ: Payment process -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -140,7 +140,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 9 -->
+              <!-- FAQ: Business categories and fees -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -160,7 +160,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 10 -->
+              <!-- FAQ: Licence validity period -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -177,7 +177,7 @@
                   </div>
                 </div>
               </div>
-              <!-- FAQ Card 11 -->
+              <!-- FAQ: Support contact information -->
               <div class="col-12 col-md-4 col-lg-4">
                 <div class="pricing">
                   <div class="pricing-title">
@@ -195,8 +195,7 @@
                   </div>
                 </div>
               </div>
-              <!-- End FAQ Cards -->
+              <!-- End of FAQ Section -->
             </div>
           </div>
         </section>
-       

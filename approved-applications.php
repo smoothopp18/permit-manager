@@ -2,16 +2,16 @@
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 
-// Ensure the user is logged in
+// Verify user authentication
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
-    header("Location: index.php"); // Redirect to login if user is not logged in
+    header("Location: index.php");
     exit();
 }
 
 $user = $_SESSION['user'];
 $application = new Application();
 
-// Retrieve only approved applications
+// Fetch all approved business applications
 $approvedApplications = $application->getApprovedApplications() ?? [];
 ?>
 <section class="section">

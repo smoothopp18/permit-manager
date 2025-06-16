@@ -1,21 +1,19 @@
 <?php
 require_once 'classes/session.php';
-require_once 'classes/invoice.php'; 
+require_once 'classes/invoice.php';
 
+// Ensure only authenticated business owners can access this page
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != 'business_owner') {
     header("Location:index.php");
     exit();
 }
 
-//calling the application class 
+// Load the Application class and retrieve user applications
 require_once 'classes/application.php';
-
 $application = new Application();
-
-// retrieving applications by logged in user
 $applications = $application->getUserApplications();
 
-// Calculate dynamic data for cards
+// Calculate dashboard statistics
 $newApplicationsCount = count(array_filter($applications, function($app) {
     return $app['status'] == 'Pending';
 }));
@@ -28,7 +26,6 @@ $rejectedApplicationsCount = count(array_filter($applications, function($app) {
 $certificateCount = count(array_filter($applications, function($app) {
     return $app['certificateStatus'] == 'certified';
 }));
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,22 +34,17 @@ $certificateCount = count(array_filter($applications, function($app) {
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Blantyre City Council</title>
-  <!-- General CSS Files -->
+  <!-- Core CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
-  <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-  <!-- Custom style CSS -->
-  <script src="https://in.paychangu.com/js/popup.js" defer></script>
   <link rel="stylesheet" href="assets/css/custom.css">
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
-  <!-- Ensure jQuery is loaded before custom.js -->
+  <!-- jQuery and Font Awesome -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- font awesome CDN Link -->
   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
@@ -63,11 +55,8 @@ $certificateCount = count(array_filter($applications, function($app) {
       <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
-									collapse-btn"> <i data-feather="align-justify"></i></a></li>
-            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
-                <i data-feather="maximize"></i>
-              </a></li>
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"><i data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn"><i data-feather="maximize"></i></a></li>
             <li>
               <form class="form-inline mr-auto">
                 <div class="search-element">
@@ -81,7 +70,6 @@ $certificateCount = count(array_filter($applications, function($app) {
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
-          <!-- Add User Dashboard Indicator -->
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">USER Dashboard</span>
           </li>
@@ -90,7 +78,9 @@ $certificateCount = count(array_filter($applications, function($app) {
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="user-dashboard.php"> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span class="logo-name">BCCCIS</span>
+            <a href="user-dashboard.php">
+              <img alt="image" src="assets/img/logo.png" class="header-logo" />
+              <span class="logo-name">BCCCIS</span>
             </a>
           </div>
           <ul class="sidebar-menu">
@@ -103,17 +93,12 @@ $certificateCount = count(array_filter($applications, function($app) {
             <li class="dropdown">
               <a href="invoice-view.php" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i><span>Invoices</span></a>
             </li>
-
             <li class="menu-header">Certificates</li>
-            <li class="dropdown">
-
-            </li>
+            <li class="dropdown"></li>
             <li class="dropdown">
               <a href="my-certificates.php" class="nav-link"><i class="fa-solid fa-award"></i><span>My Certificates</span></a>
             </li>
-
             <li class="menu-header">Support</li>
-
             <li class="dropdown">
               <a href="faq.php" class="nav-link"><i class="fa-solid fa-question"></i><span>FAQ</span></a>
             </li>
@@ -121,14 +106,14 @@ $certificateCount = count(array_filter($applications, function($app) {
               <a href="profile.php" class="nav-link"><i class="fa-solid fa-user"></i><span>Profile</span></a>
             </li>
           </ul>
-
         </aside>
       </div>
-      <!-- Main Content -->
+      <!-- Dashboard Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-body">
-          <div class="row ">
+            <div class="row">
+              <!-- Dashboard Statistic Cards -->
               <div class="col-xl-3 col-lg-6">
                 <div class="card l-bg-green">
                   <div class="card-statistic-3">
@@ -190,6 +175,7 @@ $certificateCount = count(array_filter($applications, function($app) {
                 </div>
               </div>
             </div>
+            <!-- Applications Table -->
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -198,7 +184,7 @@ $certificateCount = count(array_filter($applications, function($app) {
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-hover" id="" style="width:100%;">
+                      <table class="table table-striped table-hover" style="width:100%;">
                         <thead>
                           <tr>
                             <th>Business Name</th>
@@ -221,7 +207,7 @@ $certificateCount = count(array_filter($applications, function($app) {
                               <td><?php echo $application['expiryDate']; ?></td>
                               <td><?php echo $application['amount']; ?></td>
                             </tr>
-                            <?php endforeach;?>
+                        <?php endforeach;?>
                         </tbody>
                       </table>
                     </div>
@@ -233,17 +219,12 @@ $certificateCount = count(array_filter($applications, function($app) {
         </section>
       </div>
     </div>
-    <!-- General JS Scripts -->
+    <!-- Core JS Scripts -->
     <script src="assets/js/app.min.js"></script>
-    <!-- JS Libraies -->
     <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
-    <!-- Page Specific JS File -->
     <script src="assets/js/page/index.js"></script>
-    <!-- Template JS File -->
     <script src="assets/js/scripts.js"></script>
-    <!-- Custom JS File -->
     <script src="assets/js/custom.js"></script>
-    <!-- JQuery JS CDN -->
     <script src="assets/bundles/datatables/datatables.min.js"></script>
     <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
@@ -251,14 +232,6 @@ $certificateCount = count(array_filter($applications, function($app) {
     <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
-    <!-- Remove the print button script -->
-    <!-- <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script> -->
-    <script src="https://in.paychangu.com/js/popup.js"></script>
-
     <script src="assets/js/page/datatables.js"></script>
-    <script>
-</script>
-
-</body>
-
+  </body>
 </html>

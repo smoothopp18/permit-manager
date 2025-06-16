@@ -1,14 +1,14 @@
 <?php
-session_start(); // Ensure session is started before accessing session variables
+session_start(); // Start the session to access user data
 require_once 'classes/user.php';
 
-// Check if the user is logged in
+// Redirect to login page if user is not authenticated
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
     header("Location: index.php");
     exit();
 }
 
-// Get user details from the session
+// Retrieve user details from session
 $user = $_SESSION['user'];
 ?>
 <div class="section-body">
@@ -49,7 +49,6 @@ $user = $_SESSION['user'];
                         <p class="text-muted"><?php echo htmlspecialchars($user['role'] ?? 'N/A'); ?></p>
                       </div>
                     </div>
-                    <!-- Added logout button -->
                     <div class="row mt-3">
                       <div class="col-12 text-right">
                         <a href="logout.php" class="btn btn-danger">Logout</a>
@@ -59,7 +58,6 @@ $user = $_SESSION['user'];
                 </div>
               </div>
             </div>
-            <div class="clearfix"></div>
           </div>
         </div>
       </div>

@@ -1,36 +1,31 @@
 <?php
 require_once 'classes/application.php';
 
+// Instantiate Application class and retrieve all applications
 $application = new Application();
-
-// retrieving applications by logged in user
 $applications = $application->getAllApplications();
 
-// Filter applications by application_id if provided
+// Filter applications by application_id if provided via GET parameter
 $application_id = isset($_GET['application_id']) ? $_GET['application_id'] : null;
 if ($application_id) {
   $applications = array_filter($applications, function ($app) use ($application_id) {
     return $app['application_id'] == $application_id;
   });
 }
-
 ?>
 
 <head>
-  <!-- General CSS Files -->
+  <!-- Core CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
-  <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-  <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
   <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.png' />
-  <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<section class="section" >
+<section class="section">
   <div class="section-body">
     <div class="row">
       <div class="col-12">
@@ -43,9 +38,7 @@ if ($application_id) {
               <table class="table table-striped" id="table-1">
                 <thead>
                   <tr>
-                    <th>
-                      #
-                    </th>
+                    <th>#</th>
                     <th>Business Name</th>
                     <th>Business Category</th>
                     <th>National ID</th>
@@ -109,18 +102,13 @@ if ($application_id) {
   </div>
 </section>
 
+<!-- Core JS Libraries -->
 <script src="assets/js/app.min.js"></script>
-<!-- JS Libraries -->
 <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
-<!-- Page Specific JS File -->
 <script src="assets/js/page/index.js"></script>
-<!-- Template JS File -->
 <script src="assets/js/scripts.js"></script>
-<!-- Custom JS File -->
 <script src="assets/js/custom.js"></script>
-<!-- Font Awesome JS File -->
 <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-<!-- jQuery JS CDN -->
 <script src="assets/bundles/datatables/datatables.min.js"></script>
 <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
@@ -129,7 +117,5 @@ if ($application_id) {
 <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
 <script src="assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
-<!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
 <script src="assets/js/page/datatables.js"></script>

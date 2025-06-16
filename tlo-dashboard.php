@@ -2,29 +2,29 @@
 require_once 'classes/application.php';
 require_once 'classes/user.php';
 
-// Ensure the user is logged in
+// Redirect to login page if the user session is not set
 if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
-    header("Location: index.php"); // Redirect to login if user is not logged in
+    header("Location: index.php");
     exit();
 }
 
 $user = $_SESSION['user'];
 $application = new Application();
 
-// Ensure getAllApplications() always returns an array
+// Retrieve all applications, defaulting to an empty array if none are found
 $applications = $application->getAllApplications() ?? [];
 
-// Filter applications to show only those with status "Approved" or "Rejected"
+// Filter applications to include only those with "Approved" or "Rejected" status
 $applications = array_filter($applications, function($app) {
     return isset($app['status']) && in_array($app['status'], ['Approved', 'Rejected']);
 });
 
-// Get counts for different application statuses
+// Retrieve counts for each application status
 $newApplicationsCount = $application->getCountByStatus('Pending');
 $approvedApplicationsCount = $application->getCountByStatus('Approved');
 $rejectedApplicationsCount = $application->getCountByStatus('Rejected');
 
-// Calculate the percentage changes for each status
+// Calculate the percentage for each status relative to the total
 $totalApplications = count($applications);
 $newApplicationsPercentage = $totalApplications > 0 ? ($newApplicationsCount / $totalApplications) * 100 : 0;
 $approvedApplicationsPercentage = $totalApplications > 0 ? ($approvedApplicationsCount / $totalApplications) * 100 : 0;
@@ -39,19 +39,16 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Blantyre City Council</title>
 
-  <!-- General CSS Files -->
+  <!-- CSS Files -->
   <link rel="stylesheet" href="assets/css/app.min.css">
-  <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-  <!-- Custom style CSS -->
   <link rel="stylesheet" href="assets/css/custom.css">
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
-  <!-- Ensure jQuery is loaded first -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="assets/js/custom.js"></script>
 </head>
@@ -64,11 +61,8 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
       <nav class="navbar navbar-expand-lg main-navbar sticky">
         <div class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
-									collapse-btn"> <i data-feather="align-justify"></i></a></li>
-            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
-                <i data-feather="maximize"></i>
-              </a></li>
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            <li><a href="#" class="nav-link nav-link-lg fullscreen-btn"><i data-feather="maximize"></i></a></li>
             <li>
               <form class="form-inline mr-auto">
                 <div class="search-element">
@@ -82,7 +76,6 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
-          <!-- Add TLO Dashboard Indicator -->
           <li class="nav-item">
             <span class="nav-link" style="font-size: 1rem; font-weight: 600; color: #4CAF50;">TLO Dashboard</span>
           </li>
@@ -97,21 +90,21 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
             </a>
           </div>
           <ul class="sidebar-menu">
-            <li class="dropdown active"><a href="tlo-dashboard.php" class="#"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
-            <!-- <li class="dropdown"><a href="applyform.php" class="nav-link"><i class="fa-solid fa-plus-square"></i><span>Add New Business</span></a></li> -->
+            <li class="dropdown active"><a href="tlo-dashboard.php"><i data-feather="monitor"></i><span>Dashboard</span></a></li>
             <li class="dropdown"><a href="approved-applications.php" class="nav-link"><i class="fa-solid fa-file-invoice"></i><span>Approved Applications</span></a></li>
             <li class="menu-header">Applications</li>
-            <li class=""><a href="views/business-applications.php" class="nav-link"> <i class="fa-solid fa-briefcase"> </i><span>New Applications</span></a></li>
+            <li><a href="views/business-applications.php" class="nav-link"> <i class="fa-solid fa-briefcase"> </i><span>New Applications</span></a></li>
             <li class="menu-header">Settings</li>
             <li class="dropdown"><a href="profile.php" class="nav-link"><i class="fa-solid fa-user-circle"></i><span>Profile</span></a></li>
           </ul>
         </aside>
       </div>
 
-      <!-- Main Content -->
+      <!-- Dashboard Content -->
       <div class="main-content" id="main-content">
         <section class="section">
         <div class="row">
+            <!-- New Applications Card -->
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
@@ -124,7 +117,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                           <p class="mb-0"><span class="col-green"><?php echo round($newApplicationsPercentage, 2); ?>%</span> of Total</p>
                         </div>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-file-circle-plus" style="font-size: 3rem; color:rgb(216, 139, 24);"></i>
                       </div>
                     </div>
@@ -132,6 +125,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                 </div>
               </div>
             </div>
+            <!-- Approved Applications Card -->
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
@@ -145,7 +139,6 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
-                       
                         <i class="fa-solid fa-circle-check" style="font-size: 3rem; color:rgb(62, 211, 16);"></i>
                       </div>
                     </div>
@@ -153,6 +146,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                 </div>
               </div>
             </div>
+            <!-- Rejected Applications Card -->
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
@@ -166,7 +160,6 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0 d-flex align-items-center justify-content-center">
-                        <!-- Large icon for Rejected Applications -->
                         <i class="fa-solid fa-circle-xmark" style="font-size: 3rem; color: #F44336;"></i>
                       </div>
                     </div>
@@ -193,7 +186,6 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                             <th>Business Owner</th>
                             <th>Application Date</th>
                             <th>Application Status</th>
-                           
                           </tr>
                         </thead>
                         <tbody>
@@ -214,7 +206,6 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
                                   <?= htmlspecialchars($app['status'] ?? 'Pending') ?>
                                 </div>
                               </td>
-                           
                             </tr>
                           <?php endforeach; ?>
                         </tbody>
@@ -230,7 +221,7 @@ $rejectedApplicationsPercentage = $totalApplications > 0 ? ($rejectedApplication
     </div>
   </div>
 
-  <!-- General JS Scripts -->
+  <!-- JS Scripts -->
   <script src="assets/js/app.min.js"></script>
   <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
   <script src="assets/js/page/index.js"></script>

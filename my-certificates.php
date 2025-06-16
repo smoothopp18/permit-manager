@@ -1,35 +1,26 @@
 <?php
 require_once 'classes/application.php';
-// session_start();
-// // Check if user is logged in
-// if (!isset($_SESSION['user_id'])) {
-//   header('Location: login.php');
-//   exit();
-// }
 
+// Instantiate the Application class
 $application = new Application();
 
-// retrieving all certiticates by logged in user
+// Retrieve all certificates for the currently logged-in user
 $applications = $application->getUserCertificates();
 if ($applications === false) {
-    // Handle error if needed
+    // Display an error message if retrieval fails
     echo "Error retrieving applications.";
     exit();
-
 }
 ?>
-
 <head>
-  <!-- General CSS Files -->
+  <!-- CSS Dependencies -->
   <link rel="stylesheet" href="../assets/css/app.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/bundles/datatables/datatables.min.css">
   <link rel="stylesheet" href="../assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
-  <!-- Custom style CSS -->
   <link rel="stylesheet" href="../assets/css/custom.css">
   <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon.png' />
-  <!-- Ensure jQuery is loaded before custom.js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -81,12 +72,11 @@ if ($applications === false) {
   </div>
 </section>
 
-<!-- JS Scripts -->
+<!-- JavaScript Dependencies -->
 <script src="../assets/js/app.min.js"></script>
 <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
 <script src="../assets/js/page/index.js"></script>
 <script src="../assets/js/scripts.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../assets/js/custom.js"></script>
 <script src="https://kit.fontawesome.com/32c8b0ab14.js" crossorigin="anonymous"></script>
 <script src="../assets/bundles/datatables/datatables.min.js"></script>

@@ -2,6 +2,7 @@
 require_once 'classes/invoice.php';
 require_once 'classes/application.php';
 
+// Fetch approved applications for invoice display
 $invoice = new Invoice();
 $approvedApplications = $invoice->getApprovedApplications();
 ?>
@@ -14,16 +15,16 @@ $approvedApplications = $invoice->getApprovedApplications();
         <div class="invoice-print">
           <div class="row">
             <div class="col-lg-12">
-               <div style="text-align:center; margin: 40px 0 20px 0;">
-            <img 
-              src="assets/img/logo.png" 
-              alt="BCC Logo" 
-              style="max-width: 210px; width: 45%; height: auto; display: inline-block; box-shadow: 0 8px 32px rgba(0,0,0,0.18); border-radius: 32px; background: #fff; padding: 16px;"
-            />
-            <h1 style="font-size: 2rem; font-weight: bold; color: #1a237e; margin-top: 18px; letter-spacing: 3px; text-shadow: 0 2px 8px rgba(26,35,126,0.08);">
-              BLANTYRE CITY COUNCIL
-            </h1>
-          </div>
+              <div style="text-align:center; margin: 40px 0 20px 0;">
+                <img 
+                  src="assets/img/logo.png" 
+                  alt="BCC Logo" 
+                  style="max-width: 210px; width: 45%; height: auto; display: inline-block; box-shadow: 0 8px 32px rgba(0,0,0,0.18); border-radius: 32px; background: #fff; padding: 16px;"
+                />
+                <h1 style="font-size: 2rem; font-weight: bold; color: #1a237e; margin-top: 18px; letter-spacing: 3px; text-shadow: 0 2px 8px rgba(26,35,126,0.08);">
+                  BLANTYRE CITY COUNCIL
+                </h1>
+              </div>
               <div class="invoice-title">
                 <h2>Invoice</h2>
                 <div class="invoice-number">Order #<?php echo rand(10000, 99999); ?></div>
@@ -34,14 +35,10 @@ $approvedApplications = $invoice->getApprovedApplications();
                   <strong>Billed To:</strong><br>
                   <input type="text" name="business_owner" class="form-control" 
                          value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['business_owner']) : ''; ?>" required><br>
-
                   <input type="text" name="business_name" class="form-control" 
                          value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['businessName']) : ''; ?>" required><br>
-
-                  <!-- Hidden or visible email input -->
                   <input type="email" name="customer_email" class="form-control" placeholder="Email" 
                          value="<?php echo !empty($approvedApplications) ? htmlspecialchars($approvedApplications[0]['email']) : ''; ?>" required><br>
-
                   <strong>Order Date:</strong><br>
                   <input type="text" name="order_date" class="form-control" 
                          value="<?php echo date('F d, Y'); ?>" readonly>
@@ -53,7 +50,7 @@ $approvedApplications = $invoice->getApprovedApplications();
           <div class="row mt-4">
             <div class="col-md-12">
               <div class="section-title">Summary</div>
-              <p class="section-lead">All items here cannot be deleted.</p>
+              <p class="section-lead">All items listed are final.</p>
               <div class="table-responsive">
                 <table class="table table-striped table-hover table-md">
                   <tr>
@@ -124,8 +121,12 @@ $approvedApplications = $invoice->getApprovedApplications();
   </div>
 </section>
 
-<!-- PAYMENT SCRIPT -->
+<!-- Payment Processing Script -->
 <script>
+  /**
+   * Initiates the payment process using PaychanguCheckout.
+   * Validates required fields and prepares payment data.
+   */
   function makePayment() {
     const businessOwnerInput = document.querySelector('input[name="business_owner"]');
     const businessNameInput = document.querySelector('input[name="business_name"]');
@@ -148,6 +149,7 @@ $approvedApplications = $invoice->getApprovedApplications();
       return;
     }
 
+    // Split business owner name into first and last name
     const [firstName = "FirstName", lastName = "LastName"] = businessOwner.split(' ');
 
     PaychanguCheckout({

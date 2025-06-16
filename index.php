@@ -67,10 +67,6 @@
         font-family: 'Poppins', Arial, sans-serif;
       }
 
-      .welcome-buttons {
-        display: none;
-      }
-
       .form-section {
         flex: 1.5;
         display: flex;
@@ -148,6 +144,7 @@
 
   <body>
     <div class="main-container">
+      <!-- Welcome Section -->
       <div class="welcome-section" style="align-items: center;">
         <img src="assets/img/logo.png" alt="BCC Logo" class="form-logo" style="display: block; margin: 0 auto;">
         <div style="font-size: 1.3rem; font-weight: 500; color: #0056b3; margin-top: 18px; margin-bottom: 18px; text-align: center; width: 100%;">
@@ -156,13 +153,14 @@
         <i class="fas fa-check-circle approved-animate" style="width: 100%; text-align: center; display: block;"></i>
         <p><i>"Taking The City Back To People"</i></p>
       </div>
+      <!-- Login Form Section -->
       <div class="form-section">
         <div class="card card-primary w-100">
           <div class="card-header text-center d-flex justify-content-center align-items-center" style="border-bottom: none; background: transparent;">
             <img src="assets/img/logo.png" alt="BCC Logo" class="form-logo mb-2 mx-auto" style="width: 110px; height: 110px;">
           </div>
           <div class="card-body">
-            <h3 class="text-center mb-4" style="font-weight: 600; color: #0056b3;">Sign In</h3> <!-- Sign In indication -->
+            <h3 class="text-center mb-4" style="font-weight: 600; color: #0056b3;">Sign In</h3>
             <form method="POST" action="public/login.php" id="loginForm" class="needs-validation" novalidate>
               <div class="form-group">
                 <label for="email">Email</label>
@@ -170,7 +168,7 @@
                   <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
                   <input id="email" type="email" class="form-control" name="email" placeholder="samueldavidwhite@bcc.mw" required autofocus />
                   <div class="invalid-feedback">
-                    Please fill in a valid email
+                    Please enter a valid email address.
                   </div>
                 </div>
               </div>
@@ -180,7 +178,7 @@
                   <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
                   <input id="password" type="password" class="form-control" name="password" placeholder="********" required />
                   <div class="invalid-feedback">
-                    Please fill in your password
+                    Please enter your password.
                   </div>
                 </div>
               </div>
@@ -196,11 +194,11 @@
       </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- JavaScript for Form Validation and Alerts -->
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
-      // Show a custom Bootstrap-styled alert with blurred background
+      // Display a custom alert modal
       function showCustomAlert(message) {
         const existing = document.getElementById('customAlertModal');
         if (existing) existing.remove();
@@ -229,7 +227,7 @@
         };
       }
 
-      // Custom validation for login form
+      // Login form validation
       document.querySelector('form.needs-validation').addEventListener('submit', function(e) {
         var email = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
