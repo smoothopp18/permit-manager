@@ -276,5 +276,13 @@ class Application
         $result = $this->conn->query($query);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    // Function to get all applications with payment status paid verified
+    public function getAllApplicationsWithPaymentStatus()
+    {
+        $stmt = $this->conn->prepare("SELECT a.*, u.fullname as business_owner FROM applications a INNER JOIN users u ON a.user_id = u.user_id WHERE a.paymentStatus = 'Paid' AND a.verificationStatus = 'paidVerified'");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 

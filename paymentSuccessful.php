@@ -70,7 +70,7 @@ if (!isset($_GET['application_id'])) {
             <div class="page-description">
               Thank you. Your payment was received successfully.
             </div>
-            <a href="dashboard.php" class="btn btn-success home-btn">Go to Dashboard</a>
+            <a href="user-dashboard.php" class="btn btn-success home-btn">Go to Dashboard</a>
           </div>
         </div>
       </div>

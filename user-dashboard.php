@@ -233,5 +233,6 @@ $certificateCount = count(array_filter($applications, function($app) {
     <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
     <script src="assets/bundles/datatables/export-tables/vfs_fonts.js"></script>
     <script src="assets/js/page/datatables.js"></script>
+    <script src="https://in.paychangu.com/js/popup.js"></script>
   </body>
 </html>

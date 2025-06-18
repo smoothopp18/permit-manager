@@ -2,7 +2,7 @@
 // Include the Application class and retrieve all application payment records
 require_once 'classes/application.php';
 $app = new Application();
-$recentPayments = $app->getAllApplications();
+$recentPayments = $app->getAllApplicationsWithPaymentStatus();
 ?>
 <section class="section">
   <div class="section-body">
@@ -51,6 +51,7 @@ $recentPayments = $app->getAllApplications();
 <script src="assets/bundles/datatables/datatables.min.js"></script>
 <script src="assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/dataTables.buttons.min.js"></script>
+<script src="https://in.paychangu.com/js/popup.js"></script>
 <script src="assets/bundles/datatables/export-tables/buttons.flash.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/jszip.min.js"></script>
 <script src="assets/bundles/datatables/export-tables/pdfmake.min.js"></script>
