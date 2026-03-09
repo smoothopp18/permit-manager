@@ -284,5 +284,45 @@ class Application
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    // Get count of approved applications this week
+    public function getApprovedThisWeekCount()
+    {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE status = 'Approved' AND YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'] ?? 0;
+    }
+
+    // Get count of rejected applications
+    public function getRejectedCount()
+    {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE status = 'Rejected'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'] ?? 0;
+    }
+
+    // Get count of successful payments
+    public function getSuccessfulPaymentsCount()
+    {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE paymentStatus = 'Paid'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'] ?? 0;
+    }
+
+    // Get count of certified businesses
+    public function getCertifiedBusinessesCount()
+    {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE certificateStatus = 'certified'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'] ?? 0;
+    }
+
+    // Get count of revoked businesses
+    public function getRevokedBusinessesCount()
+    {
+        $query = "SELECT COUNT(*) as count FROM applications WHERE certificateStatus = 'revoked'";
+        $result = $this->conn->query($query);
+        return $result->fetch_assoc()['count'] ?? 0;
+    }
 }
 

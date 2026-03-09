@@ -5,10 +5,48 @@ $app = new Application();
 $allApplications = $app->getAllApplications(); 
 $allPayments = $app->getAllPayments(); // You may need to create this method
 $recentActivities = $app->getRecentActivities(); // You may need to create this method
+$approvedThisWeek = $app->getApprovedThisWeekCount();
+$rejectedCount = $app->getRejectedCount();
+$successfulPayments = $app->getSuccessfulPaymentsCount();
+$certifiedBusinesses = $app->getCertifiedBusinessesCount();
+$revokedBusinesses = $app->getRevokedBusinessesCount();
 ?>
 
 <section class="section">
   <div class="section-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Weekly Summary Report</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover" id="tableExport-applications" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>Approved This Week</th>
+                    <th>Rejected</th>
+                    <th>Successful Payments</th>
+                    <th>Certified Businesses</th>
+                    <th>Revoked Businesses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><?= $approvedThisWeek ?></td>
+                    <td><?= $rejectedCount ?></td>
+                    <td><?= $successfulPayments ?></td>
+                    <td><?= $certifiedBusinesses ?></td>
+                    <td><?= $revokedBusinesses ?></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- All Applications Table -->
     <div class="row">
